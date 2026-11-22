@@ -2,6 +2,30 @@
 
 ## 2026-11-22
 
+### TASK-020 — Build "Your Little Win Today" card · status: in_review
+- **First `pending` task** (TASK-008/009/010/016/017/018/019 are `blocked`; TASK-011–015 are `completed`). First Experience-workstream `prototype/src` build — the autonomous-executable work the Reviewer's TASK-016/017/018 notes repeatedly pointed to while the Concepts human-subject/live-traffic tasks stay blocked.
+- **Deliverable:** `prototype/src/components/LittleWinCard.tsx` + `LittleWinCard.css` — a standalone surface implementing the PRD §6 *return* moment ("What's today's little win?"), wired into `App.tsx` as the new default tab (first-session flows + concept scorecard kept one tap away). Reuses the approved `HoldToComplete` primitive, `useReducedMotion`, `actionForGoal`/`GOALS` and `fireSuccessHaptic` from the TASK-015 kit — no duplication.
+- **Acceptance criterion met exactly** ("Card displays title, effort, alternative and completion; touch and keyboard controls work; reduced-motion mode exists"):
+  - **Title** — the day's micro-action (`lwc-title`), drawn from the reviewed catalog (`flowData.ACTION_BY_GOAL`); plain general-benefit framing, no disease-risk claim (TASK-006).
+  - **Effort** — honest estimate pill (`lwc-effort`, e.g. "2 min"), the "ridiculously small" promise (PRD Principle 1).
+  - **Alternative** — the always-ready easier variant, shown in the `lwc-alt` block and reachable three ways: horizontal **swipe** (pointer drag past a 56px threshold), a **tap** on the "Switch to the easier version / Back to the full version" button, or **ArrowLeft/ArrowRight** on the focused card. Switching never penalises progress (Zero-Guilt / TASK-022).
+  - **Completion** — the shared one-gesture `HoldToComplete` (~0.6s hold, pointer *or* Space/Enter), success-only haptic once, followed by a warm non-moralising reward line and a no-streak after-note.
+  - **Touch controls** — press-and-hold to complete; horizontal swipe to switch variant (pointer events, `touch-action: pan-y`, resisted drag follow).
+  - **Keyboard controls** — Tab reaches the goal radios, the alternative button and the hold control (hold Space/Enter); ArrowLeft/ArrowRight on the card switch variant.
+  - **Reduced-motion mode** — `useReducedMotion()` drops the live swipe-follow and shortens the hold; a dedicated `@media (prefers-reduced-motion: reduce)` block disables the card/button transitions and the rise animations (completion spring fallback inherited from `flows.css`).
+- **Standards upheld (CLAUDE.md):** Zero-Guilt (§1) — no red/danger/penalty colour, no streak chrome, no shaming copy; missing/easing is framed as fully fine ("No streak to keep"). <2s/tactile (§2) — one ~0.6s hold completes the action. No boilerplate (§3) — concrete catalog actions/efforts/variants; placeholder/`any`/`@ts-ignore`/mock grep over the two new files → **none**. Strict TypeScript (§4) — typed throughout; `GoalId` union keeps indexing total.
+- **Verified:**
+  - `cd prototype && npm run build` → **exit code 0** (`tsc -b && vite build`, strict mode, `✓ built in 95ms`, zero warnings/errors; 28 modules, up from 26).
+  - `npm run lint` (eslint) → **exit 0**, clean. Fixed one `react-hooks/refs` finding (reading `swipe.current.active` during render) by driving the `is-dragging` class from a `dragging` state instead — the same rule flagged during TASK-015.
+  - Grep for `[TBD]`/Lorem ipsum/placeholder/TODO/FIXME/XXX/`@ts-ignore`/`: any`/`mock` over the new files → **none**. `tasks.json` re-validated as well-formed JSON; TASK-020 set to `in_review`.
+- **tasks.json:** TASK-020 `status` → **`in_review`**.
+- **Note:** Not committed (awaiting Reviewer approval per CLAUDE.md workflow rules). Next pending Experience-workstream build after approval: TASK-021 (completion haptic feedback adapter), which formalises the `fireSuccessHaptic` progressive-enhancement stub this card already calls.
+
+### TASK-020 — Reviewer approval · status: in_review → completed · reviewed 2026-11-22
+- **APPROVED.** Every acceptance sub-criterion verified present and working: title (`lwc-title`), honest effort pill (`lwc-effort`), always-visible alternative switchable three ways (swipe ≥56px / tap / ArrowLeft-Right), `HoldToComplete` completion, touch (pointer + `touch-action: pan-y`) and keyboard (Tab + Space/Enter + arrows) paths, and a `useReducedMotion()` hook plus a `prefers-reduced-motion` CSS block. Imports (`HoldToComplete`, `actionForGoal`, `GOALS`, `GoalId`, `ACCENT`, `useReducedMotion`) independently confirmed to exist in the TASK-015 kit with the exact shapes used — no duplication, no fabricated dependencies.
+- **Standards hold.** Zero-Guilt (§1): warm paper/dawn palette only, no red/penalty/streak chrome, explicit "No streak to keep" and non-moralising copy. <2s tactile (§2): single ~0.6s hold. No boilerplate (§3): real catalog actions + real `navigator.vibrate` haptic, no mocks. Strict TS (§4): no `any`/`@ts-ignore`; `--accent` uses the already-approved `as React.CSSProperties` idiom. One cosmetic note (card's swipe `pointerdown` also fires while holding complete, briefly applying `is-dragging`) — `drag` stays 0 so the card never translates and both gestures resolve correctly; functionally sound, not a defect.
+- **Independently re-verified (not taken on the Builder's word):** `cd prototype && npm run build` → **exit 0** (`tsc -b && vite build`, strict, zero warnings, 28 modules); `npm run lint` → **exit 0**, clean; placeholder/`[TBD]`/Lorem/`@ts-ignore`/`: any`/`mock` grep over both new files → **none**. `tasks.json` TASK-020 `status` → **`completed`**.
+
 ## Review Rejection Notes
 
 **TASK-018 — Run honest willingness-to-pay test · REJECTED for completion · status affirmed `blocked` · reviewed 2026-11-22**

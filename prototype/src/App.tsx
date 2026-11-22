@@ -2,21 +2,30 @@ import { useState } from 'react'
 import './App.css'
 import FirstSessionFlows from './flows/FirstSessionFlows'
 import ConceptScorecard from './components/ConceptScorecard'
+import LittleWinCard from './components/LittleWinCard'
 
 /**
- * Prototype shell. Defaults to the active TASK-015 deliverable (the three
- * first-session flows) while keeping the approved TASK-014 concept scorecard
- * one tap away, so neither deliverable is hidden.
+ * Prototype shell. Defaults to the active TASK-020 deliverable ("Your Little
+ * Win Today" card) while keeping the approved first-session flows (TASK-015)
+ * and concept scorecard (TASK-014) one tap away, so no deliverable is hidden.
  */
 
-type View = 'flows' | 'scorecard'
+type View = 'card' | 'flows' | 'scorecard'
 
 function App() {
-  const [view, setView] = useState<View>('flows')
+  const [view, setView] = useState<View>('card')
 
   return (
     <div className="shell">
       <nav className="shell-nav" aria-label="Prototype views">
+        <button
+          type="button"
+          className={`shell-tab${view === 'card' ? ' on' : ''}`}
+          aria-current={view === 'card'}
+          onClick={() => setView('card')}
+        >
+          Little Win card
+        </button>
         <button
           type="button"
           className={`shell-tab${view === 'flows' ? ' on' : ''}`}
@@ -34,7 +43,13 @@ function App() {
           Concept scorecard
         </button>
       </nav>
-      {view === 'flows' ? <FirstSessionFlows /> : <ConceptScorecard />}
+      {view === 'card' ? (
+        <LittleWinCard />
+      ) : view === 'flows' ? (
+        <FirstSessionFlows />
+      ) : (
+        <ConceptScorecard />
+      )}
     </div>
   )
 }

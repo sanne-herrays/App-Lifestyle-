@@ -221,7 +221,7 @@
       "title": "Build Your Little Win Today card",
       "workstream": "Experience",
       "description": "Implement a standalone tappable/swipeable daily action card.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Card displays title, effort, alternative and completion; touch and keyboard controls work; reduced-motion mode exists."
       ],
