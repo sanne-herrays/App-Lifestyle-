@@ -1,0 +1,479 @@
+{
+  "project": "Healthy Micro-Habits App",
+  "source": "strategy.md",
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "title": "Audit 12 direct habit-app competitors",
+      "workstream": "Research",
+      "description": "Produce a structured teardown of 12 habit apps covering onboarding, daily loop, rewards, friction and pricing.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "A comparison table with 12 named apps and all five dimensions populated."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-002",
+      "title": "Audit 8 adjacent-category products",
+      "workstream": "Research",
+      "description": "Analyze eight games, learning, planning or self-care apps for transferable engagement patterns.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Eight documented product examples, each with one mechanism, user benefit and transfer risk."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-003",
+      "title": "Create competitor feature inventory",
+      "workstream": "Research",
+      "description": "Normalize observed competitor capabilities into a deduplicated feature taxonomy.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "At least 30 features categorized by onboarding, action, progression, social, personalization or monetization."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-004",
+      "title": "Document competitor anti-patterns",
+      "workstream": "Research",
+      "description": "Identify friction, guilt mechanisms, confusing UX and unsupported health claims.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "At least 15 anti-patterns with an observed example and proposed design guardrail."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-005",
+      "title": "Build behavior-change evidence register",
+      "workstream": "Research",
+      "description": "Summarize peer-reviewed evidence for cues, goals, reinforcement, self-monitoring and habit automaticity.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Each mechanism has a citation, population, evidence strength, limitation and implementation implication."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-006",
+      "title": "Create prevention-action evidence rubric",
+      "workstream": "Research",
+      "description": "Define a method for rating health-action safety and evidence without implying personal disease-risk reduction.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Rubric includes evidence grade, contraindications, claim limits, review owner and review date."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-007",
+      "title": "Write user recruitment screener",
+      "workstream": "Research",
+      "description": "Define inclusion criteria for abandoned-app users, successful habit builders and busy beginners.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Screener includes segment definitions, exclusion rules and 8–12 neutral questions."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-008",
+      "title": "Run 15 behavioral interviews",
+      "workstream": "Research",
+      "description": "Interview users about actual attempts, contexts, triggers and obstacles.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "15 anonymized interview records and a coded synthesis of at least five recurring barriers."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-009",
+      "title": "Run 14-day diary study",
+      "workstream": "Research",
+      "description": "Capture real-world opportunities and failures to perform tiny health actions.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "At least 10 complete participant diaries, a context map and a documented completion rate."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-010",
+      "title": "Define primary audience and JTBD",
+      "workstream": "Research",
+      "description": "Select a narrow launch segment using research evidence.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "One primary segment, top three jobs-to-be-done, exclusions and rationale documented."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-011",
+      "title": "Write Tiny Win concept brief",
+      "workstream": "Concepts",
+      "description": "Specify one tiny daily action, reward loop and seven-day experience.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Brief contains user promise, behavior hypothesis, 7-day storyboard and failure modes."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-012",
+      "title": "Write Growing World concept brief",
+      "workstream": "Concepts",
+      "description": "Specify the virtual-world progression linked to real-world actions.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Brief contains progression rules, 7-day storyboard, reward mechanics and failure modes."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-013",
+      "title": "Write Everyday Adventures concept brief",
+      "workstream": "Concepts",
+      "description": "Specify contextual micro-missions and novelty model.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Brief contains mission-selection logic, 7-day storyboard and failure modes."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-014",
+      "title": "Build interactive concept evaluation scorecard",
+      "workstream": "Concepts",
+      "description": "Create a standalone weighted concept scoring component.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Three concepts can be scored 1–5 on seven weighted criteria; totals recompute to 0–100; weights sum to 100."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-015",
+      "title": "Prototype three first-session flows",
+      "workstream": "Concepts",
+      "description": "Build independently navigable first-session prototypes for the three concepts.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Each prototype supports entry, goal selection, first action and completion without dead ends."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-016",
+      "title": "Run blinded concept desirability test",
+      "workstream": "Concepts",
+      "description": "Compare concepts without revealing internal favorites.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "At least 18 participants; same script; preference, comprehension and qualitative reasons recorded."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-017",
+      "title": "Test App Store proposition variants",
+      "workstream": "Concepts",
+      "description": "Compare three screenshots/headline propositions on equivalent audiences.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Traffic, exposure, click-through and confidence limits reported separately per variant."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-018",
+      "title": "Run honest willingness-to-pay test",
+      "workstream": "Concepts",
+      "description": "Test purchase intent with clear pricing and no deceptive checkout.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "At least two price points; actual commitment behavior and abandonment measured; no misleading charges."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-019",
+      "title": "Write concept selection decision record",
+      "workstream": "Concepts",
+      "description": "Select or reject concepts based on observed evidence.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Weighted score, research results, major uncertainties and explicit go/no-go decision documented."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-020",
+      "title": "Build Your Little Win Today card",
+      "workstream": "Experience",
+      "description": "Implement a standalone tappable/swipeable daily action card.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Card displays title, effort, alternative and completion; touch and keyboard controls work; reduced-motion mode exists."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-021",
+      "title": "Add completion haptic feedback adapter",
+      "workstream": "Experience",
+      "description": "Implement optional platform haptics triggered only by successful completion.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Supported iOS devices vibrate once on completion; unsupported devices silently degrade; setting disables haptics."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-022",
+      "title": "Design tiny-action fallback flow",
+      "workstream": "Experience",
+      "description": "Allow a user to reduce an action to a feasible alternative.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Every sample action has an easier variant; switch takes at most two taps; progress is not penalized."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-023",
+      "title": "Build habit cue scheduler",
+      "workstream": "Experience",
+      "description": "Allow a user to associate an action with a time or existing routine.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Create, edit and disable cues; timezone changes handled; notifications require opt-in."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-024",
+      "title": "Build evidence-reviewed action catalog",
+      "workstream": "Experience",
+      "description": "Represent curated health micro-actions as structured records.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "At least 20 records include category, duration, evidence grade, contraindications, easier variant and review date."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-025",
+      "title": "Implement action recommendation rules",
+      "workstream": "Experience",
+      "description": "Select a suitable micro-action from explicit preferences and exclusions.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Deterministic test cases cover goal fit, time availability, contraindication exclusions and no-match fallback."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-026",
+      "title": "Build daily action completion ledger",
+      "workstream": "Experience",
+      "description": "Record and display real-world action completion events.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Events have unique IDs and timestamps; duplicate taps do not double-count; offline entries sync without loss."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-027",
+      "title": "Build gentle restart experience",
+      "workstream": "Experience",
+      "description": "Offer a non-punitive path after missed days.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "After 1, 3 or 7 missed days, restart requires at most two taps and no guilt/shame copy appears."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-028",
+      "title": "Build habit graduation state machine",
+      "workstream": "Experience",
+      "description": "Transition habits through new, practicing, stable and graduated states.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Transition table is documented; unit tests cover every valid transition and rejected invalid transitions."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-029",
+      "title": "Build progressive challenge selector",
+      "workstream": "Experience",
+      "description": "Offer a slightly harder action only when user signals readiness.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Users can accept, decline or revert; no automatic escalation after missed actions; choices persist."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-030",
+      "title": "Create visual and motion design tokens",
+      "workstream": "Experience",
+      "description": "Define a reusable premium visual language and accessible motion system.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Tokens specify type, spacing, color, motion and contrast; all interactive elements meet WCAG 2.2 AA target."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-031",
+      "title": "Build seven-day journey preview",
+      "workstream": "Experience",
+      "description": "Show users how tiny actions could evolve across a week.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Preview renders seven days, explains gradual progression and makes no unsupported health-outcome promises."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-032",
+      "title": "Create habit progress visualization",
+      "workstream": "Experience",
+      "description": "Show action consistency without punishing broken streaks.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Displays completed opportunities and recovery; missing days never erase past progress; screen reader summary exists."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-033",
+      "title": "Instrument activation events",
+      "workstream": "Validation & Growth",
+      "description": "Define and emit events for onboarding, first action and first reward.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Event schema documented; each event has anonymous user key, timestamp and schema version; no raw health details."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-034",
+      "title": "Build cohort retention dashboard",
+      "workstream": "Validation & Growth",
+      "description": "Calculate D1, D7, D30 and D90 app and behavior retention separately.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Cohort definitions documented; test dataset yields expected rates; incomplete cohorts marked immature."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-035",
+      "title": "Implement habit automaticity survey",
+      "workstream": "Validation & Growth",
+      "description": "Capture periodic validated or clearly labeled exploratory automaticity measures.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Survey version and attribution stored; optional completion; baseline and follow-up results can be compared."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-036",
+      "title": "Design reminder-reduction experiment",
+      "workstream": "Validation & Growth",
+      "description": "Test whether users continue actions when reminders are tapered.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Randomization, eligibility, outcome window, consent and stopping rules pre-registered."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-037",
+      "title": "Build premium entitlement gate",
+      "workstream": "Validation & Growth",
+      "description": "Separate free one-habit experience from premium multi-habit features.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Free user completes core loop; premium access requires valid entitlement; expired entitlement restores free access."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-038",
+      "title": "Build subscription economics model",
+      "workstream": "Validation & Growth",
+      "description": "Model install-to-paid conversion, platform fees, refunds, CAC and renewal scenarios.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Inputs editable; first-year contribution and sensitivity table recompute; assumptions visibly labeled."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-039",
+      "title": "Create onboarding usability test suite",
+      "workstream": "Validation & Growth",
+      "description": "Evaluate comprehension and effort in first-session UX.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "At least 12 moderated sessions; task success, time-to-first-action and critical usability issues reported."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-040",
+      "title": "Run 30-day behavioral pilot",
+      "workstream": "Validation & Growth",
+      "description": "Test feasibility and action persistence in a real cohort.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Protocol, consent, attrition, completion, adverse events and behavior outcomes reported; no disease-prevention claims."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-041",
+      "title": "Build privacy and consent controls",
+      "workstream": "Validation & Growth",
+      "description": "Implement consent and data minimization for habit and optional health data.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Consent can be withdrawn; export and deletion flows tested; no optional health data collected by default."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-042",
+      "title": "Prepare App Store editorial package",
+      "workstream": "Validation & Growth",
+      "description": "Assemble accurate product story, accessibility evidence, screenshots and feature nomination materials.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Package includes tested US English copy, real screenshots, privacy disclosures, demo and claims review."
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "TASK-043",
+      "title": "Create launch experiment plan",
+      "workstream": "Validation & Growth",
+      "description": "Define independent organic, referral, creator and paid acquisition experiments.",
+      "status": "pending",
+      "acceptance_criteria": [
+        "Each channel has hypothesis, budget cap, attribution method, success threshold and stop condition."
+      ],
+      "dependencies": []
+    }
+  ]
+}
