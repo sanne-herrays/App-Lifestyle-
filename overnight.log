@@ -1692,3 +1692,49 @@ Review complete. TASK-031 ("Build seven-day journey preview") passed every gate:
 `tasks.json` TASK-031 → `completed`; 3-bullet summary appended to `PROGRESS.md`.
 
 APPROVED
+[main 92c3292] feat: complete autonomous task
+ 9 files changed, 1066 insertions(+), 2 deletions(-)
+ create mode 100644 prototype/src/components/SevenDayJourney.css
+ create mode 100644 prototype/src/components/SevenDayJourney.tsx
+ create mode 100644 prototype/src/lib/journeyPreview.test.ts
+ create mode 100644 prototype/src/lib/journeyPreview.ts
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   1fd2825..92c3292  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Mon Nov 23 00:35:12 CET 2026
+==========================================
+Done. Executed **TASK-032 — Create habit progress visualization** (the first `pending` task), following the established engine + deterministic-test + interactive-surface pattern.
+
+**Built (4 new files + App.tsx wiring):**
+- `prototype/src/lib/progressViz.ts` — pure, React-free engine (`buildProgress`). Turns the real TASK-026 ledger into a 14-day window of calendar cells with completed-opportunity and *recovery* (gentle-return) flags, plus all-time `totalWins`/`totalCompletedDays` as pure monotonic counts. No streak field, no broken-streak state.
+- `prototype/src/lib/progressViz.test.ts` — 15 deterministic cases proving each acceptance clause.
+- `prototype/src/components/HabitProgress.tsx` + `.css` — "Progress" tab: goal filter, calm day grid (green = win, soft-gold ring = return, dashed outline = open day — no red anywhere), all-time totals, an `aria-live` honest summary, and an honestly-labelled display-only sample-history preview.
+
+**Acceptance criterion met exactly** — displays completed opportunities and recovery; the "missing days never erase past progress" invariant is proven three ways (clock advance, event-superset monotonicity, long-gap-then-return); a screen-reader summary + per-cell labels exist.
+
+**Verified:**
+- `npm run build` → exit 0 (tsc strict + Vite, zero warnings, 66 modules, up from 63)
+- `npm run lint` → exit 0, clean
+- `node src/lib/progressViz.test.ts` → 15/15 passed; regressions `journeyPreview` 11/11, `challenge` 19/19, `restart` 17/17, `ledger` 15/15 — all exit 0
+- Banned-pattern grep → no matches; danger-hue grep → only disavowing comments
+- `tasks.json` well-formed; **TASK-032 → `in_review`** (24 completed / 7 blocked / 1 in_review / 11 pending)
+
+Per the workflow rules I did **not** commit. Changed: `App.tsx`, `tasks.json`, `PROGRESS.md`; new: the four files above.
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 66 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.81 kB │ gzip:   0.45 kB
+dist/assets/index-DpYdSPMu.css   98.23 kB │ gzip:  15.04 kB
+dist/assets/index-DVwPuIBg.js   354.98 kB │ gzip: 104.02 kB
+
+✓ built in 96ms
+TASK-032 passes review. The engine, its deterministic test suite, and the wired surface genuinely satisfy the acceptance criterion with verified strict-TS, clean lint, zero-guilt design, and real screen-reader support. I confirmed every claim independently (build/lint/tests re-run, imports resolved, banned-pattern and danger-hue scans clean) rather than trusting the self-report. Status set to `completed`; 3-bullet summary appended to PROGRESS.md.
+
+APPROVED

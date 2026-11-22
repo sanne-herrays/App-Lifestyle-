@@ -353,7 +353,7 @@
       "title": "Create habit progress visualization",
       "workstream": "Experience",
       "description": "Show action consistency without punishing broken streaks.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Displays completed opportunities and recovery; missing days never erase past progress; screen reader summary exists."
       ],
