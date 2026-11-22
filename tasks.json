@@ -73,7 +73,7 @@
       "title": "Write user recruitment screener",
       "workstream": "Research",
       "description": "Define inclusion criteria for abandoned-app users, successful habit builders and busy beginners.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Screener includes segment definitions, exclusion rules and 8–12 neutral questions."
       ],

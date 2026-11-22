@@ -310,3 +310,48 @@ dist/assets/index-GpEN3EET.js   222.44 kB │ gzip: 69.28 kB
 No defects found. Updated `tasks.json` status `in_review` → `completed` and appended a 3-bullet reviewer-approval summary to `PROGRESS.md`.
 
 APPROVED
+[main 4a09dd3] feat: complete autonomous task
+ 4 files changed, 364 insertions(+), 1 deletion(-)
+ create mode 100644 docs/research/prevention-action-evidence-rubric.md
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   b15c9e2..4a09dd3  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Sun Nov 22 21:03:08 CET 2026
+==========================================
+TASK-007 complete and ready for review. Summary:
+
+**Task executed:** TASK-007 — Write user recruitment screener (the first `pending` task in `tasks.json`).
+
+**Deliverable:** `docs/research/user-recruitment-screener.md` (~190 lines) — a publication-grade Stage-2 intake instrument gating the TASK-008 interviews and TASK-009 diary study.
+
+**Acceptance criteria met:**
+- **Segment definitions (§3)** — three mutually exclusive segments with inclusion signals, quotas, and an A→B→C priority order: abandoned-app users, successful habit builders (app-free sustainers included), and busy beginners.
+- **Exclusion rules (§4)** — eight rules (E1–E8: under-18, industry insiders, serial respondents, no smartphone, clinician-advised/pregnant, food/exercise sensitivity, unavailable, internal/conflicted), with full classification logic and worked examples in §6.
+- **8–12 neutral questions (§5)** — 11 respondent-facing items with balanced, non-leading option sets; a §7 neutrality self-audit confirms the copy never reveals the product or hypothesis.
+
+**Standards upheld:** Zero-guilt from first contact (stopping an app framed as ordinary); health-claim integrity (Q9 collects eligibility flags, no diagnosis), consistent with `prevention-action-evidence-rubric.md` and TASK-041.
+
+**Verification:** `cd prototype && npm run build` → **exit code 0** (tsc strict + Vite, `✓ built in 89ms`). Research-only task; no `prototype/src` changes.
+
+**State changes:** TASK-007 set to `"in_review"` in `tasks.json`; factual log appended to `PROGRESS.md`. Not committed, per the workflow rules. Exiting.
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 20 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.45 kB │ gzip:  0.29 kB
+dist/assets/react-CHdo91hT.svg    4.12 kB │ gzip:  2.06 kB
+dist/assets/vite-BF8QNONU.svg     8.70 kB │ gzip:  1.60 kB
+dist/assets/hero-CLDdwZDr.png    13.05 kB
+dist/assets/index-D64VDMd1.css    4.10 kB │ gzip:  1.47 kB
+dist/assets/index-GpEN3EET.js   222.44 kB │ gzip: 69.28 kB
+
+✓ built in 94ms
+Review complete. TASK-007 (`docs/research/user-recruitment-screener.md`) was inspected against its acceptance criterion and every CLAUDE.md rule, all claims in the deliverable were independently verified (referenced docs exist, build re-run → exit 0, neutrality grep on respondent-facing copy clean, quota math and §6 logic consistent). It is a concrete, high-craft, zero-guilt-compliant instrument with no placeholders, filler, or mock logic. I set `tasks.json` TASK-007 `in_review` → `completed` and appended a 3-bullet reviewer-approval summary to `PROGRESS.md`.
+
+APPROVED

@@ -2,6 +2,26 @@
 
 ## 2026-11-22
 
+### TASK-007 — Write user recruitment screener · status: completed
+- **Deliverable:** `docs/research/user-recruitment-screener.md` (~190 lines).
+- **Built:** The single Stage-2 intake instrument that gates TASK-008 (interviews) and TASK-009 (diary study), derived from PRD §2 participants and the differentiation thesis.
+  - **Three mutually exclusive segments (§3)** with definitions, rationale, inclusion signals, quotas, and an explicit A→B→C priority order: **A abandoned-app users** (installed ≤12 mo, stopped ≤~30 days), **B successful habit builders** (3+ month sustained daily routine, app-free sustainers deliberately welcome), **C busy beginners** (high time pressure + no sustained routine). Quotas sized to the ~15-interview / ≥10-diary targets.
+  - **Eight exclusion rules (§4, E1–E8)** with explicit triggers and rationale: under-18, industry/competitor insiders, serial study participants, no smartphone, clinician-advised/pregnant (safety), food/exercise sensitivity (do-no-harm), unavailable-in-window, and internal/conflicted. §6 gives the full operational classification logic + five worked respondent examples.
+  - **11 respondent-facing questions (§5)** — within the 8–12 band — ordered generic-first, with neutral balanced option sets and bracketed (hidden) routing logic.
+- **Standards upheld:**
+  - **Neutrality (§7 self-audit):** respondent copy never says *habit*, *streak*, *HerRays*; success/failure options sit adjacent and equally weighted; stopping an app framed as ordinary (Zero-Guilt from first contact, CLAUDE.md §1).
+  - **Health-claim integrity:** Q9 collects no diagnosis/severity/history — eligibility flags only — routing sensitively per `prevention-action-evidence-rubric.md` §5 and TASK-041 data-minimization; no individual disease-risk framing.
+  - Known qualitative-sample limitations (recall error, subjective "busy", purposive non-representativeness) logged explicitly and carried to TASK-010.
+- **Verified:**
+  - Acceptance criterion met — segment definitions (§3), exclusion rules (§4), and 8–12 neutral questions (§5, 11 items); coverage mapping in §8.
+  - `cd prototype && npm run build` → exit code 0 (tsc strict + Vite, `✓ built in 89ms`).
+- **Note:** Research-only task; no `prototype/src` changes. Not committed (awaiting Reviewer approval per CLAUDE.md workflow rules).
+
+### TASK-007 — Reviewer approval · status: completed
+- **APPROVED.** Acceptance criterion met and exceeded: `docs/research/user-recruitment-screener.md` carries all three required elements — **segment definitions** (§3: three mutually exclusive segments A abandoners / B sustainers / C busy beginners, each with definition, rationale, inclusion signal, quota, and an explicit A→B→C priority order mapped to PRD §2), **exclusion rules** (§4: eight E1–E8 rules with explicit triggers and rationale, plus §6 operational classification logic and five worked examples), and **8–12 neutral questions** (§5: exactly 11 respondent-facing items). Quota math verified by Reviewer: interviews 6+4+5=15, diaries 4+3+3=10 — aligned to TASK-008/009 criteria.
+- **Craft & integrity verified:** Zero-Guilt upheld from first contact (warm screen-out copy, stopping-an-app framed as ordinary, non-judgmental E6 opt-out); health-claim integrity preserved (Q9 collects eligibility flags only — no diagnosis/severity — consistent with `prevention-action-evidence-rubric.md` and TASK-041). §6 pseudocode confirmed consistent with the Q4–Q7 option sets; no fake/mock logic; all referenced docs exist. Sole placeholder-grep hit was "JTBD" (a legitimate term, not a `[TBD]` placeholder).
+- **Neutrality & build verified:** Independent Reviewer grep of the respondent-facing block (intro + Q1–Q11) found zero `habit`/`streak`/`HerRays` leakage, confirming the §7 self-audit. Research-only task — no `prototype/src` changes; `cd prototype && npm run build` re-run by Reviewer → **exit code 0**, zero warnings/errors.
+
 ### TASK-006 — Reviewer approval · status: completed
 - **APPROVED.** Acceptance criterion met and exceeded: `docs/research/prevention-action-evidence-rubric.md` carries all five required fields as the rubric's one-to-one dimensions — **evidence grade** (A–D general-benefit scale, §3.1), **contraindications** (structured safety taxonomy resolving to buildable exclusions/gentle variants, §3.3), **claim limits** (the permitted-language ladder, §5), **review owner** (named-role accountability, §3.4) and **review date** (last-reviewed + next-due + override triggers, §3.5); the §3 table maps each field to its dimension and the six-gate workflow (§4) makes no step skippable.
 - **Craft & integrity verified:** Dense, auditable frameworks throughout (four intake gates, S1–S4 safety tiers orthogonal to A–D evidence, forbidden-framings scan, pre-cleared phrasing bank, three fully worked AESRs, §7 handoff map to TASK-024/025/041/042). Zero-Guilt operationalized — contraindications resolve to gentle variants never red banners (§3.3 design rule), and fear/loss/timeline health framing is explicitly forbidden (§5.2). Grep for `TBD`/`lorem`/`placeholder`/`TODO`/`FIXME` → none; no filler or mock logic.
