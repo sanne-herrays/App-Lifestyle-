@@ -130,7 +130,7 @@
       "title": "Write Growing World concept brief",
       "workstream": "Concepts",
       "description": "Specify the virtual-world progression linked to real-world actions.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Brief contains progression rules, 7-day storyboard, reward mechanics and failure modes."
       ],
