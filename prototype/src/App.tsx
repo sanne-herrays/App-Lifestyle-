@@ -9,6 +9,7 @@ import ActionCatalog from './components/ActionCatalog'
 import RecommendationDemo from './components/RecommendationDemo'
 import CompletionLedger from './components/CompletionLedger'
 import GentleRestart from './components/GentleRestart'
+import HabitGraduation from './components/HabitGraduation'
 
 /**
  * Prototype shell. Defaults to the active TASK-020 deliverable ("Your Little
@@ -18,7 +19,17 @@ import GentleRestart from './components/GentleRestart'
  * so no deliverable is hidden.
  */
 
-type View = 'card' | 'restart' | 'ledger' | 'recommend' | 'catalog' | 'cues' | 'fallback' | 'flows' | 'scorecard'
+type View =
+  | 'card'
+  | 'restart'
+  | 'graduation'
+  | 'ledger'
+  | 'recommend'
+  | 'catalog'
+  | 'cues'
+  | 'fallback'
+  | 'flows'
+  | 'scorecard'
 
 function App() {
   const [view, setView] = useState<View>('card')
@@ -41,6 +52,14 @@ function App() {
           onClick={() => setView('restart')}
         >
           Gentle restart
+        </button>
+        <button
+          type="button"
+          className={`shell-tab${view === 'graduation' ? ' on' : ''}`}
+          aria-current={view === 'graduation'}
+          onClick={() => setView('graduation')}
+        >
+          Graduation
         </button>
         <button
           type="button"
@@ -103,6 +122,8 @@ function App() {
         <LittleWinCard />
       ) : view === 'restart' ? (
         <GentleRestart />
+      ) : view === 'graduation' ? (
+        <HabitGraduation />
       ) : view === 'ledger' ? (
         <CompletionLedger />
       ) : view === 'recommend' ? (

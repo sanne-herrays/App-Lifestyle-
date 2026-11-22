@@ -1445,3 +1445,59 @@ dist/assets/index-FJQK1O1Z.js   319.11 kB │ gzip: 94.28 kB
 
 ✓ built in 90ms
 APPROVED
+[main 1be0c98] feat: complete autonomous task
+ 11 files changed, 1542 insertions(+), 3 deletions(-)
+ create mode 100644 prototype/src/components/GentleRestart.css
+ create mode 100644 prototype/src/components/GentleRestart.tsx
+ create mode 100644 prototype/src/components/useLedgerEvents.ts
+ create mode 100644 prototype/src/lib/restart.test.ts
+ create mode 100644 prototype/src/lib/restart.ts
+ create mode 100644 prototype/src/lib/restartPreview.ts
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   e839329..1be0c98  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Sun Nov 22 23:48:20 CET 2026
+==========================================
+Done. TASK-028 is complete and set to `in_review` (not committed, per the workflow rules).
+
+## TASK-028 — Build habit graduation state machine
+
+**First `pending` task** (TASK-008/009/010/016–019 blocked; 011–015 + 020–027 completed). Built in the established Experience pattern: pure React-free engine + dependency-free deterministic tests + a reachable interactive surface.
+
+**New files**
+- `prototype/src/lib/habitGraduation.ts` — the engine: documented `TRANSITIONS` table, total `transition()`, `canTransition`, `availableEvents`, a forward-only behavioural evaluator (`evaluateReadiness` + `activeDaysInWindow`), and shared guilt-free guard.
+- `prototype/src/lib/habitGraduation.test.ts` — 34 deterministic cases.
+- `prototype/src/components/HabitGraduation.tsx` + `.css` — the Zero-Guilt lifecycle surface.
+
+**Changed:** `App.tsx` (new "Graduation" tab; Little Win card stays default), `tasks.json`, `PROGRESS.md`.
+
+**Acceptance criterion met exactly** — *"Transition table is documented; unit tests cover every valid transition and rejected invalid transitions":*
+- States `new → practicing → stable → graduated`, with two autonomy-preserving user-choice backward edges (`ease`, `revisit`) that land in `practicing` — never `new`, so history is never wiped to zero.
+- The suite re-states the table independently and drives the **full 4×5 space**: all **5** valid edges land on their documented target; all **15** invalid pairs are rejected with a guilt-free reason and no mutation. A completeness case proves 5 valid + 15 rejected.
+- Zero-Guilt (§1) / PRD §7: the evaluator only ever suggests *forward* events (proven across the full grid) — no silent/penalty demotion; graduation needs a user-confirmed automaticity signal, not counts alone; per-state `prompting` copy tapers daily-nudge → none.
+
+**Verified (all exit 0):**
+- `npm run build` → strict `tsc -b && vite build`, zero warnings, **53 modules** (up from 50).
+- `npm run lint` → clean.
+- `node src/lib/habitGraduation.test.ts` → **34/34 passed**; restart regression **17/17**.
+- Banned-pattern grep over all new files + `App.tsx` → none; no red/danger/penalty/streak color tokens in the new CSS.
+
+`tasks.json` is well-formed (20 completed / 7 blocked / 1 in_review / 15 pending); TASK-028 → `in_review`. Not committed — awaiting the Reviewer step. Next pending Experience build after approval: TASK-029 (progressive challenge selector).
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 53 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.81 kB │ gzip:  0.45 kB
+dist/assets/index-wO96awzU.css   74.10 kB │ gzip: 11.97 kB
+dist/assets/index-Bs8UYlNU.js   327.16 kB │ gzip: 96.45 kB
+
+✓ built in 91ms
+tasks.json updated (`in_review → completed`) and the 3-bullet approval summary appended to PROGRESS.md.
+
+APPROVED

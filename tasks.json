@@ -309,7 +309,7 @@
       "title": "Build habit graduation state machine",
       "workstream": "Experience",
       "description": "Transition habits through new, practicing, stable and graduated states.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Transition table is documented; unit tests cover every valid transition and rejected invalid transitions."
       ],
