@@ -18,7 +18,7 @@
       "title": "Audit 8 adjacent-category products",
       "workstream": "Research",
       "description": "Analyze eight games, learning, planning or self-care apps for transferable engagement patterns.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Eight documented product examples, each with one mechanism, user benefit and transfer risk."
       ],
