@@ -2,6 +2,31 @@
 
 ## 2026-11-22
 
+### TASK-022 — Design tiny-action fallback flow · status: completed
+
+**Reviewer verdict (2026-11-22): APPROVED → `completed`.**
+- **Acceptance criteria verified in code:** all four sample actions (`GOALS`) build a `fallbackLadder` (full → catalog `easierTitle` → shared `TINY_FLOOR`), each reachable via the ARIA radiogroup; reduce/climb is one tap per rung (full→tiniest = two taps, arrow keys mirror it); rung changes never touch `done`, and completing any rung is the same full `HoldToComplete` win — no reset, no penalty chrome.
+- **Standards upheld:** §1 Zero-Guilt (calm-green/warm palette, no red/streak, softening tag, warm floor + restart); §2 <2s one-gesture via reused `HoldToComplete`; §3 no placeholders/mocks, rungs 0–1 reuse `ACTION_BY_GOAL` as single source of truth; §4 strict TS, no `any`/`@ts-ignore`, `noUncheckedIndexedAccess` handled. Focus rings, `aria-live` title, `aria-hidden` gauge, and a `prefers-reduced-motion` block present; wired into `App.tsx` as a reachable tab.
+- **Independently re-verified:** `npm run build` → exit 0, 33 modules, zero warnings; `npm run lint` → clean; placeholder/`any`/`@ts-ignore`/mock grep over new + changed files hits only the English word "any" in prose comments.
+
+---
+
+### TASK-022 — Design tiny-action fallback flow · Builder log
+- **First `pending` task** (TASK-008/009/010/016/017/018/019 `blocked`; TASK-011–015, TASK-020/021 `completed`). The next Experience-workstream build the TASK-020/021 notes pointed toward after the haptics adapter.
+- **Deliverable:** `prototype/src/components/TinyActionFallback.tsx` + `.css` — a dedicated *reduction* surface (a feasibility ladder), wired into `App.tsx` as a new "Fallback" tab beside the Little Win card, so no deliverable is hidden. Distinct from the TASK-020 card's binary full/easier toggle: this is a multi-rung ladder (full → easier → an always-feasible floor) with an explicit, persistent non-penalty guarantee.
+  - `prototype/src/flows/flowData.ts` — added `FallbackRung`, `TINY_FLOOR` (the near-zero floor per goal), and `fallbackLadder(goal)`. Rungs 0–1 **reuse** `ACTION_BY_GOAL` (single source of truth — the full action + its existing easier variant); rung 2 is the new feasibility floor. No duplication of existing catalog content.
+- **Acceptance criterion met exactly** ("Every sample action has an easier variant; switch takes at most two taps; progress is not penalized"):
+  - **Every sample action has an easier variant** — all four reviewed sample actions (the `GOALS` set: Move / Feel calmer / Drink water / Step outside) are reachable here, each a `fallbackLadder` with ≥1 easier rung drawn from the real catalog plus the shared floor. Goal switcher is an ARIA radiogroup; each selection rebuilds the ladder.
+  - **Switch takes at most two taps** — "Make it easier" steps down exactly one rung per tap (**one tap**); "Step back up" climbs one rung per tap. The tiniest version is two taps from the full action; any single switch is one tap. ArrowDown/ArrowRight reduce and ArrowUp/ArrowLeft climb for keyboard users.
+  - **Progress is not penalized** — reducing never resets or docks anything (`done` is untouched by rung changes); completing **any** rung is the same full win via the shared `HoldToComplete`, with explicit Zero-Guilt copy ("This still counts, fully." / "Switching is free — no streak to lose, nothing to undo." / "Done — and it counts the same."). At the floor the copy stays warm ("The tiniest version is perfect for right now."), never a dead/penalty state.
+- **Standards upheld (CLAUDE.md):** Zero-Guilt (§1) — warm paper + calm-green accent only, no red/danger/penalty colour, no streak chrome; reducing reads as ease, and the tag only *softens* as the action shrinks. <2s/tactile (§2) — one ~0.6s hold on the existing `HoldToComplete` (success-only haptic inherited). No boilerplate (§3) — concrete catalog actions/efforts/floors, no placeholder/mock. Strict TS (§4) — typed throughout; `GoalId` union keeps indexing total; `noUncheckedIndexedAccess` handled with explicit `?? ladder[0]!` / `?? RUNG_TAG[0]` fallbacks; no `any`, no `@ts-ignore`. Health-claim integrity — all copy is general-benefit/experiential, no disease-risk claim (TASK-006).
+- **Accessibility:** card is a focusable `role="group"` with an arrow-key reduce/climb path; rung title is `aria-live="polite"`; the ladder gauge is `aria-hidden` (decorative); effort pill is labelled; every control has a visible focus-visible ring; a dedicated `prefers-reduced-motion` block disables all transitions/animations.
+- **Verified:**
+  - `cd prototype && npm run build` → **exit 0** (`tsc -b && vite build`, strict mode, `✓ built in 96ms`, zero warnings; **33 modules**, up from 31).
+  - `npm run lint` (eslint) → **exit 0**, clean.
+  - Grep for `[TBD]`/Lorem/placeholder/TODO/FIXME/XXX/`@ts-ignore`/`: any`/`mock` over the two new files + the three changed files → only the English word "any" in prose comments; **no placeholder, type escape, or mock logic**. `tasks.json` re-validated as well-formed JSON (14 completed / 7 blocked / 1 in_review / 21 pending); TASK-022 → `in_review`.
+- **Note:** Not committed (awaiting Reviewer approval per CLAUDE.md workflow rules). Next pending Experience build after approval: TASK-023 (habit cue scheduler).
+
 ### TASK-021 — Add completion haptic feedback adapter · status: completed
 - **First `pending` task** (TASK-008/009/010/016/017/018/019 `blocked`; TASK-011–015 + TASK-020 `completed`). The TASK-020 completion note named this as the next Experience build: it *"formalises the `fireSuccessHaptic` progressive-enhancement stub the card already calls."*
 - **Deliverable:** a real platform haptics adapter replacing the one-line `navigator.vibrate(12)` stub.

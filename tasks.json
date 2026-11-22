@@ -243,7 +243,7 @@
       "title": "Design tiny-action fallback flow",
       "workstream": "Experience",
       "description": "Allow a user to reduce an action to a feasible alternative.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Every sample action has an easier variant; switch takes at most two taps; progress is not penalized."
       ],

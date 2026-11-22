@@ -91,6 +91,45 @@ export function actionForGoal(goal: GoalId | null): MicroAction {
   return goal ? ACTION_BY_GOAL[goal] : DEFAULT_ACTION
 }
 
+/* ----------------------------------------------- TASK-022 fallback ladder -- */
+
+/**
+ * TASK-022 — "reduce an action to a feasible alternative."
+ *
+ * Each sample action is an ordered ladder from the full action down to a
+ * near-zero floor that is *always* feasible. Rungs 0 and 1 reuse
+ * `ACTION_BY_GOAL` (single source of truth — the full action and its easier
+ * variant); rung 2 is the feasibility floor added here. Stepping down is one
+ * tap, and completing *any* rung is a full win — reducing never penalises
+ * progress (Zero-Guilt, CLAUDE.md §1). Framing stays general-benefit /
+ * experiential, never an individual disease-risk claim (TASK-006).
+ */
+export interface FallbackRung {
+  title: string
+  effort: string
+}
+
+/** The always-feasible floor for each goal — the smallest honest version. */
+export const TINY_FLOOR: Record<GoalId, FallbackRung> = {
+  move: { title: 'One slow shoulder roll', effort: '5 sec' },
+  calm: { title: 'One slow breath out', effort: '5 sec' },
+  water: { title: 'One sip of water', effort: '5 sec' },
+  outside: { title: 'Open the door and look out', effort: '10 sec' },
+}
+
+/**
+ * The ordered rungs for a goal, fullest first. Every sample action therefore
+ * has at least one easier variant (its `easierTitle`) plus the shared floor.
+ */
+export function fallbackLadder(goal: GoalId): readonly FallbackRung[] {
+  const a = ACTION_BY_GOAL[goal]
+  return [
+    { title: a.title, effort: a.effort },
+    { title: a.easierTitle, effort: a.easierEffort },
+    TINY_FLOOR[goal],
+  ]
+}
+
 /** Existing routines a when-then plan / stable anchor can attach to (§4). */
 export const ANCHORS: readonly string[] = [
   'after my morning coffee',
