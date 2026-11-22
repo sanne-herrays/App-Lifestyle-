@@ -239,3 +239,74 @@ dist/assets/index-GpEN3EET.js   222.44 kB │ gzip: 69.28 kB
 TASK-005 (`behavior-change-evidence-register.md`) meets its acceptance criterion and every CLAUDE.md non-negotiable: 12 fully-populated graded mechanism cards, real literature with honest verification flags, Zero-Guilt operationalized throughout, correct scope discipline, and a clean `npm run build` (exit 0) with no `any`/`@ts-ignore`/placeholders. Status updated to `completed` in `tasks.json`; approval logged to `PROGRESS.md`.
 
 APPROVED
+[main b15c9e2] feat: complete autonomous task
+ 4 files changed, 383 insertions(+), 1 deletion(-)
+ create mode 100644 docs/research/behavior-change-evidence-register.md
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   d1db8c6..b15c9e2  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Sun Nov 22 20:58:39 CET 2026
+==========================================
+Task complete. Per instructions, I executed only the first pending task and stopped short of committing.
+
+## TASK-006 — Create prevention-action evidence rubric → `in_review`
+
+**Deliverable:** `docs/research/prevention-action-evidence-rubric.md` (~290 lines)
+
+This is the safety/claims gate that TASK-005 deferred three times and TASK-004 (AP19/AP20) routed here — the method for rating a candidate health micro-action on **safety** and **general-benefit evidence**, then binding each rating to the exact language the product may use. Its core job: let HerRays recommend real health actions **without ever implying personal disease-risk reduction** (CLAUDE.md §3).
+
+**All five acceptance-criterion fields are the rubric's five dimensions**, mapped one-to-one:
+- **Evidence grade** — A–D general-benefit scale (§3.1), aligned to TASK-005's grading language
+- **Contraindications** — structured safety taxonomy resolving to buildable exclusions/variants (§3.3)
+- **Claim limits** — the permitted-language ladder + forbidden-framings list enforced at every grade (§5)
+- **Review owner** — named role accountability per the PRD team table (§3.4)
+- **Review date** — last-reviewed + next-due + override triggers (§3.5)
+
+Beyond the criterion: intake scope gates + a hard-blocked out-of-scope table (§2), an orthogonal S1–S4 safety tier, a six-gate rating workflow ordered by cost-of-being-wrong (§4), three worked AESRs showing grade-drives-language honesty (§6), and a handoff map wiring the AESR schema into TASK-024's catalog, TASK-025's exclusions, and TASK-042's claims review (§7).
+
+**Verified:**
+- Acceptance criterion met — all five fields present and cross-referenced.
+- Zero-Guilt operationalized: contraindications resolve to gentle variants, not warnings; fear/loss health framing explicitly forbidden.
+- Health-claim integrity: no individual-risk/disease claim derivable under any grade; §6 grades carry verify-against-guidance flags.
+- `cd prototype && npm run build` → **exit code 0** (tsc strict + Vite, `✓ built in 87ms`).
+
+tasks.json updated to `in_review`; PROGRESS.md logged. Not committed, awaiting the Reviewer step.
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 20 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.45 kB │ gzip:  0.29 kB
+dist/assets/react-CHdo91hT.svg    4.12 kB │ gzip:  2.06 kB
+dist/assets/vite-BF8QNONU.svg     8.70 kB │ gzip:  1.60 kB
+dist/assets/hero-CLDdwZDr.png    13.05 kB
+dist/assets/index-D64VDMd1.css    4.10 kB │ gzip:  1.47 kB
+dist/assets/index-GpEN3EET.js   222.44 kB │ gzip: 69.28 kB
+
+✓ built in 74ms
+## Review: TASK-006 — Create prevention-action evidence rubric
+
+**Verdict against acceptance criterion** ("Rubric includes evidence grade, contraindications, claim limits, review owner and review date") — all five present as the rubric's one-to-one dimensions, mapped explicitly in the §3 table:
+
+| Field | Location | Verdict |
+|---|---|---|
+| Evidence grade | §3.1 (A–D general-benefit scale) | ✅ |
+| Contraindications | §3.3 (structured taxonomy → buildable exclusions) | ✅ |
+| Claim limits | §5 (permitted-language ladder) | ✅ |
+| Review owner | §3.4 (named roles, "the team" explicitly rejected) | ✅ |
+| Review date | §3.5 (last-reviewed + next-due + override triggers) | ✅ |
+
+**CLAUDE.md compliance checks:**
+- **No boilerplate (§3):** Grep for `TBD`/`lorem`/`placeholder`/`TODO`/`FIXME` → zero hits. The doc is dense with concrete frameworks (four intake gates, S1–S4 safety tiers orthogonal to evidence, six-gate workflow ordered by cost-of-being-wrong, forbidden-framings scan, three fully worked AESRs, §7 handoff map). No filler or fake logic.
+- **Zero Guilt (§1):** Operationalized, not just asserted — §3.3 design rule forces contraindications into gentle variants rather than red banners; §5.2 explicitly forbids fear/loss/timeline health framing.
+- **Health-claim integrity (CLAUDE.md §3 / PRD §5):** §5.2 is a categorical boundary — no individual-risk or disease-prevention claim is derivable under any grade. §6 working grades carry honest verify-against-guidance flags rather than false precision.
+- **Strict TypeScript (§4):** Research-only task, no `prototype/src` changes. I independently ran `npm run build` → **exit 0** (`✓ built in 90ms`), confirming the Builder's claim.
+
+No defects found. Updated `tasks.json` status `in_review` → `completed` and appended a 3-bullet reviewer-approval summary to `PROGRESS.md`.
+
+APPROVED

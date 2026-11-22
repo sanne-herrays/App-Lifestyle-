@@ -62,7 +62,7 @@
       "title": "Create prevention-action evidence rubric",
       "workstream": "Research",
       "description": "Define a method for rating health-action safety and evidence without implying personal disease-risk reduction.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Rubric includes evidence grade, contraindications, claim limits, review owner and review date."
       ],
