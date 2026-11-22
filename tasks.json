@@ -40,7 +40,7 @@
       "title": "Document competitor anti-patterns",
       "workstream": "Research",
       "description": "Identify friction, guilt mechanisms, confusing UX and unsupported health claims.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "At least 15 anti-patterns with an observed example and proposed design guardrail."
       ],

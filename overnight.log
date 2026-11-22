@@ -143,3 +143,52 @@ Review complete. TASK-003 (`competitor-feature-inventory.md`) was assessed again
 tasks.json updated `in_review` → `completed`; PROGRESS.md appended with the approval summary.
 
 APPROVED
+[main c6e188c] feat: complete autonomous task
+ 4 files changed, 303 insertions(+), 1 deletion(-)
+ create mode 100644 docs/research/competitor-feature-inventory.md
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   7e230bc..c6e188c  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Sun Nov 22 20:46:42 CET 2026
+==========================================
+TASK-004 complete and ready for review. Exiting without committing, per the workflow.
+
+## Summary
+
+**Task executed:** TASK-004 — Document competitor anti-patterns (first `pending` task; TASK-001/002/003 are `completed`).
+
+**Deliverable:** `docs/research/competitor-anti-patterns.md` — the anti-pattern library that all three prior research docs explicitly deferred here (TASK-001 §6, TASK-002 §5.3, TASK-003 §4.1).
+
+**Acceptance criterion** (≥15 anti-patterns, each with an observed example and a proposed design guardrail): **met and exceeded — 20 anti-patterns (AP01–AP20)**, each with:
+- a concretely **observed example** in a named app from TASK-001/002 (e.g., Streaks reset-to-zero, Habitica HP/"death", Duolingo "Duo misses you" + leagues + streak-freeze, Fabulous/Productive early paywall, BeReal window, Apple Rings closure pressure, Finch gacha-adjacent store, red-"missed" convention);
+- a buildable **design guardrail** (the Zero-Guilt substitute), the constraint it violates (CLAUDE.md §1/§2/§3 or a PRD principle), and the owning HerRays task.
+
+Grouped into 7 harm families, plus value-add beyond the list: meta-pattern analysis (category retention = manufactured loss/urgency/comparison/judgment anxiety), a consolidated "do this instead" guardrail system, severity tiering, a **reusable reviewer red-flag checklist** for the PR template, and a handoff map to 13 downstream tasks. Fully traceable; no new apps; no placeholder text.
+
+**Verification:**
+- `npm run build` in `prototype/` → **exit code 0** (tsc strict + Vite, `✓ built in 94ms`). Research-only task, no `prototype/src` changes.
+- `tasks.json`: TASK-004 status → `in_review`.
+- `PROGRESS.md`: factual build log appended.
+
+Not committed — awaiting the Reviewer step per CLAUDE.md workflow rules.
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 20 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.45 kB │ gzip:  0.29 kB
+dist/assets/react-CHdo91hT.svg    4.12 kB │ gzip:  2.06 kB
+dist/assets/vite-BF8QNONU.svg     8.70 kB │ gzip:  1.60 kB
+dist/assets/hero-CLDdwZDr.png    13.05 kB
+dist/assets/index-D64VDMd1.css    4.10 kB │ gzip:  1.47 kB
+dist/assets/index-GpEN3EET.js   222.44 kB │ gzip: 69.28 kB
+
+✓ built in 78ms
+Review complete. TASK-004 (`docs/research/competitor-anti-patterns.md`) meets its acceptance criterion (20 anti-patterns vs. ≥15 required, each with a named observed example and a buildable design guardrail), upholds every CLAUDE.md non-negotiable (Zero-Guilt operationalized, no unsupported health claims, clean strict-TypeScript build, no placeholders or filler), and is fully traceable to the upstream research. `tasks.json` is updated to `completed` and `PROGRESS.md` logs the approval.
+
+APPROVED
