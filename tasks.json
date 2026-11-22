@@ -254,7 +254,7 @@
       "title": "Build habit cue scheduler",
       "workstream": "Experience",
       "description": "Allow a user to associate an action with a time or existing routine.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Create, edit and disable cues; timezone changes handled; notifications require opt-in."
       ],

@@ -1,0 +1,647 @@
+/* TASK-023 — Habit cue scheduler.
+   HerRays "sunrise" language (matches flows.css / LittleWinCard / TinyActionFallback).
+   Scoped under .hcs; palette tokens redeclared here so the surface is self-contained.
+
+   Standards wired into the styles:
+   - Zero-Guilt (CLAUDE.md §1): warm paper + calm-green accent only — no red/
+     danger/penalty colour. A paused cue dims to a neutral, calm state; the
+     time-zone banner reads as a gentle question, never an alert.
+   - Accessibility: visible focus rings on every control; all motion disabled
+     under prefers-reduced-motion at the foot of this file.
+*/
+
+.hcs {
+  --paper: #fbf6ee;
+  --card: #fffdf9;
+  --ink: #2c2420;
+  --ink-soft: #7a6f63;
+  --ink-faint: #a89c8c;
+  --line: #ebdfcd;
+  --line-soft: #f1e8da;
+  --dawn-2: #ff9d6e;
+  --accent: #5f9e7e;
+
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 40px) clamp(18px, 4vw, 34px) clamp(28px, 4vw, 40px);
+  color: var(--ink);
+  font-family: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0.1px;
+  text-align: center;
+}
+
+.hcs *,
+.hcs *::before,
+.hcs *::after {
+  box-sizing: border-box;
+}
+
+.hcs-glow {
+  position: absolute;
+  inset: -12% -10% auto -10%;
+  height: 240px;
+  background:
+    radial-gradient(58% 80% at 70% 0%, rgba(95, 158, 126, 0.2), transparent 62%),
+    radial-gradient(50% 70% at 24% 0%, rgba(255, 217, 160, 0.28), transparent 58%);
+  filter: blur(6px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hcs > *:not(.hcs-glow) {
+  position: relative;
+  z-index: 1;
+}
+
+/* ------------------------------------------------------------- header -- */
+
+.hcs-head {
+  margin-bottom: 20px;
+}
+
+.hcs-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 6px;
+}
+
+.hcs-headline {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(22px, 3.2vw, 27px);
+  line-height: 1.16;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+
+.hcs-intro {
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 38ch;
+  margin: 0 auto;
+}
+
+/* -------------------------------------------------------------- empty -- */
+
+.hcs-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.hcs-empty-note {
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------- list -- */
+
+.hcs-list {
+  list-style: none;
+  margin: 22px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: left;
+}
+
+.hcs-cue {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, var(--card)) 0%, var(--card) 46%);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 16px 18px;
+  box-shadow:
+    0 20px 44px -34px rgba(44, 36, 32, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  transition: opacity 0.25s ease, background 0.25s ease;
+}
+
+/* Paused reads as calm and resting — dimmed, never a red failure badge. */
+.hcs-cue.is-paused {
+  background: var(--paper);
+  opacity: 0.7;
+}
+
+.hcs-cue-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.hcs-cue-when {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500;
+  font-size: 19px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0;
+}
+
+.hcs-cue-action {
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin: 2px 0 0;
+}
+
+.hcs-cue-status {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 6px 0 0;
+}
+
+/* ------------------------------------------------------- switches -- */
+
+.hcs-switch,
+.hcs-mini-switch {
+  appearance: none;
+  flex: none;
+  position: relative;
+  border: none;
+  cursor: pointer;
+  background: var(--line);
+  border-radius: 999px;
+  transition: background 0.2s ease;
+}
+
+.hcs-switch {
+  width: 46px;
+  height: 28px;
+}
+
+.hcs-mini-switch {
+  width: 40px;
+  height: 24px;
+}
+
+.hcs-switch.on,
+.hcs-mini-switch.on {
+  background: var(--accent);
+}
+
+.hcs-mini-switch:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.hcs-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(44, 36, 32, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.hcs-mini-switch .hcs-knob {
+  width: 18px;
+  height: 18px;
+}
+
+.hcs-switch.on .hcs-knob {
+  transform: translateX(18px);
+}
+
+.hcs-mini-switch.on .hcs-knob {
+  transform: translateX(16px);
+}
+
+.hcs-switch:focus-visible,
+.hcs-mini-switch:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* -------------------------------------------------- timezone banner -- */
+
+.hcs-tz {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: color-mix(in srgb, var(--dawn-2) 10%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--dawn-2) 30%, var(--line));
+  border-radius: 16px;
+}
+
+.hcs-tz-note {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+}
+
+.hcs-tz-note strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.hcs-tz-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hcs-tz-btn {
+  appearance: none;
+  border: 1.5px solid var(--line);
+  background: var(--card);
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.hcs-tz-btn.primary {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--card));
+  color: var(--ink);
+}
+
+.hcs-tz-btn:hover {
+  color: var(--ink);
+  border-color: color-mix(in srgb, var(--accent) 52%, var(--line));
+}
+
+.hcs-tz-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ----------------------------------------------------- cue row tools -- */
+
+.hcs-cue-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line-soft);
+}
+
+.hcs-remind {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hcs-remind-label {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+.hcs-cue-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hcs-link {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--accent);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 6px 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.hcs-link:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.hcs-link.subtle {
+  color: var(--ink-faint);
+}
+
+.hcs-link.subtle:hover {
+  color: var(--ink-soft);
+  background: color-mix(in srgb, var(--ink-faint) 12%, transparent);
+}
+
+.hcs-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------- add -- */
+
+.hcs-add {
+  appearance: none;
+  border: 1.5px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--card));
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  padding: 11px 22px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.12s ease;
+}
+
+.hcs-add:hover {
+  background: color-mix(in srgb, var(--accent) 20%, var(--card));
+}
+
+.hcs-add:active {
+  transform: scale(0.98);
+}
+
+.hcs-add.ghost {
+  margin-top: 16px;
+  border-color: var(--line);
+  background: transparent;
+  color: var(--ink-soft);
+}
+
+.hcs-add.ghost:hover {
+  border-color: color-mix(in srgb, var(--accent) 52%, var(--line));
+  color: var(--ink);
+}
+
+.hcs-add:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------- editor -- */
+
+.hcs-editor {
+  margin-top: 20px;
+  padding: 20px 18px 22px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: 0 24px 50px -36px rgba(44, 36, 32, 0.45);
+  text-align: left;
+  animation: hcs-rise 0.35s ease both;
+}
+
+.hcs-editor-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500;
+  font-size: 20px;
+  color: var(--ink);
+  margin: 0 0 16px;
+  text-align: center;
+}
+
+.hcs-field {
+  border: none;
+  margin: 0 0 18px;
+  padding: 0;
+}
+
+.hcs-legend {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+.hcs-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hcs-chip {
+  appearance: none;
+  border: 1.5px solid var(--line);
+  background: var(--card);
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 14px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.hcs-chip:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--line));
+  color: var(--ink);
+}
+
+.hcs-chip.on {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--card));
+  color: var(--ink);
+}
+
+.hcs-chip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* time vs routine segmented control */
+
+.hcs-seg {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  margin-bottom: 14px;
+}
+
+.hcs-seg-btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.hcs-seg-btn.on {
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: 0 1px 4px rgba(44, 36, 32, 0.12);
+}
+
+.hcs-seg-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.hcs-time-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hcs-time-label {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+.hcs-time-input {
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  padding: 8px 12px;
+}
+
+.hcs-time-input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+.hcs-anchors {
+  flex-direction: column;
+}
+
+.hcs-anchors .hcs-chip {
+  width: 100%;
+}
+
+/* notify opt-in */
+
+.hcs-notify-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* editor actions */
+
+.hcs-editor-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.hcs-save {
+  appearance: none;
+  flex: 1;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 700;
+  padding: 12px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.12s ease;
+}
+
+.hcs-save:hover {
+  background: color-mix(in srgb, var(--accent) 86%, #000);
+}
+
+.hcs-save:active {
+  transform: scale(0.98);
+}
+
+.hcs-cancel {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.hcs-cancel:hover {
+  color: var(--ink);
+  border-color: var(--ink-faint);
+}
+
+.hcs-save:focus-visible,
+.hcs-cancel:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* -------------------------------------------------- notify status -- */
+
+.hcs-notify-status {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-faint);
+  max-width: 40ch;
+  margin: 20px auto 0;
+}
+
+@keyframes hcs-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ----------------------------------------------- reduced-motion fallback -- */
+
+@media (prefers-reduced-motion: reduce) {
+  .hcs-cue,
+  .hcs-switch,
+  .hcs-mini-switch,
+  .hcs-knob,
+  .hcs-chip,
+  .hcs-seg-btn,
+  .hcs-tz-btn,
+  .hcs-add,
+  .hcs-link,
+  .hcs-save,
+  .hcs-cancel {
+    transition: none !important;
+  }
+
+  .hcs-editor {
+    animation: none !important;
+  }
+}

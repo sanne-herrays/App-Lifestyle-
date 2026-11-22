@@ -1120,3 +1120,65 @@ dist/assets/index-jxcGxvis.js   265.44 kB │ gzip: 79.78 kB
 The work clears the Apple-level craft bar and every CLAUDE.md non-negotiable. `tasks.json` TASK-022 advanced `in_review` → `completed`, and PROGRESS.md now carries the 3-bullet reviewer verdict above the Builder's log.
 
 APPROVED
+[main aa8ad26] feat: complete autonomous task
+ 8 files changed, 756 insertions(+), 5 deletions(-)
+ create mode 100644 prototype/src/components/TinyActionFallback.css
+ create mode 100644 prototype/src/components/TinyActionFallback.tsx
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   cb7df4f..aa8ad26  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Sun Nov 22 22:51:11 CET 2026
+==========================================
+Done. TASK-023 (habit cue scheduler) is built, verified, and set to `in_review`.
+
+## Summary
+
+**Task executed:** TASK-023 — Build habit cue scheduler (first `pending` task; the next Experience build after TASK-022).
+
+**Delivered:**
+- `prototype/src/lib/cues.ts` — framework-agnostic logic layer (localStorage + subscribe/broadcast store, mirroring the TASK-021 haptics adapter).
+- `prototype/src/components/HabitCueScheduler.tsx` + `.css` — the UI, wired into `App.tsx` as a new "Cue scheduler" tab.
+- Reuses `GOALS`/`actionForGoal`/`ANCHORS`/`ACCENT` from `flowData.ts` — no duplicated catalog content.
+
+**Acceptance criterion — "Create, edit and disable cues; timezone changes handled; notifications require opt-in":**
+- **Create/Edit/Disable** — editor creates cues (action + time-of-day *or* existing routine); per-row Edit reopens pre-filled; a `role="switch"` Pause/Resume disables without deleting (paused = calm/dimmed, no red/streak). Remove offered too.
+- **Timezone handled** — each time cue stores its authored IANA zone; when the device moves zones, a calm banner offers one-tap "keep this clock time here" or "shift to the original moment" (real per-zone UTC-offset math via `Intl…formatToParts`).
+- **Opt-in** — `notify` can only become true after `Notification.requestPermission()` returns `granted`; create/update/toggle all clamp against it, stale grants are re-checked on load, denied/unsupported degrades to a plain line + disabled switch. An honest user-triggered `showCuePreview` fires one real `Notification` to prove the wiring (not a mock); background delivery documented as the native layer's job.
+
+**Verification:**
+- `npm run build` → **exit 0** (strict mode, zero warnings, 36 modules, up from 33).
+- `npm run lint` → **exit 0**, clean.
+- Placeholder/`any`/`@ts-ignore`/`mock` grep → only hit is the word "mock" in a comment disavowing mocks.
+- `tasks.json` valid JSON; TASK-023 → `in_review` (15 completed / 7 blocked / 1 in_review / 20 pending).
+
+Not committed, per instructions.
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 36 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.81 kB │ gzip:  0.45 kB
+dist/assets/index-NeV5gYbS.css   45.21 kB │ gzip:  8.21 kB
+dist/assets/index-C7Dfi0wG.js   276.34 kB │ gzip: 82.83 kB
+
+✓ built in 80ms
+I reviewed TASK-023 ("Build habit cue scheduler") against its acceptance criteria and every CLAUDE.md non-negotiable.
+
+**What I checked**
+- **Acceptance criteria — all met with real logic, not stubs:**
+  - *Create / edit / disable* → `createCue` / `updateCue` / `setCueEnabled` (+ `removeCue`), with a pre-filled editor and a per-row Pause/Resume switch that disables without deleting.
+  - *Timezone changes handled* → cues store their authoring IANA zone; `cueNeedsTzReview` surfaces a calm two-option banner. The shift is a genuine DST-correct per-zone UTC-offset computation via `Intl.DateTimeFormat.formatToParts` (I verified 9:00 London → 4:00 New York), not a hardcoded guess. Nothing drifts silently.
+  - *Notifications require opt-in* → `notify` can only become `true` after real `Notification.permission === 'granted'`; clamped in every mutator and re-validated against a stale stored grant on load in `sanitizeCue`.
+- **Zero-Guilt (§1):** neutral dimmed "Paused" state, warm paper + calm-green palette, tz banner on a warm dawn token — no red/penalty/streak chrome. Every "red/streak/fail" grep hit was a comment *disavowing* those patterns.
+- **Honesty (§3):** no faked background scheduling — the layer owns the opt-in gate plus one real user-triggered preview notification and documents native delivery as out of scope. No mock logic.
+- **Strict TypeScript (§4):** `npm run build` → exit 0, zero warnings, 36 modules. No `any`, `@ts-ignore`, TODOs, or placeholders in new/changed files. Reuses the shared `flowData` catalog instead of duplicating content.
+- **Craft/a11y:** `role="switch"`/`radiogroup`, aria-checked/labels, focus-visible rings, dedicated `prefers-reduced-motion` block, native time input.
+
+Recorded the result: `tasks.json` TASK-023 → `completed`, and a 3-bullet reviewer-approval summary appended to PROGRESS.md.
+
+APPROVED
