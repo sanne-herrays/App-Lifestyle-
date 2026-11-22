@@ -287,7 +287,7 @@
       "title": "Build daily action completion ledger",
       "workstream": "Experience",
       "description": "Record and display real-world action completion events.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Events have unique IDs and timestamps; duplicate taps do not double-count; offline entries sync without loss."
       ],

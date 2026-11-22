@@ -1282,3 +1282,62 @@ dist/assets/index-P3z0YMMo.js   304.64 kB │ gzip: 90.24 kB
 
 ✓ built in 88ms
 APPROVED
+[main 22712c7] feat: complete autonomous task
+ 9 files changed, 1442 insertions(+), 3 deletions(-)
+ create mode 100644 prototype/src/components/RecommendationDemo.css
+ create mode 100644 prototype/src/components/RecommendationDemo.tsx
+ create mode 100644 prototype/src/lib/recommendation.test.ts
+ create mode 100644 prototype/src/lib/recommendation.ts
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   c2dd0c9..22712c7  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Sun Nov 22 23:21:01 CET 2026
+==========================================
+Done. TASK-026 is built, verified, and set to `in_review`. Per the workflow rules I have **not committed**.
+
+## TASK-026 — Build daily action completion ledger → `in_review`
+
+**First pending task** (TASK-008/009/010/016/017/018/019 blocked; TASK-020–025 completed). The Experience build TASK-025's note pointed to next.
+
+**Acceptance criterion** — *"Events have unique IDs and timestamps; duplicate taps do not double-count; offline entries sync without loss"* — met exactly:
+
+| Requirement | How |
+|---|---|
+| Unique IDs + timestamps | Every completion → `CompletionEvent` with `crypto.randomUUID` (+ fallback) id and a `completedAt` ms timestamp stamped at the tap |
+| No double-count | Recording is **idempotent on a client key** — one gesture = one key; any replay returns the stored event (`added:false`), never a second row |
+| Offline sync without loss | Offline-first durable writes + a `pending→synced` lifecycle: a failed/offline flush keeps every event pending and retries; partial confirms re-queue the rest; re-flush is idempotent |
+
+**Files**
+- `prototype/src/lib/ledger.ts` — React-free pure core (`appendCompletion`/`flush`/`markSynced`/`serialize`/`deserialize`) + localStorage singleton store (same pattern as `cues.ts`/`haptics.ts`)
+- `prototype/src/lib/ledger.test.ts` — 15 deterministic, dependency-free cases
+- `prototype/src/components/CompletionLedger.tsx` + `.css` — Zero-Guilt interactive surface
+- `prototype/src/App.tsx` — wired in as a new "Ledger" tab (default unchanged)
+
+**Honesty (CLAUDE.md §3):** no backend is faked — "sync" is a genuine local two-store move into a second localStorage namespace, honestly labelled; real remote delivery documented as the native layer's job.
+
+**Verification (all exit 0)**
+- `npm run build` → **exit 0**, zero warnings, 45 modules (up from 42)
+- `npm run lint` → **exit 0**, clean
+- `node src/lib/ledger.test.ts` → **15/15 passed**
+- Banned-pattern grep (`[TBD]`/Lorem/placeholder/TODO/`: any`/`as any`/`@ts-ignore`/`mock`) over the 4 new files + `App.tsx` → **no matches**
+- `tasks.json` valid JSON: 18 completed / 7 blocked / 1 in_review / 17 pending
+
+Next pending Experience build after approval: **TASK-027** (gentle restart), which can consume this ledger's events to detect missed days.
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 45 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.81 kB │ gzip:  0.45 kB
+dist/assets/index-Cvg5jZkS.css   61.08 kB │ gzip: 10.22 kB
+dist/assets/index-DLjlisHi.js   313.18 kB │ gzip: 92.70 kB
+
+✓ built in 110ms
+The review is complete. TASK-026 met its acceptance criteria with genuine, independently-verified logic (no mocks, no placeholders, no type escapes), upheld every CLAUDE.md standard, and passed a clean strict build, clean lint, and a 15/15 deterministic test suite that I re-ran myself. I've advanced the task to `completed` in `tasks.json` and recorded the verdict in `PROGRESS.md`.
+
+APPROVED

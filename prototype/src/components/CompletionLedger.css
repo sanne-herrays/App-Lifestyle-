@@ -1,0 +1,478 @@
+/* TASK-026 — Daily action completion ledger.
+   HerRays "sunrise" language with a calm-green accent (the progress/consistency
+   surface, distinct from the amber Little Win card). Scoped under .ledger; the
+   palette tokens are redeclared so the shared .hold (HoldToComplete) primitive
+   from flows.css resolves its colours when rendered inside this surface.
+
+   Standards wired into the styles:
+   - Zero-Guilt (CLAUDE.md §1): warm paper + calm-green only — no red/danger/
+     penalty colour, no streak chrome. Offline/pending is a calm neutral state,
+     never an alarm.
+   - Accessibility: visible focus rings; all motion disabled under
+     prefers-reduced-motion at the foot of this file.
+*/
+
+.ledger {
+  --paper: #fbf6ee;
+  --card: #fffdf9;
+  --ink: #2c2420;
+  --ink-soft: #7a6f63;
+  --ink-faint: #a89c8c;
+  --line: #ebdfcd;
+  --line-soft: #f1e8da;
+  --accent: #5f9e7e;
+  --accent-deep: #3f7d60;
+
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 40px) clamp(18px, 4vw, 30px) clamp(28px, 4vw, 40px);
+  color: var(--ink);
+  font-family: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0.1px;
+  text-align: center;
+}
+
+.ledger *,
+.ledger *::before,
+.ledger *::after {
+  box-sizing: border-box;
+}
+
+.ledger-glow {
+  position: absolute;
+  inset: -12% -10% auto -10%;
+  height: 240px;
+  background:
+    radial-gradient(60% 80% at 70% 0%, rgba(95, 158, 126, 0.22), transparent 62%),
+    radial-gradient(50% 70% at 24% 0%, rgba(255, 217, 160, 0.3), transparent 58%);
+  filter: blur(6px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ledger > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ------------------------------------------------------------- header -- */
+
+.ledger-head {
+  margin-bottom: 18px;
+}
+
+.ledger-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+  margin: 0 0 4px;
+}
+
+.ledger-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(21px, 3.2vw, 26px);
+  line-height: 1.16;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+
+.ledger-sub {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 36ch;
+  margin: 0 auto;
+}
+
+/* ------------------------------------------------------- record a win -- */
+
+.ledger-record {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 24px 22px 22px;
+  margin-top: 8px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 8%, var(--card)) 0%, var(--card) 46%);
+  border: 1px solid var(--line);
+  border-radius: 26px;
+  box-shadow:
+    0 28px 56px -40px rgba(44, 36, 32, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.ledger-goals {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ledger-goal {
+  appearance: none;
+  border: 1.5px solid var(--line);
+  background: var(--card);
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.ledger-goal:hover {
+  border-color: color-mix(in srgb, var(--accent) 52%, var(--line));
+  color: var(--ink);
+}
+
+.ledger-goal.on {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 13%, var(--card));
+  color: var(--ink);
+}
+
+.ledger-goal:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 2px;
+}
+
+.ledger-action {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(18px, 2.6vw, 21px);
+  line-height: 1.2;
+  color: var(--ink);
+  margin: 2px 0 0;
+}
+
+.ledger-after {
+  min-height: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.ledger-after-note {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 16px;
+  font-style: italic;
+  color: var(--ink);
+  margin: 0;
+  animation: ledger-rise 0.4s ease both;
+}
+
+.ledger-after-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ledger-dupe {
+  font-size: 13px;
+  color: var(--accent-deep);
+  margin: 0;
+  animation: ledger-rise 0.3s ease both;
+}
+
+/* ------------------------------------------------------------ buttons -- */
+
+.ledger-btn {
+  appearance: none;
+  border: 1.5px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--card));
+  color: var(--accent-deep);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 9px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.12s ease, opacity 0.2s ease;
+}
+
+.ledger-btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent) 20%, var(--card));
+}
+
+.ledger-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.ledger-btn.ghost {
+  border-color: var(--line);
+  background: var(--card);
+  color: var(--ink-soft);
+}
+
+.ledger-btn.ghost:hover:not(:disabled) {
+  border-color: var(--ink-faint);
+  color: var(--ink);
+  background: var(--card);
+}
+
+.ledger-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.ledger-btn:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------- sync panel -- */
+
+.ledger-sync {
+  margin-top: 22px;
+  padding: 16px 18px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.ledger-counts {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 14px;
+}
+
+.ledger-count {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.ledger-count strong {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-right: 4px;
+}
+
+.ledger-sync-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ledger-switch {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  background: transparent;
+  padding: 4px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.ledger-switch-track {
+  position: relative;
+  width: 44px;
+  height: 26px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink-faint) 40%, var(--line));
+  transition: background 0.2s ease;
+}
+
+.ledger-switch.on .ledger-switch-track {
+  background: var(--accent);
+}
+
+.ledger-switch-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(44, 36, 32, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.ledger-switch.on .ledger-switch-thumb {
+  transform: translateX(18px);
+}
+
+.ledger-switch-label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.ledger-switch.on .ledger-switch-label {
+  color: var(--accent-deep);
+}
+
+.ledger-switch:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 2px;
+  border-radius: 999px;
+}
+
+.ledger-sync-note {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin: 12px 0 0;
+  min-height: 18px;
+}
+
+/* --------------------------------------------------------- the ledger -- */
+
+.ledger-list-wrap {
+  margin-top: 22px;
+  text-align: left;
+}
+
+.ledger-empty {
+  font-size: 14px;
+  color: var(--ink-faint);
+  text-align: center;
+  margin: 8px 0 0;
+}
+
+.ledger-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ledger-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  animation: ledger-rise 0.34s ease both;
+}
+
+.ledger-row-dot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  margin-top: 4px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 35%, var(--line));
+}
+
+.ledger-row-dot[data-synced='true'] {
+  background: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.ledger-row-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.ledger-row-title {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.ledger-row-meta {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+
+.ledger-badge {
+  color: var(--ink-faint);
+  font-weight: 600;
+}
+
+.ledger-badge.synced {
+  color: var(--accent-deep);
+}
+
+/* Visually-hidden but available to assistive tech (the unique id). */
+.ledger-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.ledger-clear {
+  display: block;
+  margin: 16px auto 0;
+  appearance: none;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink-faint);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.ledger-clear:hover {
+  color: var(--ink-soft);
+  border-color: var(--ink-faint);
+}
+
+.ledger-clear:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 2px;
+}
+
+@keyframes ledger-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ----------------------------------------------- reduced-motion fallback -- */
+
+@media (prefers-reduced-motion: reduce) {
+  .ledger-goal,
+  .ledger-btn,
+  .ledger-switch-track,
+  .ledger-switch-thumb,
+  .ledger-clear {
+    transition: none !important;
+  }
+
+  .ledger-after-note,
+  .ledger-dupe,
+  .ledger-row {
+    animation: none !important;
+  }
+}
