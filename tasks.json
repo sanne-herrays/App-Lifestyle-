@@ -364,7 +364,7 @@
       "title": "Instrument activation events",
       "workstream": "Validation & Growth",
       "description": "Define and emit events for onboarding, first action and first reward.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Event schema documented; each event has anonymous user key, timestamp and schema version; no raw health details."
       ],

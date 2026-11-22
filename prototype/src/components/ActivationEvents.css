@@ -1,0 +1,423 @@
+/* TASK-033 — Activation-event instrumentation surface.
+   HerRays warm-paper language with a calm-green "reached" accent. Scoped under .ae.
+
+   Standards wired into the styles:
+   - Zero-Guilt (CLAUDE.md §1): warm paper + calm-green only — NO red, danger,
+     penalty, or streak colour for the funnel. An unreached milestone is a calm,
+     soft outline, never a failure. (The one .bad badge below is a never-expected
+     integrity tripwire: it only renders if an event somehow carried a raw health
+     detail, and it uses a muted clay tone, not an alarming red.)
+   - Accessibility: visible focus rings on every control; strong text contrast; the
+     funnel is a labelled ordered list; status changes live in an aria-live region;
+     all motion is disabled under prefers-reduced-motion at the foot of this file.
+*/
+
+.ae {
+  --paper: #fbf6ee;
+  --card: #fffdf9;
+  --ink: #2c2420;
+  --ink-soft: #7a6f63;
+  --ink-faint: #a89c8c;
+  --line: #ebdfcd;
+  --line-soft: #f1e8da;
+  --accent: #5f9e7e;
+  --accent-deep: #3f7d60;
+  --accent-soft: #e4efe7;
+  --gold: #e09a38;
+  --gold-deep: #8a5a12;
+  --clay: #a86a52;
+
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  padding: clamp(22px, 4vw, 36px) clamp(18px, 4vw, 30px) clamp(26px, 4vw, 40px);
+  color: var(--ink);
+  font-family: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0.1px;
+}
+
+.ae *,
+.ae *::before,
+.ae *::after {
+  box-sizing: border-box;
+}
+
+.ae-glow {
+  position: absolute;
+  inset: -14% -10% auto -10%;
+  height: 220px;
+  background:
+    radial-gradient(58% 78% at 70% 0%, rgba(95, 158, 126, 0.16), transparent 62%),
+    radial-gradient(52% 70% at 26% 0%, rgba(255, 217, 160, 0.2), transparent 58%);
+  filter: blur(6px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ae > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- header ------------------------------------------------------------ */
+
+.ae-head {
+  text-align: center;
+  margin-bottom: clamp(18px, 3vw, 26px);
+}
+
+.ae-eyebrow {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.ae-title {
+  margin: 0 0 8px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(23px, 5vw, 30px);
+  font-weight: 600;
+  line-height: 1.12;
+  color: var(--ink);
+}
+
+.ae-sub {
+  margin: 0 auto;
+  max-width: 46ch;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* ---- the funnel -------------------------------------------------------- */
+
+.ae-funnel {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.ae-step {
+  display: grid;
+  grid-template-columns: 34px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  transition: border-color 200ms ease, background 200ms ease, box-shadow 200ms ease;
+}
+
+.ae-step.reached {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, var(--accent-soft), var(--card));
+  box-shadow: 0 6px 18px -14px rgba(63, 125, 96, 0.6);
+}
+
+.ae-step-dot {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--line-soft);
+  color: var(--ink-faint);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.ae-step.reached .ae-step-dot {
+  background: var(--accent-deep);
+  color: #fffdf9;
+}
+
+.ae-step-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.ae-step-label {
+  font-weight: 650;
+  font-size: 15.5px;
+  color: var(--ink);
+}
+
+.ae-step-desc {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+.ae-step-type {
+  margin-top: 2px;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 11.5px;
+  color: var(--accent-deep);
+  word-break: break-all;
+}
+
+.ae-step-when {
+  font-size: 12.5px;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+.ae-step.reached .ae-step-when {
+  color: var(--accent-deep);
+  font-weight: 600;
+}
+
+.ae-status {
+  margin: 0 0 18px;
+  text-align: center;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+/* ---- controls ---------------------------------------------------------- */
+
+.ae-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.ae-btn {
+  flex: 1 1 auto;
+  min-width: 160px;
+  padding: 11px 16px;
+  border: 1px solid var(--accent-deep);
+  border-radius: 12px;
+  background: var(--accent-deep);
+  color: #fffdf9;
+  font-size: 14.5px;
+  font-weight: 650;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 200ms ease, opacity 200ms ease;
+}
+
+.ae-btn:hover:not(:disabled) {
+  box-shadow: 0 8px 20px -12px rgba(63, 125, 96, 0.7);
+  transform: translateY(-1px);
+}
+
+.ae-btn:disabled {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent-deep);
+  cursor: default;
+}
+
+.ae-hint {
+  margin: 0 0 20px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.ae-hint strong {
+  color: var(--ink);
+}
+
+/* ---- raw events -------------------------------------------------------- */
+
+.ae-raw,
+.ae-schema {
+  margin-top: 8px;
+  padding: 16px 16px 18px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.ae-schema {
+  margin-top: 16px;
+}
+
+.ae-h3 {
+  margin: 0 0 10px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.ae-key {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  word-break: break-all;
+}
+
+.ae-key code {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 12px;
+  color: var(--ink);
+}
+
+.ae-key-note {
+  color: var(--ink-faint);
+}
+
+.ae-empty {
+  margin: 0 0 12px;
+  font-size: 13.5px;
+  color: var(--ink-faint);
+}
+
+.ae-events {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.ae-event {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 10px 12px;
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: 12px;
+}
+
+.ae-event-json {
+  flex: 1 1 260px;
+  margin: 0;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--ink);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.ae-event-badge {
+  flex: 0 0 auto;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ae-event-badge.ok {
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+}
+
+/* Never-expected integrity tripwire — muted clay, not an alarming red. */
+.ae-event-badge.bad {
+  background: #f3e3dc;
+  color: var(--clay);
+}
+
+.ae-reset {
+  padding: 9px 14px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 200ms ease, color 200ms ease;
+}
+
+.ae-reset:hover {
+  border-color: var(--accent);
+  color: var(--accent-deep);
+}
+
+/* ---- schema table ------------------------------------------------------ */
+
+.ae-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+
+.ae-table th,
+.ae-table td {
+  padding: 8px 9px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.ae-table thead th {
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-weight: 700;
+}
+
+.ae-table tbody th {
+  font-weight: 600;
+}
+
+.ae-table tbody th code {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 11.5px;
+  color: var(--accent-deep);
+}
+
+.ae-table td {
+  color: var(--ink-soft);
+}
+
+.ae-table tr:last-child th,
+.ae-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ---- focus rings ------------------------------------------------------- */
+
+.ae-btn:focus-visible,
+.ae-reset:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* ---- reduced motion ---------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .ae-step,
+  .ae-btn,
+  .ae-reset {
+    transition: none;
+  }
+  .ae-btn:hover:not(:disabled) {
+    transform: none;
+  }
+}
+
+.ae.reduce .ae-step,
+.ae.reduce .ae-btn,
+.ae.reduce .ae-reset {
+  transition: none;
+}
+
+.ae.reduce .ae-btn:hover:not(:disabled) {
+  transform: none;
+}

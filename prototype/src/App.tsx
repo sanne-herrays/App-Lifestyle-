@@ -13,6 +13,7 @@ import HabitGraduation from './components/HabitGraduation'
 import ProgressiveChallenge from './components/ProgressiveChallenge'
 import SevenDayJourney from './components/SevenDayJourney'
 import HabitProgress from './components/HabitProgress'
+import ActivationEvents from './components/ActivationEvents'
 import DesignTokens from './components/DesignTokens'
 
 /**
@@ -30,6 +31,7 @@ type View =
   | 'challenge'
   | 'journey'
   | 'progress'
+  | 'activation'
   | 'ledger'
   | 'recommend'
   | 'catalog'
@@ -92,6 +94,14 @@ function App() {
           onClick={() => setView('progress')}
         >
           Progress
+        </button>
+        <button
+          type="button"
+          className={`shell-tab${view === 'activation' ? ' on' : ''}`}
+          aria-current={view === 'activation'}
+          onClick={() => setView('activation')}
+        >
+          Activation
         </button>
         <button
           type="button"
@@ -170,6 +180,8 @@ function App() {
         <SevenDayJourney />
       ) : view === 'progress' ? (
         <HabitProgress />
+      ) : view === 'activation' ? (
+        <ActivationEvents />
       ) : view === 'ledger' ? (
         <CompletionLedger />
       ) : view === 'recommend' ? (

@@ -1738,3 +1738,55 @@ dist/assets/index-DVwPuIBg.js   354.98 kB │ gzip: 104.02 kB
 TASK-032 passes review. The engine, its deterministic test suite, and the wired surface genuinely satisfy the acceptance criterion with verified strict-TS, clean lint, zero-guilt design, and real screen-reader support. I confirmed every claim independently (build/lint/tests re-run, imports resolved, banned-pattern and danger-hue scans clean) rather than trusting the self-report. Status set to `completed`; 3-bullet summary appended to PROGRESS.md.
 
 APPROVED
+[main 6002311] feat: complete autonomous task
+ 9 files changed, 1271 insertions(+), 2 deletions(-)
+ create mode 100644 prototype/src/components/HabitProgress.css
+ create mode 100644 prototype/src/components/HabitProgress.tsx
+ create mode 100644 prototype/src/lib/progressViz.test.ts
+ create mode 100644 prototype/src/lib/progressViz.ts
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   92c3292..6002311  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Mon Nov 23 00:44:55 CET 2026
+==========================================
+TASK-033 is complete and set to `in_review`. Per the workflow rules I have **not** committed — awaiting the Reviewer step.
+
+## Summary — TASK-033 · Instrument activation events
+
+**First pending task** in `tasks.json`; the first Validation & Growth build. Delivered as the established triple (React-free engine + deterministic test + wired interactive surface).
+
+**New files**
+- `prototype/src/lib/activation.ts` — the engine: the four-milestone funnel (`onboarding_started → onboarding_completed → first_action_completed → first_reward_shown`), `ActivationEvent` shape, `ACTIVATION_SCHEMA_VERSION`, machine-readable `ACTIVATION_EVENT_SCHEMA`, anonymous-key minting, the structural `carriesRawHealthDetail` guard, one-time `recordMilestone`, `deriveFromLedger` (folds the real TASK-026 ledger in), and a localStorage-backed store.
+- `prototype/src/lib/activation.test.ts` — 13 dependency-free case groups.
+- `prototype/src/components/ActivationEvents.tsx` + `.css` — the "Activation" tab; onboarding via controls, first action/reward fold in automatically from the live ledger; shows each raw event with a live no-health-detail check + the documented schema table.
+
+**Acceptance criterion met exactly** — *"Event schema documented; each event has anonymous user key, timestamp and schema version; no raw health details":*
+- **Documented** — prose table + `ACTIVATION_EVENT_SCHEMA`, asserted in lockstep with real events (no drift).
+- **Anon key / timestamp / schema version** — present and well-formed on every emitted milestone.
+- **No raw health details** — enforced *structurally*: five-field allow-list, every value a closed-enum token / anon key / number, and the only descriptive field is a coarse `goalCategory` bucket. The guard rejects real action/reward phrasings whether smuggled under an unknown or an allowed field; a leaked field can't even survive a reload.
+
+**Verified**
+- `npm run build` → **exit 0** (tsc strict + Vite, 69 modules, zero warnings)
+- `npm run lint` → **exit 0**, clean
+- `node src/lib/activation.test.ts` → all 13 groups pass; all 8 regression suites pass
+- Banned-pattern + Zero-Guilt hue greps clean (only benign comment-prose false positives, confirmed via anchored re-check)
+
+Changed: `App.tsx`, `tasks.json`, `PROGRESS.md`. `tasks.json` is valid JSON (25 completed / 7 blocked / 1 in_review / 10 pending). Next pending build after approval: **TASK-034** (cohort retention dashboard).
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 69 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.81 kB │ gzip:   0.45 kB
+dist/assets/index-Bn8JjXdG.css  103.84 kB │ gzip:  15.90 kB
+dist/assets/index-qw3D26cL.js   363.71 kB │ gzip: 106.43 kB
+
+✓ built in 118ms
+Task status updated to `completed` in `tasks.json`; approval summary appended to `PROGRESS.md`.
+
+APPROVED
