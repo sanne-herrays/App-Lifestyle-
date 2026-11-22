@@ -75,7 +75,7 @@
       "description": "Define inclusion criteria for abandoned-app users, successful habit builders and busy beginners.",
       "status": "completed",
       "acceptance_criteria": [
-        "Screener includes segment definitions, exclusion rules and 8–12 neutral questions."
+        "Screener includes segment definitions, exclusion rules and 8\u201312 neutral questions."
       ],
       "dependencies": []
     },
@@ -84,7 +84,8 @@
       "title": "Run 15 behavioral interviews",
       "workstream": "Research",
       "description": "Interview users about actual attempts, contexts, triggers and obstacles.",
-      "status": "pending",
+      "status": "blocked",
+      "blocked_reason": "Requires human-subject research (15 real recruited/consented/transcribed interviews) which cannot be executed in an autonomous overnight build. Reviewer rejected a prior synthetic-record attempt (PROGRESS.md 2026-11-22) and forbade advancing constructed records through the research gate. Field-ready instruments delivered in docs/research/behavioral-interview-protocol-and-analysis-framework.md; empirical record requirement remains open. Unblock path and definition-of-done documented in that file (\u00a76\u2013\u00a77).",
       "acceptance_criteria": [
         "15 anonymized interview records and a coded synthesis of at least five recurring barriers."
       ],
@@ -95,7 +96,8 @@
       "title": "Run 14-day diary study",
       "workstream": "Research",
       "description": "Capture real-world opportunities and failures to perform tiny health actions.",
-      "status": "pending",
+      "status": "blocked",
+      "blocked_reason": "Requires human-subject research (\u226510 real participants making in-the-moment entries across 14 real calendar days) which cannot be executed in an autonomous overnight build. Same class of blocker as TASK-008, which the Reviewer blocked while explicitly forbidding synthetic human-subject records through the research gate and naming TASK-009 as a likely same-class blocker (PROGRESS.md 2026-11-22). Field-ready instruments delivered in docs/research/diary-study-protocol-and-analysis-framework.md: 14-day hybrid protocol (\u00a72\u2013\u00a73), context-map framework + empty T\u00d7R template (\u00a74), and three precisely-defined completion-rate formulas with empty result slots (\u00a75). Empirical requirement (\u226510 complete diaries + populated context map + observed completion rate) remains OPEN. Unblock path and definition-of-done in that file (\u00a77\u2013\u00a79). Marking blocked (not in_review) avoids fabricating the empirical deliverable and prevents a synthetic-data reject loop.",
       "acceptance_criteria": [
         "At least 10 complete participant diaries, a context map and a documented completion rate."
       ],
@@ -106,7 +108,7 @@
       "title": "Define primary audience and JTBD",
       "workstream": "Research",
       "description": "Select a narrow launch segment using research evidence.",
-      "status": "pending",
+      "status": "blocked",
       "acceptance_criteria": [
         "One primary segment, top three jobs-to-be-done, exclusions and rationale documented."
       ],
@@ -152,7 +154,7 @@
       "description": "Create a standalone weighted concept scoring component.",
       "status": "pending",
       "acceptance_criteria": [
-        "Three concepts can be scored 1–5 on seven weighted criteria; totals recompute to 0–100; weights sum to 100."
+        "Three concepts can be scored 1\u20135 on seven weighted criteria; totals recompute to 0\u2013100; weights sum to 100."
       ],
       "dependencies": []
     },
