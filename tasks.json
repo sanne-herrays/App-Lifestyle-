@@ -7,7 +7,7 @@
       "title": "Audit 12 direct habit-app competitors",
       "workstream": "Research",
       "description": "Produce a structured teardown of 12 habit apps covering onboarding, daily loop, rewards, friction and pricing.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "A comparison table with 12 named apps and all five dimensions populated."
       ],
