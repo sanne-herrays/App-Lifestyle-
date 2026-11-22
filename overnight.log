@@ -1341,3 +1341,107 @@ dist/assets/index-DLjlisHi.js   313.18 kB │ gzip: 92.70 kB
 The review is complete. TASK-026 met its acceptance criteria with genuine, independently-verified logic (no mocks, no placeholders, no type escapes), upheld every CLAUDE.md standard, and passed a clean strict build, clean lint, and a 15/15 deterministic test suite that I re-ran myself. I've advanced the task to `completed` in `tasks.json` and recorded the verdict in `PROGRESS.md`.
 
 APPROVED
+[main e839329] feat: complete autonomous task
+ 9 files changed, 1635 insertions(+), 3 deletions(-)
+ create mode 100644 prototype/src/components/CompletionLedger.css
+ create mode 100644 prototype/src/components/CompletionLedger.tsx
+ create mode 100644 prototype/src/lib/ledger.test.ts
+ create mode 100644 prototype/src/lib/ledger.ts
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   22712c7..e839329  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Sun Nov 22 23:31:07 CET 2026
+==========================================
+TASK-027 is complete and ready for review. Per the workflow rules, I have **not** committed. Exiting.
+
+## Summary — TASK-027: Build gentle restart experience → `in_review`
+
+**Acceptance criterion** ("After 1, 3 or 7 missed days, restart requires at most two taps and no guilt/shame copy appears") — met exactly, with real tested logic.
+
+**Built (5 files):**
+- `prototype/src/lib/restart.ts` — pure, React-free engine: `missedDays` (local-calendar-day gap from the real TASK-026 ledger), `restartTier` (thresholds at exactly 1/3/7 → active/short/medium/long), a ≤2-tap `steps` plan, and a `SHAME_LEXICON` guilt guard. Catalog is **injected** (`RungResolver`), mirroring `recommendation.ts`, so it stays node-runnable.
+- `prototype/src/lib/restart.test.ts` — 13 deterministic cases (measurement 4, thresholds 2, two-tap 2, guilt-free 2, edge 3).
+- `prototype/src/components/GentleRestart.tsx` + `.css` — Zero-Guilt welcome-back surface; a longer absence offers a *smaller* step; tap 1 resumes, tap 2 is the shared `HoldToComplete` (records a real ledger win). New "Gentle restart" tab in `App.tsx`.
+- `prototype/src/components/useLedgerEvents.ts` — shared live-ledger hook.
+
+**Verified:**
+- `npm run build` → **exit 0**, zero warnings, 49 modules (up from 45)
+- `npm run lint` → **exit 0**, clean
+- `node src/lib/restart.test.ts` → **13/13 passed, exit 0**
+- Banned-pattern grep → no matches; no red/penalty/streak color tokens
+- `tasks.json` valid JSON; TASK-027 → `in_review` (19 completed / 7 blocked / 1 in_review / 16 pending)
+
+Not committed, awaiting the Reviewer step.
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 49 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.81 kB │ gzip:  0.45 kB
+dist/assets/index-CliwvsBP.css   66.23 kB │ gzip: 10.87 kB
+dist/assets/index-Dp7vLqjR.js   319.07 kB │ gzip: 94.25 kB
+
+✓ built in 87ms
+Verdict recorded. `tasks.json` is valid (TASK-027 → `pending`; counts now 19 completed / 7 blocked / 17 pending), and the rejection notes are appended to `PROGRESS.md`.
+
+## Review summary — TASK-027 "Build gentle restart experience"
+
+**What passed:**
+- `npm run build` → exit 0, zero warnings, 49 modules
+- `npm run lint` (eslint) → clean
+- `node src/lib/restart.test.ts` → 13/13 passing
+- Engine (`restart.ts`) is genuinely pure, dependency-injected (no React import, mirrors `recommendation.ts`), strict TS — no `any`, no `@ts-ignore`, no placeholders/TODOs/mocks
+- Zero-guilt copy is real and self-defends via a populated `SHAME_LEXICON` + a non-trivial guard test; a longer gap offers a *smaller* step; past wins never erased
+- All referenced exports (`ACTION_BY_GOAL`, `TINY_FLOOR`, `GOALS`, `useReducedMotion`, ledger API, `HoldToComplete`) exist with the expected shapes
+
+**Why it fails:** The interactive surface (`GentleRestart.tsx`) doubles the missed-day count in the **default fresh-prototype state**. Because the no-history branch shifts `now` forward by `previewDays` *and* shifts the fixture anchor backward by `previewDays`, the engine reads `2 × previewDays`. A reviewer selecting the "3 days away" chip sees the header "It's been **6** days" (1→2, 3→6, 7→14). Verified by direct computation. The tier buckets coincide by luck, so the green build and 13/13 engine tests never surface it. This is a visible correctness/honesty defect on the feature's primary demo surface and contradicts the task's own "maps to one of the acceptance thresholds" claim — below the Apple-craft bar.
+
+Fix is surface-only (shift the clock in one direction, add a guard tying rendered `offer.missedDays` to the selected chip) and is spelled out in the rejection notes.
+
+REJECTED
+Task rejected by Reviewer. Retrying...
+==========================================
+Starting next task at Sun Nov 22 23:42:13 CET 2026
+==========================================
+TASK-027 is complete and re-submitted for review. Summary of what I did this session:
+
+## TASK-027 — Build gentle restart experience (re-submission after REJECTED → `in_review`)
+
+The task was the first `pending` one — previously rejected for **one disqualifying defect**: the no-history preview rendered a **doubled** missed-day count (3-day chip showed "It's been 6 days", 1→2, 7→14), because `now` was shifted forward by `previewDays` while the fixture anchor was shifted backward by the same amount — a `2 × previewDays` gap.
+
+**Fix (surface only — engine `restart.ts` and its tests untouched, as directed):**
+- Extracted the preview-clock math into a new pure, node-runnable helper `prototype/src/lib/restartPreview.ts` (`previewClock()`) that anchors the fixture at `mountClock` and keeps `now = base + previewDays·DAY_MS`, so the engine reads exactly `previewDays` in both paths.
+- `GentleRestart.tsx` now calls that helper instead of the buggy inline block.
+
+**Regression guard (both forms the Reviewer asked for):**
+- A new deterministic test group **"preview clock parity (surface)" (4 cases)** drives the exact `previewClock → restartOffer` composition the component renders and asserts `offer.missedDays === previewDays` in both the no-history and real-history paths (plus tier parity and the "Today" start case).
+- A DEV-only runtime assertion in the component that throws if the rendered day count ever diverges from the selected chip again.
+
+**Verified:**
+- `npm run build` → exit 0 (strict, zero warnings, 50 modules)
+- `npm run lint` → exit 0, clean
+- `node src/lib/restart.test.ts` → **17/17 passed** (13 prior + 4 new); confirms the 1/3/7 chips each display their own number
+- Banned-pattern grep over new/changed files → no matches
+- `tasks.json` valid JSON; TASK-027 → `in_review` (19 completed / 7 blocked / 1 in_review / 16 pending)
+
+Not committed, per the CLAUDE.md workflow rule (awaiting Reviewer approval).
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 50 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.81 kB │ gzip:  0.45 kB
+dist/assets/index-CliwvsBP.css   66.23 kB │ gzip: 10.87 kB
+dist/assets/index-FJQK1O1Z.js   319.11 kB │ gzip: 94.28 kB
+
+✓ built in 90ms
+APPROVED

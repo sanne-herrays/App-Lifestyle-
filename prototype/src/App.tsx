@@ -8,6 +8,7 @@ import HabitCueScheduler from './components/HabitCueScheduler'
 import ActionCatalog from './components/ActionCatalog'
 import RecommendationDemo from './components/RecommendationDemo'
 import CompletionLedger from './components/CompletionLedger'
+import GentleRestart from './components/GentleRestart'
 
 /**
  * Prototype shell. Defaults to the active TASK-020 deliverable ("Your Little
@@ -17,7 +18,7 @@ import CompletionLedger from './components/CompletionLedger'
  * so no deliverable is hidden.
  */
 
-type View = 'card' | 'ledger' | 'recommend' | 'catalog' | 'cues' | 'fallback' | 'flows' | 'scorecard'
+type View = 'card' | 'restart' | 'ledger' | 'recommend' | 'catalog' | 'cues' | 'fallback' | 'flows' | 'scorecard'
 
 function App() {
   const [view, setView] = useState<View>('card')
@@ -32,6 +33,14 @@ function App() {
           onClick={() => setView('card')}
         >
           Little Win card
+        </button>
+        <button
+          type="button"
+          className={`shell-tab${view === 'restart' ? ' on' : ''}`}
+          aria-current={view === 'restart'}
+          onClick={() => setView('restart')}
+        >
+          Gentle restart
         </button>
         <button
           type="button"
@@ -92,6 +101,8 @@ function App() {
       </nav>
       {view === 'card' ? (
         <LittleWinCard />
+      ) : view === 'restart' ? (
+        <GentleRestart />
       ) : view === 'ledger' ? (
         <CompletionLedger />
       ) : view === 'recommend' ? (
