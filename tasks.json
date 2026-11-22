@@ -163,7 +163,7 @@
       "title": "Prototype three first-session flows",
       "workstream": "Concepts",
       "description": "Build independently navigable first-session prototypes for the three concepts.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Each prototype supports entry, goal selection, first action and completion without dead ends."
       ],

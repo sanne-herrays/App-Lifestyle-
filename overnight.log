@@ -724,3 +724,55 @@ Review complete. TASK-014 (interactive concept evaluation scorecard) passes ever
 `tasks.json` → `completed`; 3-bullet summary appended to `PROGRESS.md`.
 
 APPROVED
+[main 60f6fdb] feat: complete autonomous task
+ 8 files changed, 1063 insertions(+), 120 deletions(-)
+ create mode 100644 prototype/src/components/ConceptScorecard.css
+ create mode 100644 prototype/src/components/ConceptScorecard.tsx
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   5962cea..60f6fdb  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Sun Nov 22 21:54:39 CET 2026
+==========================================
+Done. TASK-015 is complete and set to `in_review` (not committed, per the workflow rules).
+
+## Summary
+
+**Task executed:** TASK-015 — *Prototype three first-session flows* (the first `pending` task; TASK-008/009/010 are `blocked`, TASK-011–014 `completed`).
+
+**What I built** — `prototype/src/flows/`, three independently navigable first-session prototypes grounded step-by-step in the approved concept briefs (`docs/strategy/`):
+
+- **The Tiny Win** — Welcome → goal whisper → one proposed action (+ easier variant) → optional when-then plan → first win *now* → gentle close.
+- **The Growing World** — same spine; completion plants the first permanent seed in an SVG world, and the close states the **no-decay promise** out loud.
+- **Everyday Adventures** — Welcome → goal → **stable anchor** → declared private context (no location permission) → one fitted mission with a bounded-pool "suggest a different one" → first adventure → close.
+
+Plus a chooser harness (`FirstSessionFlows.tsx`), data/hooks (`flowData.ts`), shared UI primitives (`flowKit.tsx` — including the one-gesture `HoldToComplete`), and `flows.css`. `App.tsx` became a two-tab shell so the approved TASK-014 scorecard stays reachable.
+
+**Acceptance criterion met** — each flow supports **entry → goal selection → first action → completion with no dead ends**: every non-terminal step has Back + a clear forward; the close offers Start over / Try another concept.
+
+**Standards upheld** — Zero-Guilt (no red/penalty semantics, easier variant "counts fully", nothing wilts); <2s one-gesture hold with success-only haptic; reduced-motion + ARIA/keyboard a11y; strict TS (`noUncheckedIndexedAccess` guarded, no `any`); actions kept to plain general-benefit framing (TASK-006).
+
+**Verified**
+- `npm run build` → **exit 0** (`tsc -b && vite build`, strict, `✓ built in 76ms`, zero warnings)
+- `npm run lint` → **exit 0** (fixed one `react-hooks/refs` finding)
+- `npm run preview` served the bundle (HTML + JS → HTTP 200)
+- Placeholder grep over `src/` → none
+
+tasks.json → TASK-015 `in_review`; PROGRESS.md logged. Not committed. Exiting.
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 26 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.81 kB │ gzip:  0.45 kB
+dist/assets/index-C1clae3X.css   24.35 kB │ gzip:  5.66 kB
+dist/assets/index-CeT1_jch.js   256.21 kB │ gzip: 77.38 kB
+
+✓ built in 94ms
+Review complete. TASK-015 passed every gate — independently re-verified clean build (exit 0, strict TS, zero warnings), no `any`/`@ts-ignore`/placeholders, all three first-session flows satisfy entry → goal → first action → completion with no dead ends, and Zero-Guilt + <2s tactile + accessibility standards all hold. `tasks.json` updated to `completed` and a 3-bullet approval summary appended to `PROGRESS.md`.
+
+APPROVED

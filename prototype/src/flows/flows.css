@@ -1,0 +1,903 @@
+/* TASK-015 — First-session flows.
+   Warm "sunrise" visual language for HerRays, matched to the TASK-014 scorecard.
+   Fonts (Fraunces display + Hanken Grotesk body) are loaded in index.html.
+
+   Standards wired into the styles:
+   - Zero-Guilt (CLAUDE.md §1): no red/danger/penalty colours anywhere; the
+     palette is warm paper + dawn gradients only.
+   - <2s / tactile (§2): the hold gesture and its spring live here.
+   - Accessibility: visible focus rings; every motion beat is disabled under
+     prefers-reduced-motion at the foot of this file.
+*/
+
+.flows {
+  --paper: #fbf6ee;
+  --paper-2: #f5ecdf;
+  --card: #fffdf9;
+  --ink: #2c2420;
+  --ink-soft: #7a6f63;
+  --ink-faint: #a89c8c;
+  --line: #ebdfcd;
+  --line-soft: #f1e8da;
+  --dawn-1: #ffd9a0;
+  --dawn-2: #ff9d6e;
+  --dawn-3: #ef6f7e;
+  --accent: #e09a38;
+
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 70svh;
+  margin: 0 auto;
+  padding: clamp(28px, 5vw, 60px) clamp(18px, 4vw, 56px) 56px;
+  text-align: left;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0.1px;
+  overflow: hidden;
+}
+
+.flows *,
+.flows *::before,
+.flows *::after {
+  box-sizing: border-box;
+}
+
+.flows-glow {
+  position: absolute;
+  inset: -36% -30% auto -10%;
+  height: 480px;
+  background:
+    radial-gradient(60% 80% at 78% 8%, rgba(255, 157, 110, 0.3), transparent 60%),
+    radial-gradient(50% 70% at 22% 0%, rgba(255, 217, 160, 0.38), transparent 55%);
+  filter: blur(6px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.flows > *:not(.flows-glow) {
+  position: relative;
+  z-index: 1;
+}
+
+/* ------------------------------------------------------------- chooser -- */
+
+.flows-head {
+  max-width: 760px;
+  margin-bottom: clamp(26px, 4vw, 40px);
+}
+
+.flows-eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dawn-2);
+  margin-bottom: 12px;
+}
+
+.flows h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(34px, 5vw, 54px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 16px;
+}
+
+.flows-lede {
+  font-size: clamp(15px, 1.5vw, 18px);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 62ch;
+}
+
+.flows-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 22px);
+}
+
+@media (max-width: 860px) {
+  .flows-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.flows-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 26px 24px 24px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(44, 36, 32, 0.04);
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.28s ease;
+}
+
+.flows-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 30px -18px rgba(44, 36, 32, 0.4);
+}
+
+.flows-card-ray {
+  position: absolute;
+  inset: -40% -30% auto auto;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle at 70% 20%, color-mix(in srgb, var(--accent) 34%, transparent), transparent 62%);
+  pointer-events: none;
+}
+
+.flows-card h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500;
+  font-size: 23px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0 0 4px;
+}
+
+.flows-card-tag {
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin-bottom: 18px;
+}
+
+.flows-card-hyp,
+.flows-card-first {
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  padding-top: 12px;
+  border-top: 1px solid var(--line-soft);
+  margin-bottom: 2px;
+}
+
+.flows-card-hyp span,
+.flows-card-first span {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 3px;
+}
+
+.flows-start {
+  margin-top: 20px;
+}
+
+.flows-foot {
+  margin-top: 30px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-faint);
+  max-width: 70ch;
+}
+
+.flows-foot code {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 11.5px;
+  background: var(--paper-2);
+  padding: 1px 6px;
+  border-radius: 5px;
+  color: var(--ink-soft);
+}
+
+/* --------------------------------------------------------- live stage -- */
+
+.flows-live {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flows-stage {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.flows-exit {
+  margin-top: 22px;
+  appearance: none;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 9px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.flows-exit:hover {
+  color: var(--ink);
+  border-color: var(--ink-faint);
+}
+
+.flows-exit:focus-visible {
+  outline: 2px solid var(--dawn-2);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------- phone frame -- */
+
+.phone {
+  position: relative;
+  width: 380px;
+  max-width: 100%;
+  min-height: 680px;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 10%, var(--card)) 0%, var(--card) 38%);
+  border: 1px solid var(--line);
+  border-radius: 40px;
+  padding: 14px 14px 22px;
+  box-shadow:
+    0 40px 80px -40px rgba(44, 36, 32, 0.5),
+    0 2px 6px rgba(44, 36, 32, 0.06),
+    inset 0 0 0 6px rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+}
+
+.phone-glow {
+  position: absolute;
+  inset: -30% -20% auto -20%;
+  height: 300px;
+  background: radial-gradient(60% 80% at 50% 0%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 62%);
+  pointer-events: none;
+}
+
+.phone-notch {
+  position: relative;
+  width: 118px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(44, 36, 32, 0.14);
+  margin: 2px auto 10px;
+  z-index: 2;
+}
+
+.phone-top {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px 12px;
+}
+
+.phone-back {
+  appearance: none;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--ink-soft);
+  transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+
+.phone-back svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.phone-back:hover:not(:disabled) {
+  color: var(--ink);
+  background: var(--paper-2);
+}
+
+.phone-back:disabled {
+  opacity: 0.32;
+  cursor: default;
+}
+
+.phone-back:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.phone-concept {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin-right: auto;
+}
+
+.phone-dots {
+  display: flex;
+  gap: 5px;
+}
+
+.phone-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--line);
+  transition: background 0.3s ease, width 0.3s ease;
+}
+
+.phone-dot.past {
+  background: color-mix(in srgb, var(--accent) 45%, var(--line));
+}
+
+.phone-dot.on {
+  width: 18px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.phone-screen {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+}
+
+/* ------------------------------------------------------------- steps -- */
+
+.flow-step {
+  flex: 1;
+  display: flex;
+  animation: flow-rise 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes flow-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 10px 14px 4px;
+}
+
+.step-center {
+  align-items: center;
+  text-align: center;
+}
+
+.step-center .step-actions {
+  width: 100%;
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.step-h {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500;
+  font-size: 27px;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 0;
+}
+
+.step-h-sm {
+  font-size: 24px;
+}
+
+.step-p {
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.step-p strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.step-actions {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 10px;
+}
+
+/* -------------------------------------------------------------- chips -- */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chips-stack {
+  flex-direction: column;
+}
+
+.chip {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 1.5px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 11px 16px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.12s ease;
+}
+
+.chip-wide {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.chip:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--line));
+}
+
+.chip:active {
+  transform: scale(0.98);
+}
+
+.chip.sel {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--card));
+  color: var(--ink);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.chip-ico {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  color: var(--accent);
+}
+
+.goal-ico {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.plan-sentence {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 17px;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--ink);
+  padding: 14px 16px;
+  background: color-mix(in srgb, var(--accent) 9%, var(--card));
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+/* -------------------------------------------------------------- pills -- */
+
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--accent) 16%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  padding: 5px 13px;
+  border-radius: 999px;
+}
+
+.pill-soft {
+  color: var(--ink-soft);
+  background: var(--paper-2);
+  border-color: var(--line);
+}
+
+/* ------------------------------------------------------------ buttons -- */
+
+.btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 14px 20px;
+  border-radius: 15px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn:active {
+  transform: scale(0.985);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  color: #fff;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 88%, white) 0%, var(--accent) 100%);
+  box-shadow: 0 10px 20px -12px color-mix(in srgb, var(--accent) 80%, transparent);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.03);
+}
+
+.btn-primary:disabled {
+  opacity: 0.45;
+  cursor: default;
+  box-shadow: none;
+}
+
+.btn-ghost {
+  color: var(--ink-soft);
+  background: transparent;
+  border-color: var(--line);
+}
+
+.btn-ghost:hover {
+  color: var(--ink);
+  border-color: var(--ink-faint);
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+
+.btn-link:hover {
+  color: color-mix(in srgb, var(--accent) 80%, black);
+}
+
+.btn-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ----------------------------------------------------- hold-to-complete -- */
+
+.hold {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0 2px;
+}
+
+.hold-btn {
+  position: relative;
+  width: 148px;
+  height: 148px;
+  display: grid;
+  place-items: center;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hold-btn svg {
+  position: absolute;
+  inset: 14px;
+  transform: rotate(-90deg);
+}
+
+.hold-track {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 7;
+}
+
+.hold-fill {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 7;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.08s linear;
+}
+
+.hold-face {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 16%, var(--card)), var(--card));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--accent) 24%, transparent),
+    0 8px 18px -10px color-mix(in srgb, var(--accent) 60%, transparent);
+  transition: transform 0.3s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+
+.hold-glyph {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 18%, transparent);
+  transition: transform 0.2s ease;
+}
+
+.hold.is-holding .hold-face {
+  transform: scale(0.94);
+}
+
+.hold.is-holding .hold-glyph {
+  transform: scale(0.82);
+}
+
+.hold.is-done .hold-face {
+  transform: scale(1);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 86%, white), var(--accent));
+  animation: hold-pop 0.42s cubic-bezier(0.2, 1.5, 0.4, 1);
+}
+
+@keyframes hold-pop {
+  0% { transform: scale(0.8); }
+  60% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+.hold-check {
+  width: 40px;
+  height: 40px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: hold-draw 0.32s ease 0.08s forwards;
+}
+
+@keyframes hold-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.hold-hint {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+  margin: 0;
+}
+
+.hold.is-done .hold-hint {
+  color: var(--accent);
+}
+
+/* ------------------------------------------------------------- reward -- */
+
+.reward {
+  min-height: 26px;
+}
+
+.reward-line {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 19px;
+  font-style: italic;
+  color: var(--ink);
+  margin: 0;
+  animation: flow-rise 0.4s ease both;
+}
+
+.progress-note {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  padding: 8px 14px;
+  border-radius: 999px;
+}
+
+.done-mark {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 86%, white), var(--accent));
+  box-shadow: 0 10px 22px -12px color-mix(in srgb, var(--accent) 80%, transparent);
+}
+
+.done-mark svg {
+  width: 30px;
+  height: 30px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.identity {
+  appearance: none;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 16px;
+  font-style: italic;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 1px dashed var(--line);
+  padding: 10px 16px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.identity:hover {
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
+.identity.claimed {
+  color: var(--ink);
+  border-style: solid;
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--card));
+}
+
+.identity:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------- world canvas -- */
+
+.world {
+  width: 100%;
+  max-width: 300px;
+  margin: 4px auto;
+}
+
+.world-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--accent) 7%, var(--card));
+  border: 1px solid var(--line);
+}
+
+.world-sun {
+  fill: color-mix(in srgb, var(--accent) 60%, #ffd9a0);
+  opacity: 0.85;
+}
+
+.world-ground {
+  fill: color-mix(in srgb, var(--accent) 26%, #dcd2b6);
+}
+
+.sprout .stem {
+  fill: none;
+  stroke: #5f7d52;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.sprout .leaf {
+  fill: #6f9a5f;
+}
+
+.sprout .bloom {
+  fill: color-mix(in srgb, var(--accent) 70%, #ffce8a);
+}
+
+.sprout.newest {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  animation: sprout-grow 0.6s cubic-bezier(0.2, 1.3, 0.4, 1) both;
+}
+
+@keyframes sprout-grow {
+  0% { transform: scale(0.06); opacity: 0; }
+  60% { opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* NB: the .newest group is translated by SVG transform; the keyframe scale is
+   applied via transform-box so it grows from its own base, not the origin. */
+
+/* ----------------------------------------------- reduced-motion fallback -- */
+
+@media (prefers-reduced-motion: reduce) {
+  .flows-card,
+  .btn,
+  .chip,
+  .hold-face,
+  .hold-glyph,
+  .hold-fill,
+  .phone-dot,
+  .phone-back,
+  .flows-exit,
+  .identity {
+    transition: none !important;
+  }
+
+  .flow-step,
+  .reward-line,
+  .hold.is-done .hold-face,
+  .hold-check,
+  .sprout.newest {
+    animation: none !important;
+  }
+
+  .hold-check {
+    stroke-dashoffset: 0;
+  }
+
+  .flows-card:hover {
+    transform: none;
+  }
+}
