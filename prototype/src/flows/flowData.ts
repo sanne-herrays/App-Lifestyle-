@@ -130,6 +130,58 @@ export function fallbackLadder(goal: GoalId): readonly FallbackRung[] {
   ]
 }
 
+/* --------------------------------------------- TASK-029 progression ladder -- */
+
+/**
+ * TASK-029 — "Offer a slightly harder action only when the user signals
+ * readiness."
+ *
+ * Where the TASK-022 `fallbackLadder` steps *down* toward an always-feasible
+ * floor, this ladder steps *up*: rung 0 is the user's current little win, and
+ * each higher rung is a slightly bolder stretch. The progressive-challenge
+ * selector (`src/lib/challenge.ts`) only ever *offers* the next rung — it never
+ * climbs on its own, and never after a quiet day (Zero-Guilt, CLAUDE.md §1).
+ *
+ * Rung 0 reuses `ACTION_BY_GOAL` (single source of truth); the stretch rungs
+ * are new, honest, general-benefit content — nothing implies individual
+ * disease-risk reduction (TASK-006 / §3).
+ */
+export interface ChallengeStep {
+  title: string
+  effort: string
+}
+
+/** The slightly-harder tiers above each goal's baseline action (ascending). */
+export const CHALLENGE_STRETCH: Record<GoalId, readonly ChallengeStep[]> = {
+  move: [
+    { title: 'Five minutes of easy movement', effort: '5 min' },
+    { title: 'A ten-minute walk', effort: '10 min' },
+  ],
+  calm: [
+    { title: 'Three minutes of slow breathing', effort: '3 min' },
+    { title: 'A five-minute quiet sit', effort: '5 min' },
+  ],
+  water: [
+    { title: 'Two glasses of water', effort: '2 min' },
+    { title: 'A glass with each meal today', effort: 'across the day' },
+  ],
+  outside: [
+    { title: 'Five minutes outside', effort: '5 min' },
+    { title: 'A ten-minute walk outside', effort: '10 min' },
+  ],
+}
+
+/**
+ * The ascending progression for a goal, gentlest first. Rung 0 is the baseline
+ * little win (reused from `ACTION_BY_GOAL`); each later rung is an optional
+ * stretch. The challenge engine indexes into this; the length is the ceiling a
+ * climb can never pass.
+ */
+export function challengeLadder(goal: GoalId): readonly ChallengeStep[] {
+  const a = ACTION_BY_GOAL[goal]
+  return [{ title: a.title, effort: a.effort }, ...CHALLENGE_STRETCH[goal]]
+}
+
 /** Existing routines a when-then plan / stable anchor can attach to (§4). */
 export const ANCHORS: readonly string[] = [
   'after my morning coffee',

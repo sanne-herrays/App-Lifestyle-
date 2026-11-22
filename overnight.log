@@ -1501,3 +1501,63 @@ dist/assets/index-Bs8UYlNU.js   327.16 kB │ gzip: 96.45 kB
 tasks.json updated (`in_review → completed`) and the 3-bullet approval summary appended to PROGRESS.md.
 
 APPROVED
+[main 93df43d] feat: complete autonomous task
+ 9 files changed, 1669 insertions(+), 3 deletions(-)
+ create mode 100644 prototype/src/components/HabitGraduation.css
+ create mode 100644 prototype/src/components/HabitGraduation.tsx
+ create mode 100644 prototype/src/lib/habitGraduation.test.ts
+ create mode 100644 prototype/src/lib/habitGraduation.ts
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   1be0c98..93df43d  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Sun Nov 22 23:58:58 CET 2026
+==========================================
+TASK-029 complete and staged for review. Summary of this session's single-task build:
+
+## TASK-029 — Build progressive challenge selector → `in_review`
+
+**First pending task** (TASK-028 was approved→completed; 008/009/010/016/017/018/019 remain blocked). Delivered in the established pattern — pure engine + deterministic test + reachable surface.
+
+**What was built**
+- `prototype/src/lib/challenge.ts` — framework-agnostic engine (no React): readiness gate `evaluateChallenge`, total `applyDecision` reducer (accept/decline/revert), `signalReadiness`, a localStorage subscribe/broadcast store, and defensive `serialize`/`deserialize`/`sanitizeState` persistence.
+- `prototype/src/lib/challenge.test.ts` — 19 dependency-free deterministic cases, node-runnable.
+- `prototype/src/components/ProgressiveChallenge.tsx` + `.css` — Zero-Guilt progression surface wired into `App.tsx` as a new tab (default stays the Little Win card).
+- `prototype/src/flows/flowData.ts` — ascending `challengeLadder` whose rung 0 reuses `ACTION_BY_GOAL` (single source of truth).
+
+**Acceptance criterion met exactly** — *"Users can accept, decline or revert; no automatic escalation after missed actions; choices persist"*: accept steps up exactly one rung (and needs a fresh signal for the next), decline leaves the rung untouched, revert eases back down; the rung is raised **only** by an explicit accept and a recent quiet day (derived from the real TASK-026 ledger) suppresses the offer entirely; rung + readiness round-trip through persistence.
+
+**Verified**
+- `npm run build` → **exit 0** (tsc strict + Vite, 56 modules, zero warnings)
+- `npm run lint` → **exit 0**, clean
+- `node src/lib/challenge.test.ts` → **19/19 passed**; regressions `habitGraduation` **34/34**, `restart` **17/17**
+- Banned-pattern / red-streak-shame greps → clean; `tasks.json` valid (21 completed / 7 blocked / 1 in_review / 14 pending)
+
+Not committed, per the workflow rules — awaiting the Reviewer step. Next pending Experience build after approval would be TASK-030 (visual and motion design tokens).
+
+Note: `overnight.log` and `prototype/tsconfig.app.tsbuildinfo` also show as modified — the tsbuildinfo is a build artifact; the overnight.log change predates this session (it was already modified at session start).
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 56 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.81 kB │ gzip:  0.45 kB
+dist/assets/index-o3BVHQLf.css   81.39 kB │ gzip: 12.69 kB
+dist/assets/index-D0oxVfSs.js   335.10 kB │ gzip: 98.41 kB
+
+✓ built in 93ms
+Review complete. TASK-029 (progressive challenge selector) passes on every axis:
+
+- **Acceptance criteria** — accept/decline/revert all present as explicit user actions; no path but `accept` ever raises a rung; a real-ledger quiet day suppresses the offer; choices persist through a tested serialize/deserialize round-trip.
+- **CLAUDE.md §1 Zero-Guilt** — warm, reversible copy; no red/streak/penalty chrome; offer appears only on the user's own readiness tap; an automated `isGuiltFree` guard scans every surfaced string.
+- **CLAUDE.md §3/§4** — honest general-benefit content, no placeholders/fake logic, no `any`/`@ts-ignore`; `npm run build` exits 0 and 19/19 deterministic tests pass.
+
+The honest, clearly-labeled preview toggle is a reviewer aid over real ledger logic, not fabricated data. Craft, accessibility, and behavioral integrity are all at the required level.
+
+tasks.json updated (`in_review` → `completed`) and PROGRESS.md logged.
+
+APPROVED

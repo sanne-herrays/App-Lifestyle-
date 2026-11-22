@@ -10,6 +10,7 @@ import RecommendationDemo from './components/RecommendationDemo'
 import CompletionLedger from './components/CompletionLedger'
 import GentleRestart from './components/GentleRestart'
 import HabitGraduation from './components/HabitGraduation'
+import ProgressiveChallenge from './components/ProgressiveChallenge'
 
 /**
  * Prototype shell. Defaults to the active TASK-020 deliverable ("Your Little
@@ -23,6 +24,7 @@ type View =
   | 'card'
   | 'restart'
   | 'graduation'
+  | 'challenge'
   | 'ledger'
   | 'recommend'
   | 'catalog'
@@ -60,6 +62,14 @@ function App() {
           onClick={() => setView('graduation')}
         >
           Graduation
+        </button>
+        <button
+          type="button"
+          className={`shell-tab${view === 'challenge' ? ' on' : ''}`}
+          aria-current={view === 'challenge'}
+          onClick={() => setView('challenge')}
+        >
+          Progressive challenge
         </button>
         <button
           type="button"
@@ -124,6 +134,8 @@ function App() {
         <GentleRestart />
       ) : view === 'graduation' ? (
         <HabitGraduation />
+      ) : view === 'challenge' ? (
+        <ProgressiveChallenge />
       ) : view === 'ledger' ? (
         <CompletionLedger />
       ) : view === 'recommend' ? (
