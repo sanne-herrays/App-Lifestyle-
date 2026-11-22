@@ -1,0 +1,411 @@
+/* TASK-030 — Design-tokens specification surface.
+   Consumes the global `--hr-*` tokens from `styles/tokens.css` (imported in
+   main.tsx) — this file sets almost no raw colour/size of its own, which is the
+   point: it is the token system eating its own cooking.
+
+   Standards wired in:
+   - Zero-Guilt (CLAUDE.md §1): warm paper + calm accents only; a below-AA verdict
+     uses a muted amber (gold-ink), never an alarming red/danger colour.
+   - Accessibility: visible focus-visible rings on every control, the focus hue is
+     the AA-safe --hr-focus token; motion collapses to instant via the media query
+     and the `.hr-reduce` class at the foot. */
+
+.dt {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 40px) clamp(16px, 4vw, 34px) clamp(28px, 4vw, 48px);
+  color: var(--hr-ink);
+  background: var(--hr-paper);
+  font-family: var(--hr-font-body);
+  letter-spacing: 0.1px;
+  text-align: left;
+}
+
+.dt *,
+.dt *::before,
+.dt *::after {
+  box-sizing: border-box;
+}
+
+/* ---- header -------------------------------------------------------------- */
+.dt-head {
+  margin-bottom: var(--hr-space-xxl);
+}
+
+.dt-eyebrow {
+  font-size: var(--hr-size-caption);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--hr-gold-ink);
+  margin: 0 0 var(--hr-space-xs);
+}
+
+.dt-title {
+  font-family: var(--hr-font-display);
+  font-size: var(--hr-size-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--hr-ink);
+  margin: 0 0 var(--hr-space-sm);
+}
+
+.dt-sub {
+  font-size: var(--hr-size-body-lg);
+  line-height: 1.5;
+  color: var(--hr-ink-soft);
+  max-width: 54ch;
+  margin: 0;
+}
+
+/* ---- block scaffolding --------------------------------------------------- */
+.dt-block {
+  margin-top: var(--hr-space-xxxl);
+  padding-top: var(--hr-space-xl);
+  border-top: 1px solid var(--hr-line);
+}
+
+.dt-block-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--hr-space-md);
+}
+
+.dt-h2 {
+  font-family: var(--hr-font-display);
+  font-size: var(--hr-size-title-sm);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--hr-ink);
+  margin: 0 0 var(--hr-space-sm);
+}
+
+.dt-note {
+  font-size: var(--hr-size-small);
+  line-height: 1.5;
+  color: var(--hr-ink-soft);
+  max-width: 60ch;
+  margin: 0 0 var(--hr-space-lg);
+}
+
+/* ---- contrast verdict ---------------------------------------------------- */
+.dt-verdict {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  flex: 0 0 auto;
+  text-align: right;
+}
+
+.dt-ratio {
+  font-size: var(--hr-size-small);
+  font-weight: 700;
+  color: var(--hr-ink);
+}
+
+.dt-verdict-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.dt-verdict.pass .dt-verdict-label {
+  color: var(--hr-green-ink);
+}
+
+.dt-verdict.below .dt-verdict-label {
+  color: var(--hr-gold-ink); /* calm amber, deliberately not a danger red */
+}
+
+/* ---- contract list ------------------------------------------------------- */
+.dt-contracts,
+.dt-palette,
+.dt-type,
+.dt-ramp,
+.dt-radii,
+.dt-motion {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dt-contract {
+  display: flex;
+  align-items: center;
+  gap: var(--hr-space-md);
+  padding: var(--hr-space-md) 0;
+  border-bottom: 1px solid var(--hr-line-soft);
+}
+
+.dt-contract:last-child {
+  border-bottom: 0;
+}
+
+.dt-contract-chip {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 36px;
+  border-radius: var(--hr-radius-sm);
+  border: 1px solid var(--hr-line);
+  font-weight: 700;
+  font-size: var(--hr-size-body);
+}
+
+.dt-contract-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+
+.dt-contract-name {
+  font-size: var(--hr-size-body);
+  color: var(--hr-ink);
+}
+
+.dt-contract-meta {
+  font-size: 12px;
+  color: var(--hr-ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- palette ------------------------------------------------------------- */
+.dt-palette {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--hr-space-md);
+}
+
+.dt-swatch {
+  display: flex;
+  align-items: center;
+  gap: var(--hr-space-md);
+  padding: var(--hr-space-sm);
+  background: var(--hr-card);
+  border: 1px solid var(--hr-line);
+  border-radius: var(--hr-radius-md);
+}
+
+.dt-swatch-chip {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 46px;
+  border-radius: var(--hr-radius-sm);
+  border: 1px solid var(--hr-line);
+  font-weight: 700;
+  font-size: var(--hr-size-body-lg);
+}
+
+.dt-swatch-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.dt-swatch-label {
+  font-size: var(--hr-size-body);
+  font-weight: 600;
+  color: var(--hr-ink);
+}
+
+.dt-swatch-hex {
+  font-size: 12px;
+  color: var(--hr-ink-faint);
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+}
+
+.dt-swatch-tag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--hr-ink-soft);
+}
+
+.dt-swatch .dt-verdict {
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* ---- segmented control (preview surface) --------------------------------- */
+.dt-seg {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--hr-card);
+  border: 1px solid var(--hr-line);
+  border-radius: var(--hr-radius-pill);
+  margin-bottom: var(--hr-space-sm);
+}
+
+.dt-seg-opt {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--hr-size-small);
+  font-weight: 600;
+  color: var(--hr-ink-soft);
+  padding: 6px 14px;
+  border-radius: var(--hr-radius-pill);
+  cursor: pointer;
+  transition: background var(--hr-duration-base) var(--hr-ease-standard),
+    color var(--hr-duration-base) var(--hr-ease-standard);
+}
+
+.dt-seg-opt input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.dt-seg-opt.on {
+  background: var(--hr-green-soft);
+  color: var(--hr-green-ink);
+}
+
+.dt-seg-opt:has(input:focus-visible) {
+  outline: 3px solid var(--hr-focus);
+  outline-offset: 2px;
+}
+
+/* ---- type ---------------------------------------------------------------- */
+.dt-type-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--hr-space-md) 0;
+  border-bottom: 1px solid var(--hr-line-soft);
+}
+
+.dt-type-row:last-child {
+  border-bottom: 0;
+}
+
+.dt-type-specimen {
+  color: var(--hr-ink);
+  overflow-wrap: anywhere;
+}
+
+.dt-type-meta {
+  font-size: 12px;
+  color: var(--hr-ink-faint);
+}
+
+/* ---- spacing & radius ---------------------------------------------------- */
+.dt-two {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--hr-space-xxl);
+}
+
+.dt-ramp-row,
+.dt-radius-row {
+  display: flex;
+  align-items: center;
+  gap: var(--hr-space-md);
+  padding: 6px 0;
+}
+
+.dt-ramp-bar {
+  height: 14px;
+  background: var(--hr-green);
+  border-radius: var(--hr-radius-sm);
+  flex: 0 0 auto;
+}
+
+.dt-radius-box {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  background: var(--hr-gold-soft);
+  border: 1px solid var(--hr-gold);
+}
+
+.dt-ramp-meta {
+  font-size: var(--hr-size-small);
+  color: var(--hr-ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- motion -------------------------------------------------------------- */
+.dt-motion {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hr-space-md);
+}
+
+.dt-motion-chip {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--hr-space-sm);
+  font-family: inherit;
+  font-size: var(--hr-size-small);
+  font-weight: 600;
+  color: var(--hr-ink);
+  background: var(--hr-card);
+  border: 1px solid var(--hr-line);
+  border-radius: var(--hr-radius-pill);
+  padding: 10px 16px;
+  cursor: pointer;
+  transition-property: transform, background, border-color;
+  /* duration + timing-function are set inline from the motion tokens */
+}
+
+.dt-motion-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--hr-green);
+}
+
+.dt-motion-chip:hover,
+.dt-motion-chip:focus-visible {
+  transform: translateY(-4px) scale(1.04);
+  border-color: var(--hr-green);
+  background: var(--hr-green-soft);
+}
+
+.dt-motion-chip:focus-visible {
+  outline: 3px solid var(--hr-focus);
+  outline-offset: 2px;
+}
+
+/* ---- reduced motion ------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .dt *,
+  .dt *::before,
+  .dt *::after {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+
+  .dt-motion-chip:hover,
+  .dt-motion-chip:focus-visible {
+    transform: none;
+  }
+}
+
+.dt.hr-reduce *,
+.dt.hr-reduce *::before,
+.dt.hr-reduce *::after {
+  transition-duration: 0ms !important;
+  animation-duration: 0ms !important;
+}
+
+.dt.hr-reduce .dt-motion-chip:hover,
+.dt.hr-reduce .dt-motion-chip:focus-visible {
+  transform: none;
+}

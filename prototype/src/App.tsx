@@ -11,6 +11,7 @@ import CompletionLedger from './components/CompletionLedger'
 import GentleRestart from './components/GentleRestart'
 import HabitGraduation from './components/HabitGraduation'
 import ProgressiveChallenge from './components/ProgressiveChallenge'
+import DesignTokens from './components/DesignTokens'
 
 /**
  * Prototype shell. Defaults to the active TASK-020 deliverable ("Your Little
@@ -32,6 +33,7 @@ type View =
   | 'fallback'
   | 'flows'
   | 'scorecard'
+  | 'tokens'
 
 function App() {
   const [view, setView] = useState<View>('card')
@@ -127,6 +129,14 @@ function App() {
         >
           Concept scorecard
         </button>
+        <button
+          type="button"
+          className={`shell-tab${view === 'tokens' ? ' on' : ''}`}
+          aria-current={view === 'tokens'}
+          onClick={() => setView('tokens')}
+        >
+          Design tokens
+        </button>
       </nav>
       {view === 'card' ? (
         <LittleWinCard />
@@ -148,8 +158,10 @@ function App() {
         <TinyActionFallback />
       ) : view === 'flows' ? (
         <FirstSessionFlows />
-      ) : (
+      ) : view === 'scorecard' ? (
         <ConceptScorecard />
+      ) : (
+        <DesignTokens />
       )}
     </div>
   )

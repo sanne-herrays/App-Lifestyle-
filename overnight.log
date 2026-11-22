@@ -1561,3 +1561,66 @@ The honest, clearly-labeled preview toggle is a reviewer aid over real ledger lo
 tasks.json updated (`in_review` → `completed`) and PROGRESS.md logged.
 
 APPROVED
+[main b4fc4a8] feat: complete autonomous task
+ 10 files changed, 1667 insertions(+), 2 deletions(-)
+ create mode 100644 prototype/src/components/ProgressiveChallenge.css
+ create mode 100644 prototype/src/components/ProgressiveChallenge.tsx
+ create mode 100644 prototype/src/lib/challenge.test.ts
+ create mode 100644 prototype/src/lib/challenge.ts
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   93df43d..b4fc4a8  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Mon Nov 23 00:10:05 CET 2026
+==========================================
+TASK-030 complete and left at `in_review` (not committed, per the workflow rules). Summary of the single task executed this session:
+
+## TASK-030 — Create visual and motion design tokens
+
+**What the task needed:** "Tokens specify type, spacing, color, motion and contrast; all interactive elements meet WCAG 2.2 AA target."
+
+**Delivered** (following the established *pure lib + node-runnable test + reachable surface* pattern), unifying the warm-paper palette that every component had been re-declaring locally into one source of truth:
+
+| File | Role |
+|---|---|
+| `src/lib/designTokens.ts` | Framework-agnostic token source — palette, type/spacing/radius ramps, fonts, motion, **a real WCAG 2.1/2.2 contrast engine**, and `INTERACTIVE_CONTRACTS` enumerating every interactive fg/bg pair + its AA role |
+| `src/styles/tokens.css` | `--hr-*` CSS mirror (imported in `main.tsx`) + global `prefers-reduced-motion` collapse |
+| `src/lib/designTokens.test.ts` | 153 deterministic cases, incl. a TS↔CSS drift guard that reads the CSS from disk |
+| `src/components/DesignTokens.{tsx,css}` | "Design tokens" tab rendering live contrast verdicts, palette, ramps, motion samples |
+
+**The accessibility work is the substance:** the contrast engine uncovered that the brand fill-hues fail as *text* (gold `#e09a38` → 2.3:1, white-on-green `#5f9e7e` → 3.1:1) and that the app's `dawn` focus ring fails 3:1 on paper. So the system adds darkened `…Ink` text siblings, a `greenDeep` button fill (white → 4.87:1), and a dedicated AA-safe `--hr-focus`. **All 12 interactive contracts now clear their WCAG 2.2 AA threshold** — proven by the test, not just asserted (the guard even catches the real legacy failure).
+
+**Verified:** `npm run build` → exit 0 (strict, zero warnings, 60 modules) · `npm run lint` → clean · token test 153/153 · all 5 regressions pass · banned-pattern & danger-hue greps clean · `tasks.json` well-formed (22 completed / 7 blocked / 1 in_review / 13 pending).
+
+Not committed. Next pending Experience build after approval: **TASK-031** (seven-day journey preview).
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 60 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.81 kB │ gzip:   0.45 kB
+dist/assets/index-CAEFyOlt.css   88.71 kB │ gzip:  14.04 kB
+dist/assets/index-CXIU8qa5.js   345.42 kB │ gzip: 101.50 kB
+
+✓ built in 116ms
+Review complete.
+
+**TASK-030 — Create visual and motion design tokens**
+
+I reviewed the uncommitted work against its acceptance criteria and CLAUDE.md. Rather than trust the Builder's log, I independently verified every claim:
+
+- **Build:** `npm run build` → exit 0, strict `tsc -b` + Vite, zero warnings, 60 modules.
+- **Tests:** `node src/lib/designTokens.test.ts` → **153/153 pass**. The WCAG engine is the genuine relative-luminance formula (not a mock), proven against reference values (black/white = 21:1, identical = 1:1), with a non-trivial negative test that catches the real legacy failure `white on #5f9e7e ≈ 3.14:1`.
+- **Lint:** eslint → exit 0.
+- **Acceptance criteria:** all five token groups present (type, spacing, colour, motion, contrast) and **all 12 interactive contrast contracts clear WCAG 2.2 AA** on live computation — tightest real margins secondary-on-paper 4.56:1 and focus-ring 3.94:1.
+- **TypeScript:** no `any`, no `@ts-ignore`, no TODO/placeholder/mock logic. `noUncheckedIndexedAccess` is handled properly.
+- **Zero-Guilt (§1):** palette carries no red/danger/streak hue; the one sub-AA sample renders in calm amber; motion respects `prefers-reduced-motion` globally and per-surface.
+- **No drift:** CSS↔TS parity is machine-enforced by the test reading `tokens.css` from disk.
+
+This is genuine, high-craft work — accessibility is engineered (darkened `…Ink` text siblings, AA-safe `--hr-focus` ring, decorative tokens flagged and proven never used as interactive foreground), not retrofitted. I updated `tasks.json` (TASK-030 → `completed`) and appended the approval summary to `PROGRESS.md`.
+
+APPROVED

@@ -1,0 +1,115 @@
+/* TASK-030 — HerRays design tokens (CSS custom-property layer).
+
+   The canonical CSS mirror of `src/lib/designTokens.ts`. These two files are kept
+   in lock-step by the `designTokens.test.ts` "CSS parity" case, which reads this
+   file and asserts every colour hex, type size, spacing/radius step and motion
+   duration declared in TypeScript is present here — so the token source of truth
+   cannot silently drift from what ships to the browser.
+
+   Variables are namespaced `--hr-*` so they never collide with the Vite template
+   tokens in `index.css`. Existing approved surfaces still redeclare their own
+   locals; new surfaces (and migrations) consume these.
+
+   Zero-Guilt (CLAUDE.md §1): no red / danger / penalty / streak hue anywhere in
+   this palette — warm paper, dawn, gold, calm green, one muted berry.
+   Accessibility: the `…-ink` text tokens and `--hr-focus` are tuned to clear
+   WCAG 2.2 AA (see INTERACTIVE_CONTRACTS in the TS module); the reduced-motion
+   block at the foot collapses all motion to `--hr-duration-instant`. */
+
+:root {
+  /* -- colour · surfaces -------------------------------------------------- */
+  --hr-paper: #fbf6ee;
+  --hr-paper-deep: #f5ecdf;
+  --hr-card: #fffdf9;
+
+  /* -- colour · ink (text) ------------------------------------------------ */
+  --hr-ink: #2c2420;
+  --hr-ink-soft: #7a6f63;
+  --hr-ink-faint: #a89c8c; /* decorative / non-essential text only */
+
+  /* -- colour · hairlines ------------------------------------------------- */
+  --hr-line: #ebdfcd;
+  --hr-line-soft: #f1e8da;
+
+  /* -- colour · gold (Tiny Win) ------------------------------------------- */
+  --hr-gold: #e09a38; /* fill / border / graphic */
+  --hr-gold-ink: #8a5a12; /* gold TEXT on light (AA) */
+  --hr-gold-soft: #ffe9c9;
+
+  /* -- colour · calm green (progression) ---------------------------------- */
+  --hr-green: #5f9e7e; /* fill / dot / border */
+  --hr-green-deep: #3f7d60; /* button fill under white; green text on card */
+  --hr-green-ink: #35684e; /* green TEXT on a green tint (AA) */
+  --hr-green-soft: #e4efe7;
+
+  /* -- colour · muted berry (Everyday Adventures) ------------------------- */
+  --hr-berry: #de6a80; /* fill / border */
+  --hr-berry-ink: #a23651; /* berry TEXT on light (AA) */
+
+  /* -- colour · dawn & interaction ---------------------------------------- */
+  --hr-dawn: #ff9d6e; /* sunrise glow (non-text) */
+  --hr-focus: #c75b2a; /* focus ring, >=3:1 vs paper & card */
+  --hr-on-accent: #ffffff; /* text on a saturated accent fill */
+
+  /* -- typography · families ---------------------------------------------- */
+  --hr-font-display: 'Fraunces', Georgia, serif;
+  --hr-font-body: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+
+  /* -- typography · size ramp --------------------------------------------- */
+  --hr-size-caption: 12px;
+  --hr-size-small: 13px;
+  --hr-size-body: 15px;
+  --hr-size-body-lg: 17px;
+  --hr-size-title-sm: 20px;
+  --hr-size-title: 24px;
+  --hr-size-display: 32px;
+  --hr-size-display-lg: 44px;
+
+  /* -- spacing ramp (4px base) -------------------------------------------- */
+  --hr-space-xs: 4px;
+  --hr-space-sm: 8px;
+  --hr-space-md: 12px;
+  --hr-space-lg: 16px;
+  --hr-space-xl: 20px;
+  --hr-space-xxl: 24px;
+  --hr-space-xxxl: 32px;
+  --hr-space-huge: 40px;
+
+  /* -- radius ramp -------------------------------------------------------- */
+  --hr-radius-sm: 6px;
+  --hr-radius-md: 14px;
+  --hr-radius-lg: 18px;
+  --hr-radius-xl: 28px;
+  --hr-radius-pill: 999px;
+
+  /* -- motion · durations ------------------------------------------------- */
+  --hr-duration-instant: 0ms;
+  --hr-duration-fast: 120ms;
+  --hr-duration-base: 200ms;
+  --hr-duration-slow: 320ms;
+
+  /* -- motion · easings --------------------------------------------------- */
+  --hr-ease-standard: cubic-bezier(0.2, 0.9, 0.2, 1);
+  --hr-ease-linear: linear;
+}
+
+/* Accessible motion: honour the OS "reduce motion" setting globally. Any surface
+   built on these tokens that drives transitions/animations from --hr-duration-*
+   inherits an instant, non-vestibular-triggering experience here. Components that
+   hard-code their own durations still carry their own reduced-motion blocks. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --hr-duration-fast: 0ms;
+    --hr-duration-base: 0ms;
+    --hr-duration-slow: 0ms;
+  }
+}
+
+/* A JS-driven escape hatch mirroring the media query, for surfaces that toggle a
+   `.hr-reduce` class from `useReducedMotion` (keeps parity with the existing
+   `.reduce` convention used by other components). */
+.hr-reduce {
+  --hr-duration-fast: 0ms;
+  --hr-duration-base: 0ms;
+  --hr-duration-slow: 0ms;
+}

@@ -331,7 +331,7 @@
       "title": "Create visual and motion design tokens",
       "workstream": "Experience",
       "description": "Define a reusable premium visual language and accessible motion system.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Tokens specify type, spacing, color, motion and contrast; all interactive elements meet WCAG 2.2 AA target."
       ],
