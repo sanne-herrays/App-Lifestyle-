@@ -2,6 +2,27 @@
 
 ## 2026-11-22
 
+### TASK-003 — Reviewer approval · status: completed
+- **APPROVED.** Acceptance criterion met and exceeded: `docs/research/competitor-feature-inventory.md` §3 inventories **42 deduplicated features** (≥30 required) categorized across all six required dimensions — onboarding (8), action (9), progression (9), social (5), personalization (6), monetization (5); the §3.6 count check and §7 coverage checklist reconcile exactly to 42.
+- **Traceability & craft verified:** All 20 exemplar apps trace to TASK-001/002 with no new apps introduced; spot-checked signature attributions against the source teardowns and confirmed verbatim — Loop's exponential-moving-average "habit strength" (F21), Way of Life's Yes/No/Skip (F11), and Atoms' "I am the kind of person who…" identity framing (F03). Real deduplication rule (§2.2 mechanism-not-art), original frameworks (three-tier map, prevalence×verdict distribution, ⭕ open-gap analysis, §4.4 bill of materials). No `[TBD]`, placeholders, or filler.
+- **Standards confirmed:** Zero-Guilt upheld — brittle streak, XP economy, leaderboards, time-window and early hard paywall all scored 🚫 and routed to TASK-004; F26 habit-graduation gap surfaced as the signature differentiator per PRD Principle 5. `cd prototype && npm run build` → clean (tsc strict + Vite, `✓ built in 96ms`); no `any`/`@ts-ignore`/`TODO` in `prototype/src` (research-only task, no prototype changes).
+
+### TASK-003 — Create competitor feature inventory · status: in_review
+- **Deliverable:** `docs/research/competitor-feature-inventory.md` (~160 lines).
+- **Built:** Deduplicated capability taxonomy that re-cuts the TASK-001/002 evidence base (all 20 apps) *by feature* instead of *by product*.
+  - **42 features** inventoried across all six required categories: onboarding (F01–F08), action (F09–F17), progression (F18–F26), social (F27–F31), personalization (F32–F37), monetization (F38–F42) — exceeds the ≥30 acceptance threshold.
+  - Each feature carries: representative exemplar apps, a prevalence label (table-stakes / common / rare-signature), a one-line mechanism pointer, and a Zero-Guilt verdict (✅ adopt / ⚠️ adapt / 🚫 reject / ⭕ open gap).
+  - Explicit deduplication rule (§2.2): same-mechanism capabilities collapsed with multiple exemplars (e.g. all progress rings → F18); behaviorally-distinct metrics kept separate (brittle streak F19 ≠ decaying strength F21).
+  - Cross-cutting synthesis: three-tier map (table-stakes/differentiator/anti-pattern), seven ⭕ open gaps with their HerRays home task, prevalence×verdict distribution table, and a composite "bill of materials" (§4.4) assembled only from ✅/⭕ rows.
+  - Key finding surfaced: **F26 habit graduation/taper is absent in all 20 products** — HerRays' clearest differentiator (PRD Principle 5) and its hardest commercial question (routed to TASK-038).
+  - Handoff table (§5) wires features to TASK-004 (anti-patterns), TASK-005 (evidence grading), TASK-011–013 (concepts), TASK-014 (scorecard), TASK-020–032 (experience), TASK-038 (economics).
+- **Verified:**
+  - Acceptance criterion met — ≥30 features (42) categorized across all six dimensions; count check in §3 and coverage checklist §7.
+  - Fully traceable: every feature grounded in an app already documented in TASK-001/002; no new apps introduced; no `[TBD]`/placeholder text.
+  - Zero-Guilt alignment upheld — 6 outright rejects (streak reset, XP economy, leaderboards, time-window, hard paywall) routed to TASK-004 with forward pointers; engagement-≠-efficacy caution restated.
+  - `cd prototype && npm run build` → exit code 0 (tsc strict + Vite, `✓ built in 95ms`).
+- **Note:** Research-only task; no `prototype/src` changes. Not committed (awaiting Reviewer approval per CLAUDE.md workflow rules).
+
 ### TASK-001 — Audit 12 direct habit-app competitors · status: in_review
 - **Deliverable:** `docs/research/competitor-teardown-direct-habit-apps.md` (240 lines).
 - **Built:** Publication-grade competitive teardown of 12 named direct habit apps (Finch, Habitica, Streaks, (Not Boring) Habits, Fabulous, Atoms, Way of Life, Productive, Habitify, HabitKit, Loop Habit Tracker, Routinery).

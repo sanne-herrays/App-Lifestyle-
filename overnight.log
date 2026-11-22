@@ -85,3 +85,61 @@ dist/assets/index-GpEN3EET.js   222.44 kB │ gzip: 69.28 kB
 TASK-002 passes its acceptance criterion and every CLAUDE.md standard. `tasks.json` is updated to `completed` and the approval is logged in `PROGRESS.md`.
 
 APPROVED
+[main 7e230bc] feat: complete autonomous task
+ 4 files changed, 241 insertions(+), 1 deletion(-)
+ create mode 100644 docs/research/adjacent-category-audit.md
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   8d326b1..7e230bc  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Sun Nov 22 20:42:40 CET 2026
+==========================================
+TASK-003 complete and advanced to `in_review`. Exiting per instructions (no commit).
+
+## Summary
+
+**Task executed:** TASK-003 — Create competitor feature inventory (first `pending` task in `tasks.json`).
+
+**Deliverable:** `docs/research/competitor-feature-inventory.md` — a deduplicated capability taxonomy that re-cuts the TASK-001/002 evidence (all 20 apps) *by feature* rather than *by product*.
+
+**What it contains:**
+- **42 features** across all six required categories — onboarding (8), action (9), progression (9), social (5), personalization (6), monetization (5) — exceeding the ≥30 acceptance threshold.
+- Every feature carries exemplar apps, a prevalence label, a mechanism pointer, and a Zero-Guilt verdict (✅/⚠️/🚫/⭕).
+- Explicit deduplication rule, a three-tier strategic map (table-stakes / differentiator / anti-pattern), seven open-gap findings, a prevalence×verdict distribution, and a composite "bill of materials" built only from adopt/open-gap features.
+- Key finding: **habit graduation (F26) is absent in all 20 products** — flagged as HerRays' clearest differentiator and hardest commercial question.
+- A handoff table wiring features to downstream tasks (004, 005, 011–013, 014, 020–032, 038).
+
+**Verification:**
+- Acceptance criterion met (42 features, six categories; count check + coverage checklist included).
+- Fully traceable to prior research; no placeholder text; Zero-Guilt rejects routed to TASK-004.
+- `cd prototype && npm run build` → **exit 0** (tsc strict + Vite, built in 95ms).
+
+**Status changes:** `tasks.json` TASK-003 → `in_review`; `PROGRESS.md` updated with a factual build log. Not committed — awaiting Reviewer approval per CLAUDE.md.
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 20 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.45 kB │ gzip:  0.29 kB
+dist/assets/react-CHdo91hT.svg    4.12 kB │ gzip:  2.06 kB
+dist/assets/vite-BF8QNONU.svg     8.70 kB │ gzip:  1.60 kB
+dist/assets/hero-CLDdwZDr.png    13.05 kB
+dist/assets/index-D64VDMd1.css    4.10 kB │ gzip:  1.47 kB
+dist/assets/index-GpEN3EET.js   222.44 kB │ gzip: 69.28 kB
+
+✓ built in 79ms
+Review complete. TASK-003 (`competitor-feature-inventory.md`) was assessed against its acceptance criterion and every CLAUDE.md rule:
+
+- **Acceptance criterion** (≥30 features across six categories): met and exceeded — 42 deduplicated features, counts reconcile exactly across onboarding/action/progression/social/personalization/monetization.
+- **No filler**: concrete frameworks throughout (mechanism-based dedup rule, three-tier strategic map, prevalence×verdict distribution, open-gap analysis, bill of materials). No `[TBD]`/`Lorem ipsum`/placeholder text.
+- **Traceable, not fabricated**: all 20 apps map back to TASK-001/002; I verified the load-bearing signature claims verbatim against the source teardowns (Loop EMA strength, Way of Life Skip, Atoms identity framing).
+- **Zero-Guilt**: punitive mechanics (streak reset, XP economy, leaderboards, time-window, hard paywall) are explicitly rejected and routed to TASK-004, not adopted.
+- **Strict TypeScript**: `npm run build` exits 0 (tsc strict + Vite); no `any`/`@ts-ignore`/`TODO` in `prototype/src`.
+
+tasks.json updated `in_review` → `completed`; PROGRESS.md appended with the approval summary.
+
+APPROVED

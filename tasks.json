@@ -29,7 +29,7 @@
       "title": "Create competitor feature inventory",
       "workstream": "Research",
       "description": "Normalize observed competitor capabilities into a deduplicated feature taxonomy.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "At least 30 features categorized by onboarding, action, progression, social, personalization or monetization."
       ],
