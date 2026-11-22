@@ -6,6 +6,7 @@ import LittleWinCard from './components/LittleWinCard'
 import TinyActionFallback from './components/TinyActionFallback'
 import HabitCueScheduler from './components/HabitCueScheduler'
 import ActionCatalog from './components/ActionCatalog'
+import RecommendationDemo from './components/RecommendationDemo'
 
 /**
  * Prototype shell. Defaults to the active TASK-020 deliverable ("Your Little
@@ -15,7 +16,7 @@ import ActionCatalog from './components/ActionCatalog'
  * so no deliverable is hidden.
  */
 
-type View = 'card' | 'catalog' | 'cues' | 'fallback' | 'flows' | 'scorecard'
+type View = 'card' | 'recommend' | 'catalog' | 'cues' | 'fallback' | 'flows' | 'scorecard'
 
 function App() {
   const [view, setView] = useState<View>('card')
@@ -30,6 +31,14 @@ function App() {
           onClick={() => setView('card')}
         >
           Little Win card
+        </button>
+        <button
+          type="button"
+          className={`shell-tab${view === 'recommend' ? ' on' : ''}`}
+          aria-current={view === 'recommend'}
+          onClick={() => setView('recommend')}
+        >
+          Suggestion
         </button>
         <button
           type="button"
@@ -74,6 +83,8 @@ function App() {
       </nav>
       {view === 'card' ? (
         <LittleWinCard />
+      ) : view === 'recommend' ? (
+        <RecommendationDemo />
       ) : view === 'catalog' ? (
         <ActionCatalog />
       ) : view === 'cues' ? (

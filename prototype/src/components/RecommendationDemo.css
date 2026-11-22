@@ -1,0 +1,303 @@
+/* TASK-025 — Action recommendation rules (demo).
+   HerRays "sunrise" language (matches flows.css / ActionCatalog / LittleWinCard).
+   Scoped under .rec; palette tokens redeclared so the surface is self-contained.
+
+   Standards wired into the styles:
+   - Zero-Guilt (CLAUDE.md §1): warm paper + calm-green accent only. The result —
+     including the no-match fallback — reads as a calm, positive offer, never a
+     red warning. Contraindication opt-outs are neutral "good to know" chips.
+   - Accessibility: native radio/checkbox inputs drive each chip (full keyboard
+     and arrow-key behaviour for free); the input is visually hidden but focus is
+     shown via :focus-within rings. The result region is an aria-live status.
+     All motion is disabled under prefers-reduced-motion at the foot of the file.
+*/
+
+.rec {
+  --paper: #fbf6ee;
+  --card: #fffdf9;
+  --ink: #2c2420;
+  --ink-soft: #7a6f63;
+  --ink-faint: #a89c8c;
+  --line: #ebdfcd;
+  --line-soft: #f1e8da;
+  --accent: #5f9e7e;
+  --accent-soft: #eaf3ec;
+  --sand: #cdb48a;
+
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 40px) clamp(18px, 4vw, 34px) clamp(28px, 4vw, 44px);
+  color: var(--ink);
+  font-family: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0.1px;
+}
+
+.rec *,
+.rec *::before,
+.rec *::after {
+  box-sizing: border-box;
+}
+
+.rec-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.rec-glow {
+  position: absolute;
+  inset: -12% -10% auto -10%;
+  height: 220px;
+  background: radial-gradient(60% 100% at 50% 0%, rgba(224, 154, 56, 0.16), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.rec-head,
+.rec-field,
+.rec-result {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- header ---- */
+.rec-eyebrow {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.rec-title {
+  margin: 0 0 8px;
+  font-size: clamp(22px, 4.4vw, 28px);
+  line-height: 1.15;
+  font-weight: 650;
+}
+
+.rec-sub {
+  margin: 0 0 22px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* ---- fields ---- */
+.rec-field {
+  margin: 0 0 18px;
+  padding: 0;
+  border: 0;
+}
+
+.rec-legend {
+  padding: 0;
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.rec-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rec-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 15px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  font-size: 14px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease, transform 0.12s ease;
+}
+
+.rec-chip input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+}
+
+.rec-chip:hover {
+  border-color: var(--accent);
+}
+
+.rec-chip.on {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: #2f5f49;
+  font-weight: 600;
+}
+
+.rec-chip:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.rec-chip:active {
+  transform: scale(0.98);
+}
+
+.rec-hint {
+  margin: 10px 0 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--ink-faint);
+}
+
+/* ---- result ---- */
+.rec-result {
+  margin-top: 26px;
+}
+
+.rec-reason {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.rec-card {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--card);
+  padding: 20px;
+  box-shadow: 0 10px 30px -22px rgba(44, 36, 32, 0.5);
+  animation: rec-rise 0.3s ease both;
+}
+
+.rec-card.fallback {
+  border-style: dashed;
+  background: linear-gradient(180deg, #fffdf9, #fcf7ef);
+}
+
+.rec-card-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.rec-action {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.25;
+  font-weight: 650;
+}
+
+.rec-effort {
+  flex: none;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: #2f5f49;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.rec-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.rec-grade,
+.rec-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.rec-grade {
+  background: #eef4ee;
+  color: #3c6b52;
+  border: 1px solid #d9e8df;
+}
+
+.rec-tag {
+  background: #f6efe2;
+  color: #7a6238;
+  border: 1px solid #ece0cb;
+}
+
+.rec-note {
+  margin: 14px 0 0;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.rec-adapt {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.rec-adapt li {
+  margin: 2px 0;
+}
+
+.rec-claim {
+  margin: 14px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 13px;
+  line-height: 1.5;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.rec-stats {
+  margin: 12px 2px 0;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+}
+
+@keyframes rec-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rec-chip,
+  .rec-card {
+    transition: none;
+    animation: none;
+  }
+  .rec-chip:active {
+    transform: none;
+  }
+}

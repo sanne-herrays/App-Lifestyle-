@@ -276,7 +276,7 @@
       "title": "Implement action recommendation rules",
       "workstream": "Experience",
       "description": "Select a suitable micro-action from explicit preferences and exclusions.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Deterministic test cases cover goal fit, time availability, contraindication exclusions and no-match fallback."
       ],

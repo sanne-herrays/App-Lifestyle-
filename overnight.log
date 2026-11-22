@@ -1235,3 +1235,50 @@ TASK-024 passes review. All acceptance criteria are met and verified independent
 `tasks.json` updated (`in_review` → `completed`) and `PROGRESS.md` appended with the review verdict.
 
 APPROVED
+[main c2dd0c9] feat: complete autonomous task
+ 8 files changed, 1420 insertions(+), 6 deletions(-)
+ create mode 100644 prototype/src/components/ActionCatalog.css
+ create mode 100644 prototype/src/components/ActionCatalog.tsx
+ create mode 100644 prototype/src/lib/actionCatalog.ts
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   5c5cc5d..c2dd0c9  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Sun Nov 22 23:08:26 CET 2026
+==========================================
+TASK-025 is complete and in review. Summary of what I built and verified:
+
+## TASK-025 — Implement action recommendation rules → `in_review`
+
+This was the first `pending` task (008–010/016–019 blocked; 011–015 + 020–024 completed), and the one the TASK-024 note pointed to as consuming the catalog's `goal` + `contraindications` fields.
+
+**Deliverables**
+- **`prototype/src/lib/recommendation.ts`** — a pure, framework-agnostic `recommend(input)` engine. It selects one micro-action from explicit preferences (`goal`, `timeAvailableSeconds`) and explicit exclusions (`declaredContexts`, `excludeCategories`) over a passed-in catalog. The catalog is an input (not read from module scope), ranking is total (full-fit › evidence grade › catalog order), and all catalog imports are **type-only** so the engine has no runtime dependency on the React-bound modules.
+- **`prototype/src/lib/recommendation.test.ts`** — 19 dependency-free deterministic cases (the prototype has no test runner). They're type-checked by `tsc -b` **and** directly executable via `node` using Node v25's native TypeScript stripping.
+- **`prototype/src/components/RecommendationDemo.tsx` + `.css`** — an interactive "Suggestion" tab wiring the engine to the real TASK-024 catalog (default view unchanged; nothing hidden).
+
+**Acceptance criterion** ("Deterministic test cases cover goal fit, time availability, contraindication exclusions and no-match fallback") — all four covered: **goal fit** (3), **time availability** (3, incl. full→easier time downgrade), **contraindication exclusions** (6: skip-for-now/offer-easier/advise-check + category opt-out), **no-match fallback** (6: smallest-surviving → goal relaxation → universal gentle pause → empty catalog, all Zero-Guilt).
+
+**Verified**
+- `npm run build` → **exit 0**, zero warnings, 42 modules
+- `npm run lint` → **exit 0**
+- `node src/lib/recommendation.test.ts` → **19/19 passed, exit 0**
+- Banned-pattern grep over all new/changed files → **no matches**
+- `tasks.json` valid JSON (17 completed / 7 blocked / 1 in_review / 18 pending); TASK-025 → `in_review`
+
+Per instructions, **not committed** — awaiting the Reviewer step. Exiting now.
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 42 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.81 kB │ gzip:  0.46 kB
+dist/assets/index-6Zgq_WWG.css   54.26 kB │ gzip:  9.43 kB
+dist/assets/index-P3z0YMMo.js   304.64 kB │ gzip: 90.24 kB
+
+✓ built in 88ms
+APPROVED
