@@ -232,7 +232,7 @@
       "title": "Add completion haptic feedback adapter",
       "workstream": "Experience",
       "description": "Implement optional platform haptics triggered only by successful completion.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Supported iOS devices vibrate once on completion; unsupported devices silently degrade; setting disables haptics."
       ],

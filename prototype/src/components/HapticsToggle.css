@@ -1,0 +1,74 @@
+/* TASK-021 — Completion haptics setting control.
+   HerRays "sunrise" language (matches LittleWinCard.css / flows.css). Zero-Guilt
+   (CLAUDE.md §1): no red/penalty colour; "off" is a calm neutral, not a warning.
+   Motion is disabled under prefers-reduced-motion at the foot of this file. */
+
+.haptics-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-family: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.86rem;
+  color: #7a6f63;
+}
+
+.haptics-label {
+  letter-spacing: 0.1px;
+}
+
+.haptics-unavailable {
+  max-width: 34ch;
+  margin: 0 auto;
+  line-height: 1.5;
+  color: #a89c8c;
+  text-align: center;
+}
+
+.haptics-switch {
+  position: relative;
+  flex: 0 0 auto;
+  width: 46px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid #ebdfcd;
+  border-radius: 999px;
+  background: #f1e8da;
+  cursor: pointer;
+  transition: background 220ms ease, border-color 220ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.haptics-switch.on {
+  border-color: var(--accent, #e09a38);
+  background: linear-gradient(180deg, #ffb877, var(--accent, #e09a38));
+}
+
+.haptics-switch:focus-visible {
+  outline: 2px solid var(--accent, #e09a38);
+  outline-offset: 3px;
+}
+
+.haptics-knob {
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fffdf9;
+  box-shadow: 0 1px 3px rgba(44, 36, 32, 0.28);
+  transform: translate(0, -50%);
+  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.haptics-switch.on .haptics-knob {
+  transform: translate(18px, -50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .haptics-switch,
+  .haptics-knob {
+    transition: none;
+  }
+}

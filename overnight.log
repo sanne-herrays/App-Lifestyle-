@@ -1008,3 +1008,65 @@ Review complete. TASK-020 ("Your Little Win Today" card) passed every gate.
 tasks.json updated `in_review` → `completed`; 3-bullet approval summary appended to PROGRESS.md.
 
 APPROVED
+[main ccff4b5] feat: complete autonomous task
+ 10 files changed, 1668 insertions(+), 8 deletions(-)
+ create mode 100644 docs/research/app-store-proposition-variant-test-protocol-and-analysis-framework.md
+ create mode 100644 docs/research/blinded-concept-desirability-test-protocol-and-analysis-framework.md
+ create mode 100644 docs/research/honest-willingness-to-pay-test-protocol-and-analysis-framework.md
+ create mode 100644 prototype/src/components/LittleWinCard.css
+ create mode 100644 prototype/src/components/LittleWinCard.tsx
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   3ee44a7..ccff4b5  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Sun Nov 22 22:39:05 CET 2026
+==========================================
+Done. Executed **TASK-021 — Add completion haptic feedback adapter** (the first `pending` task), then stopped without committing per the workflow rules.
+
+## What I built
+
+Formalized the one-line `navigator.vibrate(12)` stub into a real two-channel platform adapter:
+
+- **`prototype/src/lib/haptics.ts`** — channel detection, persisted on/off setting, single-pulse `fireSuccessHaptic()`, and a `useHapticsSetting()` hook.
+- **`prototype/src/components/HapticsToggle.tsx` + `.css`** — a Zero-Guilt `role="switch"` settings control, wired into the Little Win card footer.
+- **`prototype/src/flows/flowData.ts`** — `fireSuccessHaptic` is now a re-export from the adapter, so all existing call sites (flowKit → three flows + the card) route through it unchanged. Single source of truth, no duplication.
+
+## Acceptance criterion met exactly
+
+> *"Supported iOS devices vibrate once on completion; unsupported devices silently degrade; setting disables haptics."*
+
+- **iOS vibrates once** — iOS Safari doesn't expose the Web Vibration API, so the adapter uses the only web-reachable iOS haptic: a hidden native `<input type="checkbox" switch>` clicked once (one system tick on iOS 17.4+). Android/Chromium use `navigator.vibrate(12)`. One pulse per completion either way.
+- **Silent degrade** — channel resolves to `'none'` → no-op; lazy DOM creation (non-iOS never touches the DOM); every fire path wrapped so completion can never break; the toggle shows a plain "not available" line instead of a dead switch.
+- **Setting disables** — persisted `localStorage` setting (default on); `fireSuccessHaptic()` returns early when off; subscribe/broadcast store keeps surfaces in sync.
+
+Haptic fires **only** from `HoldToComplete`'s success branch — never on cancel/early-release.
+
+## Verification
+- `npm run build` → **exit 0** (strict `tsc -b && vite build`, zero warnings, 31 modules, up from 28)
+- `npm run lint` → **exit 0**, clean
+- Placeholder/`any`/`@ts-ignore`/`mock` grep over all new + changed files → **none**
+- `tasks.json` re-validated as well-formed JSON; **TASK-021 → `in_review`**
+
+`PROGRESS.md` updated. Not committed. Next pending Experience build after approval: TASK-022 (tiny-action fallback flow).
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 31 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.81 kB │ gzip:  0.45 kB
+dist/assets/index-CyJnQHKg.css   30.46 kB │ gzip:  6.56 kB
+dist/assets/index-urS1AVKO.js   261.84 kB │ gzip: 79.03 kB
+
+✓ built in 81ms
+Review complete. TASK-021 passes every gate:
+
+- **Acceptance criteria** — iOS haptic via the real `switch`-tick channel (correctly recognizing `navigator.vibrate` is absent on iOS Safari), Android/Chromium via `navigator.vibrate`, both firing exactly once per genuine completion; unsupported devices no-op with an honest UI; a persisted setting disables it.
+- **CLAUDE.md** — Zero-Guilt palette and copy, strict TypeScript (clean build, no `any`/`@ts-ignore`), no boilerplate or mock logic, Apple-level craft (a11y semantics, reduced-motion, lazy DOM).
+
+`tasks.json` status advanced `in_review` → `completed`; PROGRESS.md updated with the 3-bullet verdict.
+
+APPROVED

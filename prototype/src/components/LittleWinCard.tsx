@@ -27,6 +27,7 @@
 
 import { useRef, useState } from 'react'
 import { HoldToComplete } from '../flows/flowKit'
+import HapticsToggle from './HapticsToggle'
 import {
   ACCENT,
   actionForGoal,
@@ -213,6 +214,12 @@ export default function LittleWinCard() {
           </button>
         </div>
       )}
+
+      {/* Completion haptic setting (TASK-021). Buzz is on by default; this turns
+          it off. Hidden channels degrade silently inside HapticsToggle. */}
+      <div className="lwc-settings">
+        <HapticsToggle />
+      </div>
     </div>
   )
 }

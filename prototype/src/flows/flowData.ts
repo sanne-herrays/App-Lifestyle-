@@ -163,15 +163,11 @@ export function useReducedMotion(): boolean {
 }
 
 /**
- * Success-only haptic. Feature-detected and silently degrades where unsupported
- * (the full platform adapter is TASK-021); fires only on a real completion.
+ * Success-only haptic. Now backed by the TASK-021 platform adapter
+ * (`src/lib/haptics.ts`): channel-detected (Vibration API on Android/Chromium,
+ * the native switch tick on iOS), honours the user setting, and silently
+ * degrades where unsupported. Re-exported here so the existing first-session
+ * flow call sites keep their import path unchanged. Fires only on a real
+ * completion, exactly once.
  */
-export function fireSuccessHaptic(): void {
-  if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
-    try {
-      navigator.vibrate(12)
-    } catch {
-      /* no-op: haptics are a progressive enhancement, never required */
-    }
-  }
-}
+export { fireSuccessHaptic } from '../lib/haptics'

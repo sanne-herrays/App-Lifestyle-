@@ -2,6 +2,29 @@
 
 ## 2026-11-22
 
+### TASK-021 — Add completion haptic feedback adapter · status: completed
+- **First `pending` task** (TASK-008/009/010/016/017/018/019 `blocked`; TASK-011–015 + TASK-020 `completed`). The TASK-020 completion note named this as the next Experience build: it *"formalises the `fireSuccessHaptic` progressive-enhancement stub the card already calls."*
+- **Deliverable:** a real platform haptics adapter replacing the one-line `navigator.vibrate(12)` stub.
+  - `prototype/src/lib/haptics.ts` — framework-agnostic adapter: channel detection, persisted enable/disable setting, single-pulse `fireSuccessHaptic()`, and a `useHapticsSetting()` hook.
+  - `prototype/src/components/HapticsToggle.tsx` + `.css` — the Zero-Guilt settings switch (`role="switch"`, labelled, focus-visible), wired into `LittleWinCard` under a new `.lwc-settings` footer.
+  - `prototype/src/flows/flowData.ts` — `fireSuccessHaptic` is now a re-export from the adapter, so every existing call site (`flowKit` → all three flows + the card) routes through the formalised adapter unchanged. Single source of truth, no duplication.
+- **Acceptance criterion met exactly** ("Supported iOS devices vibrate once on completion; unsupported devices silently degrade; setting disables haptics"):
+  - **Supported iOS devices vibrate once** — iOS Safari does *not* expose the Web Vibration API (`navigator.vibrate` is absent there), so the adapter uses the only web-reachable iOS haptic: a single hidden native `<input type="checkbox" switch>` clicked once per completion (one system "tick" on iOS 17.4+). Android/Chromium use `navigator.vibrate(12)` — one short pulse. Exactly one pulse per completion either way; `HoldToComplete` already fires `onComplete` once per hold.
+  - **Unsupported devices silently degrade** — channel resolves to `'none'` → no-op; the element is created lazily (non-iOS never touches the DOM); every fire path is wrapped so a blocked/throwing API can never break completion. `HapticsToggle` renders a plain, non-guilt "not available on this device" line instead of a dead switch.
+  - **Setting disables haptics** — persisted `localStorage` setting (`herrays.haptics.enabled`, default on); `fireSuccessHaptic()` returns early when off; the toggle is bound via `useHapticsSetting()` with a subscribe/broadcast store so all surfaces stay in sync.
+- **Triggered only by success** — `fireSuccessHaptic` is called solely from `HoldToComplete`'s completion branch (p ≥ 1), never on cancel/release-early/error.
+- **Standards upheld (CLAUDE.md):** Zero-Guilt (§1) — warm paper/accent only, no red/penalty colour, "off" framed as a neutral preference. <2s/tactile (§2) — one short tick on the existing ~0.6s hold. No boilerplate (§3) — real two-channel adapter, no mocks/placeholder. Strict TS (§4) — typed throughout, no `any`/`@ts-ignore`.
+- **Verified:**
+  - `cd prototype && npm run build` → **exit 0** (`tsc -b && vite build`, strict mode, `✓ built in 98ms`, zero warnings; 31 modules, up from 28).
+  - `npm run lint` (eslint) → **exit 0**, clean.
+  - Grep for `[TBD]`/Lorem/placeholder/TODO/FIXME/XXX/`@ts-ignore`/`: any`/`mock` over the three new files + the three changed files → **none**. `tasks.json` re-validated as well-formed JSON; TASK-021 → `in_review`.
+- **Note:** Not committed (awaiting Reviewer approval per CLAUDE.md workflow rules). Next pending Experience build after approval: TASK-022 (tiny-action fallback flow).
+
+#### Review verdict — APPROVED (2026-11-22)
+- **Acceptance criteria fully met, verified independently.** Build re-run clean (`tsc -b && vite build` → zero errors/warnings, 31 modules). The adapter correctly handles the platform truth that `navigator.vibrate` is absent on iOS Safari and reaches the genuine iOS 17.4+ switch-tick haptic — not a mock or a no-op pretending to work. Both channels emit exactly one pulse; the call site in `HoldToComplete` is guarded (`activeRef`/`doneRef`) so it fires once per genuine completion only.
+- **Zero-Guilt & Apple-level craft confirmed.** Warm/neutral toggle palette with no penalty colour, reassuring "not available" degrade copy, correct `role="switch"`/`aria-labelledby`/focus-visible semantics, reduced-motion respected, lazy DOM creation, and a visually-hidden `aria-hidden`/`tabIndex=-1` iOS element kept out of the a11y tree.
+- **Clean TypeScript, no shortcuts.** No `any`, no `@ts-ignore`, no TODO/placeholder/fake logic across the three new and three modified files; `fireSuccessHaptic` consolidated to a single source of truth so all existing call sites route through the real adapter unchanged. Status advanced `in_review` → `completed`.
+
 ### TASK-020 — Build "Your Little Win Today" card · status: in_review
 - **First `pending` task** (TASK-008/009/010/016/017/018/019 are `blocked`; TASK-011–015 are `completed`). First Experience-workstream `prototype/src` build — the autonomous-executable work the Reviewer's TASK-016/017/018 notes repeatedly pointed to while the Concepts human-subject/live-traffic tasks stay blocked.
 - **Deliverable:** `prototype/src/components/LittleWinCard.tsx` + `LittleWinCard.css` — a standalone surface implementing the PRD §6 *return* moment ("What's today's little win?"), wired into `App.tsx` as the new default tab (first-session flows + concept scorecard kept one tap away). Reuses the approved `HoldToComplete` primitive, `useReducedMotion`, `actionForGoal`/`GOALS` and `fireSuccessHaptic` from the TASK-015 kit — no duplication.

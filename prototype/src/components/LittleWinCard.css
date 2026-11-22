@@ -317,6 +317,12 @@
   outline-offset: 2px;
 }
 
+.lwc-settings {
+  margin-top: clamp(20px, 4vw, 28px);
+  padding-top: clamp(16px, 3vw, 22px);
+  border-top: 1px solid var(--line-soft);
+}
+
 @keyframes lwc-rise {
   from {
     opacity: 0;
