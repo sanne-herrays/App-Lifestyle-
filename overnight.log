@@ -1182,3 +1182,56 @@ I reviewed TASK-023 ("Build habit cue scheduler") against its acceptance criteri
 Recorded the result: `tasks.json` TASK-023 → `completed`, and a 3-bullet reviewer-approval summary appended to PROGRESS.md.
 
 APPROVED
+[main 5c5cc5d] feat: complete autonomous task
+ 8 files changed, 1543 insertions(+), 6 deletions(-)
+ create mode 100644 prototype/src/components/HabitCueScheduler.css
+ create mode 100644 prototype/src/components/HabitCueScheduler.tsx
+ create mode 100644 prototype/src/lib/cues.ts
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   aa8ad26..5c5cc5d  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Sun Nov 22 22:59:30 CET 2026
+==========================================
+Task complete. Here's what I built for **TASK-024 — Build evidence-reviewed action catalog** (the first `pending` task).
+
+## What was built
+- **`prototype/src/lib/actionCatalog.ts`** — a strictly-typed, framework-agnostic data module of **24 curated micro-actions**, each a completed **Action Evidence & Safety Record (AESR)** in the exact shape the TASK-006 rubric (`prevention-action-evidence-rubric.md` §3/§7) defines as this task's deliverable and the single source of truth TASK-025 will read.
+- **`prototype/src/components/ActionCatalog.tsx` + `.css`** — a browseable, Zero-Guilt viewer with a category filter, wired into `App.tsx` as a new "Action catalog" tab (nothing hidden).
+
+## Acceptance criterion — met and exceeded
+"At least 20 records include category, duration, evidence grade, contraindications, easier variant and review date." → **24 records**, and all six fields present on **every** record (verified: 24/24 for each field), across 8 general-benefit categories.
+
+## Grounded in the rubric, honest by construction
+- **Evidence grade** A–C only (D never ships), conservative spread; the three rubric §6 worked examples reproduced exactly.
+- **Contraindications** are *structured* (context + disposition + buildable resolution) so TASK-025 can use them as deterministic exclusion filters; each resolves to a gentler variant or a clean skip — never a scary warning.
+- **Review date** is a full record (named owner, last-reviewed, next-due by the §3.5 cadence, re-review triggers).
+- **Claim limits** sit at/below grade; a universal forbidden-framings list blocks disease-risk/quantified/cure/timeline claims (CLAUDE.md §3). Nourishment is additive-only, never restrictive.
+- **No duplication:** the four goal-signature actions reuse `ACTION_BY_GOAL`; the other 20 are new, non-colliding content.
+
+## Verification
+- `cd prototype && npm run build` → **exit 0** (tsc strict + vite, zero warnings, 39 modules).
+- `npm run lint` → **exit 0**, clean.
+- Placeholder/`any`/`@ts-ignore`/mock grep over all new + changed files → **no matches**.
+- `tasks.json` re-validated (16 completed / 7 blocked / 1 in_review / 19 pending); **TASK-024 → `in_review`**.
+
+Not committed, per the CLAUDE.md workflow rule (awaiting Reviewer approval). Next pending Experience build: TASK-025, which consumes this catalog's `goal` + `contraindications` fields.
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 39 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.81 kB │ gzip:  0.45 kB
+dist/assets/index-D01o7cYb.css   50.59 kB │ gzip:  8.87 kB
+dist/assets/index-DGKVHEwo.js   296.38 kB │ gzip: 88.03 kB
+
+✓ built in 83ms
+TASK-024 passes review. All acceptance criteria are met and verified independently (not just trusted from the Builder's notes): 24 evidence-reviewed records with all six required fields compiler-enforced, a real backing rubric, clean strict-TypeScript build and lint, zero banned patterns, and genuine zero-guilt + accessibility craft.
+
+`tasks.json` updated (`in_review` → `completed`) and `PROGRESS.md` appended with the review verdict.
+
+APPROVED

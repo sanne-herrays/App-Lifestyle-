@@ -5,15 +5,17 @@ import ConceptScorecard from './components/ConceptScorecard'
 import LittleWinCard from './components/LittleWinCard'
 import TinyActionFallback from './components/TinyActionFallback'
 import HabitCueScheduler from './components/HabitCueScheduler'
+import ActionCatalog from './components/ActionCatalog'
 
 /**
  * Prototype shell. Defaults to the active TASK-020 deliverable ("Your Little
- * Win Today" card) while keeping the cue scheduler (TASK-023), fallback flow
- * (TASK-022), approved first-session flows (TASK-015) and concept scorecard
- * (TASK-014) one tap away, so no deliverable is hidden.
+ * Win Today" card) while keeping the evidence-reviewed action catalog
+ * (TASK-024), cue scheduler (TASK-023), fallback flow (TASK-022), approved
+ * first-session flows (TASK-015) and concept scorecard (TASK-014) one tap away,
+ * so no deliverable is hidden.
  */
 
-type View = 'card' | 'cues' | 'fallback' | 'flows' | 'scorecard'
+type View = 'card' | 'catalog' | 'cues' | 'fallback' | 'flows' | 'scorecard'
 
 function App() {
   const [view, setView] = useState<View>('card')
@@ -28,6 +30,14 @@ function App() {
           onClick={() => setView('card')}
         >
           Little Win card
+        </button>
+        <button
+          type="button"
+          className={`shell-tab${view === 'catalog' ? ' on' : ''}`}
+          aria-current={view === 'catalog'}
+          onClick={() => setView('catalog')}
+        >
+          Action catalog
         </button>
         <button
           type="button"
@@ -64,6 +74,8 @@ function App() {
       </nav>
       {view === 'card' ? (
         <LittleWinCard />
+      ) : view === 'catalog' ? (
+        <ActionCatalog />
       ) : view === 'cues' ? (
         <HabitCueScheduler />
       ) : view === 'fallback' ? (

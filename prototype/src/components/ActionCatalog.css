@@ -1,0 +1,388 @@
+/* TASK-024 — Evidence-reviewed action catalog (viewer).
+   HerRays "sunrise" language (matches flows.css / LittleWinCard / HabitCueScheduler).
+   Scoped under .ac; palette tokens redeclared here so the surface is self-contained.
+
+   Standards wired into the styles:
+   - Zero-Guilt (CLAUDE.md §1): warm paper + calm-green accent only. Evidence
+     grade and safety tier are neutral *information* chips (green→sage→sand as
+     evidence softens — never red, never a warning). Contraindications read as a
+     gentle "good to know", never an alert.
+   - Accessibility: visible focus rings on every control; .ac-sr is a
+     screen-reader-only description for each grade/tier chip; all motion is
+     disabled under prefers-reduced-motion at the foot of this file.
+*/
+
+.ac {
+  --paper: #fbf6ee;
+  --card: #fffdf9;
+  --ink: #2c2420;
+  --ink-soft: #7a6f63;
+  --ink-faint: #a89c8c;
+  --line: #ebdfcd;
+  --line-soft: #f1e8da;
+  --accent: #5f9e7e;
+  --sage: #9bbfa6;
+  --sand: #cdb48a;
+
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 40px) clamp(18px, 4vw, 34px) clamp(28px, 4vw, 44px);
+  color: var(--ink);
+  font-family: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0.1px;
+}
+
+.ac *,
+.ac *::before,
+.ac *::after {
+  box-sizing: border-box;
+}
+
+.ac-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.ac-glow {
+  position: absolute;
+  inset: -12% -10% auto -10%;
+  height: 240px;
+  background:
+    radial-gradient(58% 80% at 70% 0%, rgba(95, 158, 126, 0.2), transparent 62%),
+    radial-gradient(50% 70% at 24% 0%, rgba(255, 217, 160, 0.28), transparent 58%);
+  filter: blur(6px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ac > *:not(.ac-glow) {
+  position: relative;
+  z-index: 1;
+}
+
+/* ------------------------------------------------------------- header -- */
+
+.ac-head {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.ac-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 6px;
+}
+
+.ac-headline {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(23px, 3.4vw, 29px);
+  line-height: 1.14;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+
+.ac-intro {
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 46ch;
+  margin: 0 auto;
+}
+
+/* ------------------------------------------------------------- legend -- */
+
+.ac-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 16px;
+  margin: 0 auto 18px;
+  padding: 12px 14px;
+  max-width: 48ch;
+  background: var(--card);
+  border: 1px solid var(--line-soft);
+  border-radius: 16px;
+}
+
+.ac-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+
+/* ------------------------------------------------------------ filters -- */
+
+.ac-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.ac-filter {
+  appearance: none;
+  border: 1.5px solid var(--line);
+  background: var(--card);
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.ac-filter:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--line));
+  color: var(--ink);
+}
+
+.ac-filter.on {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--card));
+  color: var(--ink);
+}
+
+.ac-filter:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.ac-count {
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+  margin: 0 0 18px;
+}
+
+/* --------------------------------------------------------------- list -- */
+
+.ac-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ac-card {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 6%, var(--card)) 0%, var(--card) 44%);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 18px 20px 16px;
+  box-shadow:
+    0 20px 44px -34px rgba(44, 36, 32, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.ac-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ac-cat {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.ac-dur {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+.ac-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 8px 0 6px;
+}
+
+.ac-easier {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin: 0 0 12px;
+}
+
+.ac-easier-tag {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-right: 8px;
+}
+
+/* ----------------------------------------------- evidence / safety chips -- */
+
+.ac-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ac-grade,
+.ac-tier {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 4px 11px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+
+/* Grade reads as information, softening green → sage → sand as evidence thins.
+   None of these is a red/danger colour (Zero-Guilt §1). */
+.ac-grade-a {
+  background: color-mix(in srgb, var(--accent) 16%, var(--card));
+  border-color: color-mix(in srgb, var(--accent) 36%, var(--line));
+  color: color-mix(in srgb, var(--accent) 72%, var(--ink));
+}
+
+.ac-grade-b {
+  background: color-mix(in srgb, var(--sage) 20%, var(--card));
+  border-color: color-mix(in srgb, var(--sage) 42%, var(--line));
+  color: color-mix(in srgb, var(--sage) 60%, var(--ink));
+}
+
+.ac-grade-c {
+  background: color-mix(in srgb, var(--sand) 20%, var(--card));
+  border-color: color-mix(in srgb, var(--sand) 44%, var(--line));
+  color: color-mix(in srgb, var(--sand) 56%, var(--ink));
+}
+
+.ac-tier {
+  background: var(--paper);
+  border-color: var(--line);
+  color: var(--ink-soft);
+}
+
+/* ---------------------------------------------------------- claim line -- */
+
+.ac-claim {
+  font-size: 13.5px;
+  line-height: 1.5;
+  font-style: italic;
+  color: var(--ink);
+  background: var(--paper);
+  border-radius: 14px;
+  padding: 10px 14px;
+  margin: 0 0 12px;
+}
+
+.ac-claim-tag {
+  display: block;
+  font-style: normal;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 4px;
+}
+
+/* ----------------------------------------------------- good-to-know notes -- */
+
+.ac-notes {
+  margin: 0 0 12px;
+}
+
+.ac-notes-head {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 6px;
+}
+
+.ac-notes-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ac-note {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  padding-left: 14px;
+  position: relative;
+}
+
+.ac-note::before {
+  content: '·';
+  position: absolute;
+  left: 2px;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.ac-note-ctx {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.ac-notes-none {
+  font-size: 13px;
+  color: var(--ink-faint);
+  margin: 0 0 12px;
+}
+
+/* -------------------------------------------------------- review line -- */
+
+.ac-review {
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--ink-faint);
+  margin: 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--line-soft);
+}
+
+/* ----------------------------------------------- reduced-motion fallback -- */
+
+@media (prefers-reduced-motion: reduce) {
+  .ac-filter {
+    transition: none !important;
+  }
+}

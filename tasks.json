@@ -265,7 +265,7 @@
       "title": "Build evidence-reviewed action catalog",
       "workstream": "Experience",
       "description": "Represent curated health micro-actions as structured records.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "At least 20 records include category, duration, evidence grade, contraindications, easier variant and review date."
       ],
