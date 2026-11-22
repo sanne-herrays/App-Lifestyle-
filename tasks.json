@@ -174,7 +174,8 @@
       "title": "Run blinded concept desirability test",
       "workstream": "Concepts",
       "description": "Compare concepts without revealing internal favorites.",
-      "status": "pending",
+      "status": "blocked",
+      "blocked_reason": "Requires human-subject research (\u226518 real recruited/consented participants run through a moderated, blinded, counterbalanced comparison of the three concepts with preference/comprehension/qualitative reasons observed) which cannot be executed in an autonomous overnight build. Same class of blocker as TASK-008/009, which the Reviewer blocked while explicitly forbidding synthetic human-subject records from being advanced through a decision gate as if empirical (PROGRESS.md 2026-11-22); the TASK-015 completion note named TASK-016 as a likely same-class blocker. Fabricating 18 preference records would corrupt the TASK-019 concept-selection gate and violate CLAUDE.md \u00a73. Field-ready instruments delivered in docs/research/blinded-concept-desirability-test-protocol-and-analysis-framework.md: blinding design (\u00a73), single verbatim script + six-order counterbalancing (\u00a75, \u00a73.2), preference/comprehension/qualitative-reason instruments + coding schemes (\u00a74), and the analysis framework with empty result slots (\u00a76). Stimuli are the already-built, approved TASK-015 first-session prototypes. Empirical requirement (\u226518 participants, same script, preference+comprehension+reasons recorded) remains OPEN. Unblock path and definition-of-done in that file (\u00a78\u2013\u00a79). Marking blocked (not in_review) avoids fabricating the empirical deliverable and prevents a synthetic-data reject loop.",
       "acceptance_criteria": [
         "At least 18 participants; same script; preference, comprehension and qualitative reasons recorded."
       ],
@@ -185,7 +186,8 @@
       "title": "Test App Store proposition variants",
       "workstream": "Concepts",
       "description": "Compare three screenshots/headline propositions on equivalent audiences.",
-      "status": "pending",
+      "status": "blocked",
+      "blocked_reason": "Requires a live traffic run (real impressions from equivalent cold audiences accrued over days against a live/pre-launch App Store listing or a funded ad account) which cannot be executed in an autonomous overnight build. There is no traffic, no exposure, no click, and therefore no click-through rate and no confidence limit to report. Same class of blocker as TASK-008/009/016, which the Reviewer blocked while explicitly forbidding synthetic records from being advanced through a decision gate as if empirical (PROGRESS.md 2026-11-22); the TASK-016 note named TASK-017 as a likely same-class blocker. Fabricating per-variant CTRs would corrupt the TASK-019 concept-selection gate and TASK-043 launch plan, and violate CLAUDE.md \u00a73. Field-ready experiment design delivered in docs/research/app-store-proposition-variant-test-protocol-and-analysis-framework.md: the three concrete proposition variants (\u00a72, real headlines/subheads/screenshot narratives, pre-cleared against the claims ladder), audience-equivalence & randomization design across three channels (\u00a73), metric definitions for traffic/exposure/CTR (\u00a74), pre-registered analysis with a stated 95% Wilson-CI method + sizing/stopping rules (\u00a75), and result tables with empty slots reporting all four metrics separately per variant (\u00a76). Empirical requirement (per-variant traffic, exposure, click-through and confidence limits from a real run) remains OPEN. Unblock path and definition-of-done in that file (\u00a78\u2013\u00a79). Marking blocked (not in_review) avoids fabricating the empirical deliverable and prevents a synthetic-data reject loop.",
       "acceptance_criteria": [
         "Traffic, exposure, click-through and confidence limits reported separately per variant."
       ],
@@ -196,7 +198,8 @@
       "title": "Run honest willingness-to-pay test",
       "workstream": "Concepts",
       "description": "Test purchase intent with clear pricing and no deceptive checkout.",
-      "status": "pending",
+      "status": "blocked",
+      "blocked_reason": "Requires a real paid-commitment run with live users (PRD \u00a74 mandates a BEHAVIORAL willingness-to-pay test, 'not just survey intent'): real prospects making real commitment decisions against a genuine honest checkout at real price points, accrued over days \u2014 a live/TestFlight StoreKit purchase surface or a funded disclosed pre-order, plus an equalized prospect cohort. None of that exists in an autonomous overnight build: no live prices configured, no payment sheet invoked, no prospect commits, so there is no commitment rate, no abandonment funnel and no demand curve. Same class of blocker as TASK-008/009/016/017, which the Reviewer blocked while explicitly forbidding synthetic records from being advanced through a decision gate as if empirical (PROGRESS.md 2026-11-22); the TASK-016 and TASK-017 notes named TASK-018 as a likely same-class blocker. Fabricating per-price commitment/abandonment numbers would corrupt the TASK-019 concept-selection gate, the TASK-038 economics model and the TASK-043 launch plan, and violate CLAUDE.md \u00a73. Field-ready experiment design delivered in docs/research/honest-willingness-to-pay-test-protocol-and-analysis-framework.md: the concrete PRD \u00a77 price arms + offer ($29.99/$39.99/$59.99 annual, free-vs-premium split, \u00a72), three honest commitment mechanisms + an enforceable 'no misleading charges' gate H1\u2013H8 (\u00a73), commitment/abandonment metric definitions tied to TASK-033 events (\u00a74), a pre-registered analysis plan with a stated 95% Wilson-CI method, stopping rule and Gabor-Granger demand-curve estimation (\u00a75), and result tables with empty slots reporting commitment behavior + a per-step abandonment funnel separately per price (\u00a76). Empirical requirement (actual commitment behavior + abandonment at \u22652 price points from a real honest run) remains OPEN. Unblock path and definition-of-done in that file (\u00a78\u2013\u00a79). Marking blocked (not in_review) avoids fabricating the empirical deliverable and prevents a synthetic-data reject loop.",
       "acceptance_criteria": [
         "At least two price points; actual commitment behavior and abandonment measured; no misleading charges."
       ],
@@ -207,7 +210,7 @@
       "title": "Write concept selection decision record",
       "workstream": "Concepts",
       "description": "Select or reject concepts based on observed evidence.",
-      "status": "pending",
+      "status": "blocked",
       "acceptance_criteria": [
         "Weighted score, research results, major uncertainties and explicit go/no-go decision documented."
       ],
