@@ -11,6 +11,7 @@ import CompletionLedger from './components/CompletionLedger'
 import GentleRestart from './components/GentleRestart'
 import HabitGraduation from './components/HabitGraduation'
 import ProgressiveChallenge from './components/ProgressiveChallenge'
+import SevenDayJourney from './components/SevenDayJourney'
 import DesignTokens from './components/DesignTokens'
 
 /**
@@ -26,6 +27,7 @@ type View =
   | 'restart'
   | 'graduation'
   | 'challenge'
+  | 'journey'
   | 'ledger'
   | 'recommend'
   | 'catalog'
@@ -72,6 +74,14 @@ function App() {
           onClick={() => setView('challenge')}
         >
           Progressive challenge
+        </button>
+        <button
+          type="button"
+          className={`shell-tab${view === 'journey' ? ' on' : ''}`}
+          aria-current={view === 'journey'}
+          onClick={() => setView('journey')}
+        >
+          Seven-day journey
         </button>
         <button
           type="button"
@@ -146,6 +156,8 @@ function App() {
         <HabitGraduation />
       ) : view === 'challenge' ? (
         <ProgressiveChallenge />
+      ) : view === 'journey' ? (
+        <SevenDayJourney />
       ) : view === 'ledger' ? (
         <CompletionLedger />
       ) : view === 'recommend' ? (

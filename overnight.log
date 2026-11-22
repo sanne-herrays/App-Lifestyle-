@@ -1624,3 +1624,71 @@ I reviewed the uncommitted work against its acceptance criteria and CLAUDE.md. R
 This is genuine, high-craft work — accessibility is engineered (darkened `…Ink` text siblings, AA-safe `--hr-focus` ring, decorative tokens flagged and proven never used as interactive foreground), not retrofitted. I updated `tasks.json` (TASK-030 → `completed`) and appended the approval summary to `PROGRESS.md`.
 
 APPROVED
+[main 1fd2825] feat: complete autonomous task
+ 11 files changed, 1380 insertions(+), 3 deletions(-)
+ create mode 100644 prototype/src/components/DesignTokens.css
+ create mode 100644 prototype/src/components/DesignTokens.tsx
+ create mode 100644 prototype/src/lib/designTokens.test.ts
+ create mode 100644 prototype/src/lib/designTokens.ts
+ create mode 100644 prototype/src/styles/tokens.css
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   b4fc4a8..1fd2825  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Mon Nov 23 00:26:32 CET 2026
+==========================================
+TASK-031 (seven-day journey preview) is complete and set to `in_review`. Not committed, per the workflow rules. Summary:
+
+**What I built** — the established engine + deterministic test + reachable surface pattern:
+- `prototype/src/lib/journeyPreview.ts` — pure, React-free engine (injected ladder, like `restart.ts`). `buildJourney` emits exactly 7 days on a fixed non-decreasing `RUNG_SCHEDULE` (`[0,0,0,1,1,1,2]`), clamped to each goal's ladder ceiling, with a `HEALTH_PROMISE_LEXICON` + `isPromiseSafe` guard.
+- `prototype/src/lib/journeyPreview.test.ts` — 11 node-runnable cases.
+- `prototype/src/components/SevenDayJourney.tsx` + `.css` — warm-paper surface, wired into `App.tsx` as a new "Seven-day journey" tab (default still the Little Win card).
+
+**Acceptance criterion met exactly** ("renders seven days, explains gradual progression, makes no unsupported health-outcome promises"):
+- 7 days numbered 1…7, each with title/effort/note.
+- Progression proven non-decreasing, ≤1 rung/day, settles before it grows, never exceeds the reviewed ladder; framing stated up front.
+- Every surfaced string clears both the promise guard and the shared guilt-free guard; both guards proven non-trivial (reject disease-risk / cure / timeline / weight-loss claims).
+
+**Verified:**
+- `npm run build` → exit 0, strict, zero warnings, 63 modules (up from 60).
+- `npm run lint` → exit 0, clean.
+- `node src/lib/journeyPreview.test.ts` → 11/11; regressions `challenge` 19/19, `restart` 17/17.
+- Banned-pattern grep clean; no red/danger/penalty/streak hues.
+- `tasks.json` valid JSON (23 completed / 7 blocked / 1 in_review / 12 pending); TASK-031 → `in_review`.
+
+Changed: `App.tsx`, `tasks.json`, `PROGRESS.md`. New: the four files above. (The pre-existing `M overnight.log` in git status was not touched.) Stopping here without committing, as instructed.
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 63 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.81 kB │ gzip:   0.45 kB
+dist/assets/index-BIHF8Tlo.css   92.87 kB │ gzip:  14.46 kB
+dist/assets/index-BKwdlkGv.js   348.57 kB │ gzip: 102.28 kB
+
+✓ built in 89ms
+Review complete. TASK-031 ("Build seven-day journey preview") passed every gate:
+
+**Acceptance criteria (all met)**
+- **Renders seven days** — `JOURNEY_DAYS = 7`; `buildJourney` always returns 7 ordered days (1…7); the component renders them as a semantic `<ol>`.
+- **Explains gradual progression** — up-front `PROGRESSION_NOTE`, per-day phase notes, and a strictly non-decreasing rung schedule that settles before it grows, climbs at most one rung, and clamps to each goal's real ladder ceiling (short ladders plateau instead of inventing content).
+- **No unsupported health-outcome promises** — every surfaced string is scanned against `HEALTH_PROMISE_LEXICON` (disease/risk/cure/quantified/timeline claims); copy stays experiential.
+
+**CLAUDE.md standards**
+- **Zero-Guilt (§1):** growth is optional/reversible, repeated days read as equal wins, no red/streak/penalty chrome; all copy also clears the shared `isGuiltFree` guard.
+- **No boilerplate (§3):** substantive, real integration — no `TODO`/placeholder/`Lorem ipsum`.
+- **Strict TypeScript (§4):** `npm run build` → exit 0, clean; no `any` / `@ts-ignore`.
+
+**Verification run (not asserted — observed)**
+- `npm run build` → `✓ built in 96ms`, zero errors.
+- `node src/lib/journeyPreview.test.ts` → **11/11 passed**, both guards proven non-trivial.
+- Dependency shapes confirmed (`ChallengeStep` = `{title, effort}` matches `JourneyRung`; `restart.ts` is React-free), and the view is wired into `App.tsx`.
+- A11y is genuine: labelled radio controls, visible focus rings, sr-only honest summary, and both a `prefers-reduced-motion` block and `.reduce` fallback.
+
+`tasks.json` TASK-031 → `completed`; 3-bullet summary appended to `PROGRESS.md`.
+
+APPROVED

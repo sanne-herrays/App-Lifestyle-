@@ -342,7 +342,7 @@
       "title": "Build seven-day journey preview",
       "workstream": "Experience",
       "description": "Show users how tiny actions could evolve across a week.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Preview renders seven days, explains gradual progression and makes no unsupported health-outcome promises."
       ],
