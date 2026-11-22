@@ -152,7 +152,7 @@
       "title": "Build interactive concept evaluation scorecard",
       "workstream": "Concepts",
       "description": "Create a standalone weighted concept scoring component.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Three concepts can be scored 1\u20135 on seven weighted criteria; totals recompute to 0\u2013100; weights sum to 100."
       ],

@@ -670,3 +670,57 @@ dist/assets/index-GpEN3EET.js   222.44 kB │ gzip: 69.28 kB
 TASK-013 passes against every acceptance criterion and every CLAUDE.md standard. The deliverable is comprehensive, concrete, intellectually honest (its §0 self-flags the concept's core bet as the weakest-evidenced of the three rather than overselling it), evidence-accurate, Zero-Guilt by construction, and the build is clean with no `prototype/src` changes. `tasks.json` → `completed`; Reviewer decision logged to `PROGRESS.md`. Nothing committed (per workflow rules, approval doesn't imply commit).
 
 APPROVED
+[main 5962cea] feat: complete autonomous task
+ 4 files changed, 388 insertions(+), 1 deletion(-)
+ create mode 100644 docs/strategy/everyday-adventures-concept-brief.md
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   9755687..5962cea  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Sun Nov 22 21:46:51 CET 2026
+==========================================
+TASK-014 is complete and routed to review. Per the workflow (step 6), I'm stopping here without committing.
+
+## Summary
+
+**Task executed: TASK-014 — Build interactive concept evaluation scorecard** (the first `pending` task; TASK-008/009/010 are `blocked`, TASK-011/012/013 `completed`).
+
+**What I built** — a standalone, weighted scoring component:
+- `prototype/src/components/ConceptScorecard.tsx` + `ConceptScorecard.css`, wired into `App.tsx`; `index.html` retitled with Fraunces + Hanken Grotesk fonts.
+
+**Acceptance criterion met exactly** — *"Three concepts can be scored 1–5 on seven weighted criteria; totals recompute to 0–100; weights sum to 100":*
+- **3 concepts** (Tiny Win / Growing World / Everyday Adventures) from `strategy.md` §3 and the approved briefs.
+- **7 weighted criteria summing to 100** (20/20/15/15/10/10/10), taken verbatim from the strategy scorecard; the sum is *computed* and shown in a self-checking "100 / 100 ✓" badge.
+- **1–5 selectors** on all 21 cells; **live totals on a 0–100 scale** (`Σ score/5 × weight` → neutral 60, max 100, min 20) on animated per-concept rings.
+- Faithful extra from the same source: the three **non-negotiable gates** modelled as overrides that "hold" a concept out of the lead.
+
+**Standards & verification:**
+- Zero-Guilt visual language, one-tap scoring, full keyboard a11y (ARIA radiogroup/switch), reduced-motion honored.
+- `npm run build` → **exit 0** (strict `tsc` + Vite, `✓ built in 93ms`); `npm run lint` → **exit 0**; placeholder scan clean.
+
+tasks.json: TASK-014 → `in_review`. PROGRESS.md logged. **Not committed** — awaiting the Reviewer step per CLAUDE.md. Next pending after approval: TASK-015.
+
+One note for the reviewer: fonts load via Google Fonts CDN (standard for a prototype; graceful serif/sans fallbacks are specified), so headings render in system serif/sans if offline.
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 18 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.81 kB │ gzip:  0.45 kB
+dist/assets/index-DSyYnwB5.css   10.25 kB │ gzip:  3.09 kB
+dist/assets/index-BHzZRnaa.js   227.61 kB │ gzip: 71.53 kB
+
+✓ built in 78ms
+Review complete. TASK-014 (interactive concept evaluation scorecard) passes every acceptance criterion and CLAUDE.md standard — verified independently, not taken on the Builder's word:
+
+- **Criterion met:** three concepts × seven weighted criteria scored 1–5; `Σ(score/5 × weight)` recomputes live to a true 0–100 scale (60/100/20 at the boundaries, hand-checked); weights sum to 100 via a computed, self-verifying badge.
+- **Zero-guilt craft:** no red/penalty/shame semantics; "held" is a warm amber hold, neutral-3 start, non-punitive reset.
+- **Clean strict TS:** `npm run build` exit 0 with zero warnings, `npm run lint` clean, no `any`/`@ts-ignore`, no placeholders or mock logic.
+
+`tasks.json` → `completed`; 3-bullet summary appended to `PROGRESS.md`.
+
+APPROVED
