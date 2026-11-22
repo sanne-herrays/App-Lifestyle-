@@ -621,3 +621,52 @@ Review complete. TASK-012 passes against every acceptance criterion and every CL
 `tasks.json` → `completed`; Reviewer decision logged to `PROGRESS.md`. Nothing committed (per workflow rules, approval doesn't imply commit).
 
 APPROVED
+[main 9755687] feat: complete autonomous task
+ 4 files changed, 395 insertions(+), 1 deletion(-)
+ create mode 100644 docs/strategy/growing-world-concept-brief.md
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   49400c5..9755687  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Sun Nov 22 21:39:23 CET 2026
+==========================================
+Done. Executed exactly one task and stopped.
+
+## TASK-013 — Write Everyday Adventures concept brief → `in_review`
+
+**First `pending` task** (TASK-008/009/010 `blocked`; TASK-011/012 done), and the third of the three equivalent concept briefs.
+
+**Deliverable:** `docs/strategy/everyday-adventures-concept-brief.md` (~320 lines), written to the same equivalent-brief spec as its siblings so TASK-014/016/019 can compare the three fairly.
+
+**All three acceptance-criterion elements present:**
+- **Mission-selection logic** — §5.4, rules M1–M7 (privacy-first inputs, invariant anchor, reviewed-catalog-only pool, bounded/convergent variety, deterministic relevance ranking, safety hard-exclusions + no-match fallback, gentle-restart & graduation states), owned by TASK-025 over the TASK-024 catalog.
+- **7-day storyboard** — §6, across the PRD §6 six-moment frame, with a missed Day 4 + gentle restart and a Day-7 convergence beat.
+- **Failure modes** — §9, fourteen across behavioral / trust / health / commercial-operational / meta.
+
+**Concept-defining honesty note (§0):** this concept's bet — *novelty lowers resistance* — is flagged up front as test-gated **and in direct structural tension** with the strongest register evidence (automaticity needs repetition in a *stable* context, §3.1/§3.6). The whole design — "keep the cue stable, vary the mission within it" (M2) + bounded convergent rotation (M4) — exists to resolve that tension, and I named it as the lowest-confidence behavioral-effectiveness bet of the three rather than borrowing grades.
+
+**Verified:**
+- `cd prototype && npm run build` → **exit code 0** (tsc strict + Vite, `✓ built in 90ms`). No `prototype/src` changes.
+- Placeholder grep → only the self-referential §11 line; no actual filler.
+
+**Updated:** `tasks.json` TASK-013 → `in_review`; `PROGRESS.md` logged. **Not committed** (awaiting Reviewer approval per CLAUDE.md). Next pending Concepts task after approval is TASK-014 (interactive concept scorecard — a `prototype/src` build).
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 20 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.45 kB │ gzip:  0.29 kB
+dist/assets/react-CHdo91hT.svg    4.12 kB │ gzip:  2.06 kB
+dist/assets/vite-BF8QNONU.svg     8.70 kB │ gzip:  1.60 kB
+dist/assets/hero-CLDdwZDr.png    13.05 kB
+dist/assets/index-D64VDMd1.css    4.10 kB │ gzip:  1.47 kB
+dist/assets/index-GpEN3EET.js   222.44 kB │ gzip: 69.28 kB
+
+✓ built in 89ms
+TASK-013 passes against every acceptance criterion and every CLAUDE.md standard. The deliverable is comprehensive, concrete, intellectually honest (its §0 self-flags the concept's core bet as the weakest-evidenced of the three rather than overselling it), evidence-accurate, Zero-Guilt by construction, and the build is clean with no `prototype/src` changes. `tasks.json` → `completed`; Reviewer decision logged to `PROGRESS.md`. Nothing committed (per workflow rules, approval doesn't imply commit).
+
+APPROVED

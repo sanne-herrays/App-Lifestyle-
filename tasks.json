@@ -141,7 +141,7 @@
       "title": "Write Everyday Adventures concept brief",
       "workstream": "Concepts",
       "description": "Specify contextual micro-missions and novelty model.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Brief contains mission-selection logic, 7-day storyboard and failure modes."
       ],
