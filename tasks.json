@@ -119,7 +119,7 @@
       "title": "Write Tiny Win concept brief",
       "workstream": "Concepts",
       "description": "Specify one tiny daily action, reward loop and seven-day experience.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Brief contains user promise, behavior hypothesis, 7-day storyboard and failure modes."
       ],
