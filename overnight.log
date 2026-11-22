@@ -192,3 +192,50 @@ dist/assets/index-GpEN3EET.js   222.44 kB │ gzip: 69.28 kB
 Review complete. TASK-004 (`docs/research/competitor-anti-patterns.md`) meets its acceptance criterion (20 anti-patterns vs. ≥15 required, each with a named observed example and a buildable design guardrail), upholds every CLAUDE.md non-negotiable (Zero-Guilt operationalized, no unsupported health claims, clean strict-TypeScript build, no placeholders or filler), and is fully traceable to the upstream research. `tasks.json` is updated to `completed` and `PROGRESS.md` logs the approval.
 
 APPROVED
+[main d1db8c6] feat: complete autonomous task
+ 4 files changed, 308 insertions(+), 1 deletion(-)
+ create mode 100644 docs/research/competitor-anti-patterns.md
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   c6e188c..d1db8c6  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Sun Nov 22 20:52:38 CET 2026
+==========================================
+Task complete. Summary of this session's work:
+
+**TASK-005 — Build behavior-change evidence register** → `in_review`
+
+**Deliverable:** `docs/research/behavior-change-evidence-register.md` (~300 lines)
+
+**What it contains:**
+- **12 graded mechanism cards**, each with all five acceptance-criterion fields (citation · population · evidence strength · limitation · implementation implication), plus a HerRays mechanism and a Zero-Guilt check. The five PRD §5 mechanisms — cues, goals, reinforcement, self-monitoring, habit automaticity — are all covered at grade A/B, alongside 7 supporting mechanisms (implementation intentions, action simplicity, affect/celebration, autonomy/SDT, flexible consistency, fresh-start restart, identity).
+- An **A–D GRADE-inspired scheme** that rates *evidence for behavior change* specifically, holding the engagement-≠-efficacy line the earlier research docs flagged.
+- Anchored in the real literature (Lally 2010, Gollwitzer & Sheeran 2006, Locke & Latham 2002, Harkin 2016, Michie 2009, Wood & Neal 2007, Ryan & Deci, Dai/Milkman 2014, Verplanken & Orbell / Gardner SRHI/SRBAI).
+- Synthesis (§4) assembling the graded links into the PRD §5 behavior engine, showing where evidence and Zero-Guilt *converge*, and naming honest weak spots (the "66-day" myth, under-evidenced celebration, Western-adult sampling). Handoff map (§5) wires each mechanism to its owning downstream task; §6 adds a grade→claim gate.
+
+**Verification:**
+- Acceptance criterion met — 12 mechanisms, all five fields each (coverage matrix §7).
+- Scope-disciplined: behavioral mechanisms only; no disease/risk claims (gated to TASK-006); every effect size flagged for primary-source verification.
+- `cd prototype && npm run build` → **exit code 0** (tsc strict + Vite, `✓ built in 91ms`). Research-only task; no `prototype/src` changes.
+
+tasks.json updated to `in_review`; PROGRESS.md logged. Not committed, per workflow rules — awaiting Reviewer approval.
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 20 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.45 kB │ gzip:  0.29 kB
+dist/assets/react-CHdo91hT.svg    4.12 kB │ gzip:  2.06 kB
+dist/assets/vite-BF8QNONU.svg     8.70 kB │ gzip:  1.60 kB
+dist/assets/hero-CLDdwZDr.png    13.05 kB
+dist/assets/index-D64VDMd1.css    4.10 kB │ gzip:  1.47 kB
+dist/assets/index-GpEN3EET.js   222.44 kB │ gzip: 69.28 kB
+
+✓ built in 74ms
+TASK-005 (`behavior-change-evidence-register.md`) meets its acceptance criterion and every CLAUDE.md non-negotiable: 12 fully-populated graded mechanism cards, real literature with honest verification flags, Zero-Guilt operationalized throughout, correct scope discipline, and a clean `npm run build` (exit 0) with no `any`/`@ts-ignore`/placeholders. Status updated to `completed` in `tasks.json`; approval logged to `PROGRESS.md`.
+
+APPROVED

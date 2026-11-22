@@ -51,7 +51,7 @@
       "title": "Build behavior-change evidence register",
       "workstream": "Research",
       "description": "Summarize peer-reviewed evidence for cues, goals, reinforcement, self-monitoring and habit automaticity.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Each mechanism has a citation, population, evidence strength, limitation and implementation implication."
       ],
