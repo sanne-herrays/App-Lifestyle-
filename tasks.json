@@ -375,7 +375,7 @@
       "title": "Build cohort retention dashboard",
       "workstream": "Validation & Growth",
       "description": "Calculate D1, D7, D30 and D90 app and behavior retention separately.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Cohort definitions documented; test dataset yields expected rates; incomplete cohorts marked immature."
       ],

@@ -1790,3 +1790,60 @@ dist/assets/index-qw3D26cL.js   363.71 kB │ gzip: 106.43 kB
 Task status updated to `completed` in `tasks.json`; approval summary appended to `PROGRESS.md`.
 
 APPROVED
+[main 293cfbc] feat: complete autonomous task
+ 9 files changed, 1541 insertions(+), 2 deletions(-)
+ create mode 100644 prototype/src/components/ActivationEvents.css
+ create mode 100644 prototype/src/components/ActivationEvents.tsx
+ create mode 100644 prototype/src/lib/activation.test.ts
+ create mode 100644 prototype/src/lib/activation.ts
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   6002311..293cfbc  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Mon Nov 23 00:54:41 CET 2026
+==========================================
+Done. Executed **TASK-034 — Build cohort retention dashboard** (the first `pending` task) completely.
+
+## What I built
+
+Following the codebase's established pattern (pure React-free engine + deterministic Node test + reachable surface):
+
+- **`prototype/src/lib/cohortRetention.ts`** — the engine. Groups anonymous users into day-0 cohorts and computes **D1/D7/D30/D90 app and behavior retention separately** (both anchored to the same cohort day so they're directly comparable, per PRD §7). Classic day-N (bracket) retention over full-cohort denominators, with a strict maturity rule. Exports machine-readable `COHORT_DEFINITIONS`, PRD §7 `HYPOTHESIS_TARGETS`, and a shared verified `SAMPLE_RETENTION_DATASET`.
+- **`prototype/src/lib/cohortRetention.test.ts`** — 13 deterministic case groups; every per-cohort and pooled rate hand-computed and asserted.
+- **`prototype/src/components/CohortRetention.tsx` + `.css`** — a "Retention" tab rendering the *same* verified dataset through the *same* engine, immature cells marked "maturing," mature rates compared to hypothesis targets.
+
+## Acceptance criterion met exactly
+- **Cohort definitions documented** → prose header + machine-readable `COHORT_DEFINITIONS` (test-enforced, rendered as a table).
+- **Test dataset yields expected rates** → `SAMPLE_RETENTION_DATASET` (6 users / 2 cohorts), every rate asserted (e.g. cohort A app 75/50/75/75%, behavior 25/50/25/0%; pooled D1 app 4/6).
+- **Incomplete cohorts marked immature** → `rate === null`, `mature === false` until the day-N window closes; a horizon with no mature cohort reports `null`, distinguished from an observed `0%`.
+
+## Verified
+- `cd prototype && npm run build` → **exit 0** (strict `tsc -b` + Vite, zero warnings, 72 modules)
+- `npm run lint` → clean
+- `node src/lib/cohortRetention.test.ts` → **13/13**; all 9 regression suites pass
+- Banned-pattern grep clean; no red/streak/penalty hues; `tasks.json` valid JSON
+
+**TASK-034 → `in_review`.** Not committed, per the workflow rules. Changed: `App.tsx`, `tasks.json`, `PROGRESS.md`; new: the four files above.
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 72 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.81 kB │ gzip:   0.46 kB
+dist/assets/index-CPxOL5fb.css  108.61 kB │ gzip:  16.46 kB
+dist/assets/index-DZgYcagG.js   372.10 kB │ gzip: 108.80 kB
+
+✓ built in 95ms
+Review complete. TASK-034 (cohort retention dashboard) passes every gate:
+
+- **Acceptance criteria** — all three clauses met and empirically verified: definitions documented as a code-enforced artifact; sample dataset rates hand-recomputed independently and matched (all 13 test groups pass); incomplete cohorts correctly marked immature (`rate:null`, `mature:false`, pooled overalls exclude them).
+- **CLAUDE.md standards** — strict TS build clean (exit 0, no warnings); zero-guilt upheld (warm paper/calm-green palette, no red/streak/penalty chrome, every string passes `isGuiltFree`); numbers honestly labelled illustrative, not fake live data; solid a11y.
+- **Code quality** — no `any`, `@ts-ignore`, `TODO`, placeholder, or mock logic; pure engine cleanly separated from the React surface and wired into the app.
+
+tasks.json updated to `completed`; 3-bullet approval summary appended to PROGRESS.md.
+
+APPROVED

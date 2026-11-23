@@ -14,6 +14,7 @@ import ProgressiveChallenge from './components/ProgressiveChallenge'
 import SevenDayJourney from './components/SevenDayJourney'
 import HabitProgress from './components/HabitProgress'
 import ActivationEvents from './components/ActivationEvents'
+import CohortRetention from './components/CohortRetention'
 import DesignTokens from './components/DesignTokens'
 
 /**
@@ -32,6 +33,7 @@ type View =
   | 'journey'
   | 'progress'
   | 'activation'
+  | 'retention'
   | 'ledger'
   | 'recommend'
   | 'catalog'
@@ -102,6 +104,14 @@ function App() {
           onClick={() => setView('activation')}
         >
           Activation
+        </button>
+        <button
+          type="button"
+          className={`shell-tab${view === 'retention' ? ' on' : ''}`}
+          aria-current={view === 'retention'}
+          onClick={() => setView('retention')}
+        >
+          Retention
         </button>
         <button
           type="button"
@@ -182,6 +192,8 @@ function App() {
         <HabitProgress />
       ) : view === 'activation' ? (
         <ActivationEvents />
+      ) : view === 'retention' ? (
+        <CohortRetention />
       ) : view === 'ledger' ? (
         <CompletionLedger />
       ) : view === 'recommend' ? (

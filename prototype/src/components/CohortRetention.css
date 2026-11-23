@@ -1,0 +1,375 @@
+/* TASK-034 — Cohort retention dashboard.
+   HerRays warm-paper language with a calm-green accent. Scoped under .cr.
+
+   Standards wired into the styles:
+   - Zero-Guilt (CLAUDE.md §1): warm paper + calm-green only — NO red, danger,
+     penalty, or streak colour. An immature (open-window) cell is a soft, muted
+     "maturing" tone, never a failure or an alarming red. A rate below a hypothesis
+     target is shown neutrally — no red X, no shaming.
+   - Accessibility: visible focus rings on the metric filter; strong text contrast;
+     the breakdown is real tables with scoped headers; the headline lives in an
+     aria-live region; all motion is disabled under prefers-reduced-motion at the
+     foot of this file.
+*/
+
+.cr {
+  --paper: #fbf6ee;
+  --card: #fffdf9;
+  --ink: #2c2420;
+  --ink-soft: #7a6f63;
+  --ink-faint: #a89c8c;
+  --line: #ebdfcd;
+  --line-soft: #f1e8da;
+  --accent: #5f9e7e;
+  --accent-deep: #3f7d60;
+  --accent-soft: #e4efe7;
+  --gold: #e09a38;
+  --gold-deep: #8a5a12;
+
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: clamp(22px, 4vw, 36px) clamp(18px, 4vw, 30px) clamp(26px, 4vw, 40px);
+  color: var(--ink);
+  font-family: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0.1px;
+}
+
+.cr *,
+.cr *::before,
+.cr *::after {
+  box-sizing: border-box;
+}
+
+.cr-glow {
+  position: absolute;
+  inset: -14% -10% auto -10%;
+  height: 220px;
+  background:
+    radial-gradient(58% 78% at 70% 0%, rgba(95, 158, 126, 0.16), transparent 62%),
+    radial-gradient(52% 70% at 26% 0%, rgba(255, 217, 160, 0.2), transparent 58%);
+  filter: blur(6px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cr > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- header ------------------------------------------------------------ */
+
+.cr-head {
+  text-align: center;
+  margin-bottom: clamp(14px, 2.4vw, 20px);
+}
+
+.cr-eyebrow {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.cr-title {
+  margin: 0 0 8px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(23px, 5vw, 30px);
+  font-weight: 600;
+  line-height: 1.12;
+  color: var(--ink);
+}
+
+.cr-sub {
+  margin: 0 auto;
+  max-width: 52ch;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.cr-honest {
+  margin: 0 auto clamp(18px, 3vw, 26px);
+  max-width: 58ch;
+  padding: 11px 14px;
+  background: var(--paper);
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+/* ---- overall KPIs ------------------------------------------------------ */
+
+.cr-overall {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.cr-h3 {
+  margin: 0 0 10px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.cr-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 560px) {
+  .cr-kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.cr-kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 13px 13px 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.cr-kpi.on-track {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, var(--accent-soft), var(--card));
+  box-shadow: 0 6px 18px -14px rgba(63, 125, 96, 0.6);
+}
+
+/* Immature = soft, calm, muted — an open window, never a failure. */
+.cr-kpi.maturing {
+  background: var(--paper);
+  border-style: dashed;
+}
+
+.cr-kpi-h {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.cr-kpi-rate {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.cr-kpi.maturing .cr-kpi-rate {
+  color: var(--ink-faint);
+}
+
+.cr-kpi-note {
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+.cr-kpi-target {
+  margin-top: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-faint);
+}
+
+.cr-kpi-target.met {
+  color: var(--accent-deep);
+}
+
+/* ---- status ------------------------------------------------------------ */
+
+.cr-status {
+  margin: 0 0 16px;
+  padding: 10px 14px;
+  background: var(--accent-soft);
+  border-radius: 12px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--accent-deep);
+  text-align: center;
+}
+
+/* ---- metric filter ----------------------------------------------------- */
+
+.cr-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.cr-chip {
+  padding: 8px 15px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 200ms ease, color 200ms ease, background 200ms ease;
+}
+
+.cr-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent-deep);
+}
+
+.cr-chip.on {
+  background: var(--accent-deep);
+  border-color: var(--accent-deep);
+  color: #fffdf9;
+}
+
+/* ---- tables ------------------------------------------------------------ */
+
+.cr-breakdown {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.cr-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  font-size: 13px;
+}
+
+.cr-caption {
+  caption-side: top;
+  padding: 12px 14px 8px;
+  text-align: left;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.cr-table th,
+.cr-table td {
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.cr-table thead th {
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-weight: 700;
+}
+
+.cr-table tbody tr:last-child th,
+.cr-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.cr-cohort-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.cr-cohort-when {
+  font-size: 13px;
+}
+
+.cr-cohort-n {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--ink-faint);
+}
+
+.cr-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.cr-cell-rate {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--accent-deep);
+}
+
+.cr-cell-frac {
+  font-size: 11px;
+  color: var(--ink-faint);
+}
+
+.cr-cell.maturing {
+  color: var(--ink-faint);
+}
+
+.cr-cell-maturing {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--ink-faint);
+}
+
+/* ---- definitions ------------------------------------------------------- */
+
+.cr-defs {
+  margin-top: 4px;
+}
+
+.cr-def-table tbody th {
+  width: 34%;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.cr-def-table td {
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+/* ---- focus rings ------------------------------------------------------- */
+
+.cr-chip:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* ---- reduced motion ---------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .cr-kpi,
+  .cr-chip {
+    transition: none;
+  }
+}
+
+.cr.reduce .cr-kpi,
+.cr.reduce .cr-chip {
+  transition: none;
+}
