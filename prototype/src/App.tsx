@@ -17,6 +17,7 @@ import ActivationEvents from './components/ActivationEvents'
 import CohortRetention from './components/CohortRetention'
 import AutomaticitySurvey from './components/AutomaticitySurvey'
 import EntitlementGate from './components/EntitlementGate'
+import SubscriptionEconomics from './components/SubscriptionEconomics'
 import DesignTokens from './components/DesignTokens'
 
 /**
@@ -38,6 +39,7 @@ type View =
   | 'retention'
   | 'automaticity'
   | 'premium'
+  | 'economics'
   | 'ledger'
   | 'recommend'
   | 'catalog'
@@ -135,6 +137,14 @@ function App() {
         </button>
         <button
           type="button"
+          className={`shell-tab${view === 'economics' ? ' on' : ''}`}
+          aria-current={view === 'economics'}
+          onClick={() => setView('economics')}
+        >
+          Economics
+        </button>
+        <button
+          type="button"
           className={`shell-tab${view === 'ledger' ? ' on' : ''}`}
           aria-current={view === 'ledger'}
           onClick={() => setView('ledger')}
@@ -218,6 +228,8 @@ function App() {
         <AutomaticitySurvey />
       ) : view === 'premium' ? (
         <EntitlementGate />
+      ) : view === 'economics' ? (
+        <SubscriptionEconomics />
       ) : view === 'ledger' ? (
         <CompletionLedger />
       ) : view === 'recommend' ? (

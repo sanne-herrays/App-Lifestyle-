@@ -1,0 +1,461 @@
+/* TASK-038 — Subscription economics model.
+   HerRays warm-paper language with a calm-green accent. Scoped under .se.
+
+   Standards wired into the styles:
+   - Zero-Guilt (CLAUDE.md §1): warm paper + calm-green only — NO red, danger,
+     penalty, or streak colour. A sensitivity cell below break-even is a calm,
+     muted "resting" tone, never an alarming red or a failure state. The headline
+     renders the same way whether contribution is positive or still resting.
+   - Integrity (§3): the honest banner and the assumptions table are first-class
+     chrome — every number is labelled an editable hypothesis, never observed data.
+   - Accessibility: visible focus rings on sliders, the scale toggle and the reset;
+     strong text contrast; the sensitivity / renewal / assumptions views are real
+     tables with scoped headers; the headline lives in an aria-live region; all
+     motion is disabled under prefers-reduced-motion at the foot of this file.
+*/
+
+.se {
+  --paper: #fbf6ee;
+  --card: #fffdf9;
+  --ink: #2c2420;
+  --ink-soft: #7a6f63;
+  --ink-faint: #a89c8c;
+  --line: #ebdfcd;
+  --line-soft: #f1e8da;
+  --accent: #5f9e7e;
+  --accent-deep: #3f7d60;
+  --accent-soft: #e4efe7;
+  --gold: #e09a38;
+  --gold-deep: #8a5a12;
+
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(22px, 4vw, 36px) clamp(18px, 4vw, 30px) clamp(26px, 4vw, 40px);
+  color: var(--ink);
+  font-family: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0.1px;
+}
+
+.se *,
+.se *::before,
+.se *::after {
+  box-sizing: border-box;
+}
+
+.se-glow {
+  position: absolute;
+  inset: -14% -10% auto -10%;
+  height: 220px;
+  background:
+    radial-gradient(58% 78% at 70% 0%, rgba(95, 158, 126, 0.16), transparent 62%),
+    radial-gradient(52% 70% at 26% 0%, rgba(255, 217, 160, 0.2), transparent 58%);
+  filter: blur(6px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.se > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- header ------------------------------------------------------------ */
+
+.se-head {
+  text-align: center;
+  margin-bottom: clamp(12px, 2vw, 18px);
+}
+
+.se-eyebrow {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.se-title {
+  margin: 0 0 8px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(22px, 5vw, 29px);
+  font-weight: 600;
+  line-height: 1.12;
+  color: var(--ink);
+}
+
+.se-sub {
+  margin: 0 auto;
+  max-width: 54ch;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.se-honest {
+  margin: 0 auto clamp(16px, 3vw, 24px);
+  max-width: 62ch;
+  padding: 11px 14px;
+  background: var(--paper);
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+/* ---- section shared ---------------------------------------------------- */
+
+.se-h3 {
+  margin: 0 0 10px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.se-note {
+  margin: 0 0 12px;
+  max-width: 64ch;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.se-inputs,
+.se-result,
+.se-sensitivity,
+.se-renewal,
+.se-assumptions {
+  margin-bottom: clamp(20px, 3.4vw, 30px);
+}
+
+/* ---- inputs ------------------------------------------------------------ */
+
+.se-inputs-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.se-inputs-head .se-h3 {
+  margin: 0;
+}
+
+.se-reset {
+  padding: 7px 13px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 200ms ease, color 200ms ease;
+}
+
+.se-reset:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent-deep);
+}
+
+.se-reset:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.se-levers {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 20px;
+}
+
+@media (max-width: 560px) {
+  .se-levers {
+    grid-template-columns: 1fr;
+  }
+}
+
+.se-lever {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.se-lever-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.se-lever-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.se-lever-value {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent-deep);
+  font-variant-numeric: tabular-nums;
+}
+
+.se-slider {
+  width: 100%;
+  height: 22px;
+  margin: 0;
+  accent-color: var(--accent-deep);
+  cursor: pointer;
+}
+
+/* ---- result + headline ------------------------------------------------- */
+
+.se-headline {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, var(--accent-soft), var(--card));
+  margin-bottom: 12px;
+}
+
+/* A resting (below break-even) headline is calm paper — never red. */
+.se-headline.resting {
+  background: var(--paper);
+  border-style: dashed;
+}
+
+.se-headline-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.se-headline-value {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(30px, 7vw, 40px);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.se-headline.resting .se-headline-value {
+  color: var(--ink-soft);
+}
+
+.se-headline-note {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+.se-scale {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.se-scale-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-faint);
+}
+
+.se-scale-toggle {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.se-scale-btn {
+  padding: 6px 13px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 200ms ease, color 200ms ease, background 200ms ease;
+}
+
+.se-scale-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent-deep);
+}
+
+.se-scale-btn.on {
+  background: var(--accent-deep);
+  border-color: var(--accent-deep);
+  color: #fffdf9;
+}
+
+/* ---- tables ------------------------------------------------------------ */
+
+.se-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  font-size: 13px;
+}
+
+.se-caption {
+  caption-side: top;
+  padding: 12px 14px 8px;
+  text-align: left;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.se-table th,
+.se-table td {
+  padding: 9px 12px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.se-table thead th {
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-weight: 700;
+}
+
+.se-table tbody tr:last-child th,
+.se-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.se-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ---- waterfall --------------------------------------------------------- */
+
+.se-waterfall th {
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.se-wf-total th,
+.se-wf-total td {
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.se-wf-sub td {
+  color: var(--ink-soft);
+}
+
+.se-wf-headline th,
+.se-wf-headline td {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent-deep);
+  background: var(--accent-soft);
+}
+
+.se-breakeven {
+  margin: 12px 0 0;
+  padding: 10px 14px;
+  background: var(--paper);
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* ---- sensitivity grid -------------------------------------------------- */
+
+.se-grid-wrap {
+  overflow-x: auto;
+}
+
+.se-grid th[scope='row'] {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.se-cell {
+  font-weight: 600;
+}
+
+/* Viable = calm green; resting (below break-even) = muted paper, never red. */
+.se-cell.viable {
+  color: var(--accent-deep);
+  background: var(--accent-soft);
+}
+
+.se-cell.resting {
+  color: var(--ink-faint);
+  background: var(--paper);
+}
+
+/* ---- renewal + assumptions -------------------------------------------- */
+
+.se-renew-table th[scope='row'] {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.se-assume-table tbody th {
+  width: 36%;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.se-assume-table td {
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+/* ---- focus rings ------------------------------------------------------- */
+
+.se-slider:focus-visible,
+.se-reset:focus-visible,
+.se-scale-btn:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* ---- reduced motion ---------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .se-reset,
+  .se-scale-btn {
+    transition: none;
+  }
+}
+
+.se.reduce .se-reset,
+.se.reduce .se-scale-btn {
+  transition: none;
+}

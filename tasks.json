@@ -419,7 +419,7 @@
       "title": "Build subscription economics model",
       "workstream": "Validation & Growth",
       "description": "Model install-to-paid conversion, platform fees, refunds, CAC and renewal scenarios.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Inputs editable; first-year contribution and sensitivity table recompute; assumptions visibly labeled."
       ],
