@@ -1847,3 +1847,66 @@ Review complete. TASK-034 (cohort retention dashboard) passes every gate:
 tasks.json updated to `completed`; 3-bullet approval summary appended to PROGRESS.md.
 
 APPROVED
+[main 3f42398] feat: complete autonomous task
+ 9 files changed, 1390 insertions(+), 2 deletions(-)
+ create mode 100644 prototype/src/components/CohortRetention.css
+ create mode 100644 prototype/src/components/CohortRetention.tsx
+ create mode 100644 prototype/src/lib/cohortRetention.test.ts
+ create mode 100644 prototype/src/lib/cohortRetention.ts
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   293cfbc..3f42398  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Mon Nov 23 01:05:36 CET 2026
+==========================================
+Done. TASK-035 (habit automaticity survey) is built, verified, and set to `in_review`. Per the workflow rules I have **not** committed.
+
+## What was built
+
+A pure engine + deterministic test + reachable interactive surface, following the established codebase pattern and grounded in the project's own evidence register (§3.6 — the **validated SRBAI**, Gardner, Abraham, Lally & de Bruijn 2012, IJBNPA 9:102, labeled by instrument + version).
+
+**New files**
+- `prototype/src/lib/automaticitySurvey.ts` — React-free engine: the versioned, fully-attributed `SRBAI` instrument (4 verbatim items, 1–7 scale); `buildResponse` (stamps instrument id/version + verbatim attribution snapshot + schema version); scoring, bands, baseline↔follow-up comparison, and a localStorage store.
+- `prototype/src/lib/automaticitySurvey.test.ts` — 13 deterministic case groups.
+- `prototype/src/components/AutomaticitySurvey.tsx` + `.css` — the survey surface, wired into `App.tsx` as a new "Automaticity" tab.
+
+**Acceptance criterion — met exactly** ("Survey version and attribution stored; optional completion; baseline and follow-up results can be compared"):
+- **Version + attribution stored** — every response snapshots instrument id, version and a verbatim citation; proven to survive a round-trip and to be dropped on reload if provenance is lost.
+- **Optional completion** — strictly opt-in (`SURVEY_IS_OPTIONAL`), always a "Skip for now", a partial/empty draft scores `null` rather than erroring.
+- **Baseline vs follow-up** — tagged, timestamped responses yield an honest delta, but only when instrument versions match and both sides are complete (proven not-comparable otherwise against a synthetic v2 and a partial response).
+
+**Standards:** Zero-Guilt (no pass/fail; a lower band is warm, a decrease is neutral — no red/streak chrome); integrity (framed as a behavioural reflection, never a health result); strict TS throughout; a11y (labelled radiogroups, `aria-live` score, focus rings, reduced-motion block).
+
+## Verification (all green)
+- `npm run build` → **exit 0** (tsc strict + Vite, 75 modules, zero warnings)
+- `npm run lint` → **exit 0**
+- `node …/automaticitySurvey.test.ts` → **13/13**; regressions (`activation`, `cohortRetention`, `restart`, `ledger`) → all exit 0
+- Banned-pattern grep → none; danger-hue grep → only disavowing comments / `reduce` keyword
+- `tasks.json` valid JSON — 27 completed / 7 blocked / **1 in_review** / 8 pending; TASK-035 → `in_review`
+
+Next pending build after approval: **TASK-036** (reminder-reduction experiment).
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 75 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.81 kB │ gzip:   0.45 kB
+dist/assets/index-Dn73duvT.css  116.01 kB │ gzip:  17.54 kB
+dist/assets/index-zsAxtDsx.js   385.54 kB │ gzip: 112.47 kB
+
+✓ built in 98ms
+Review complete. TASK-035 (Implement habit automaticity survey) passed on every axis:
+
+- **Acceptance criteria** — all three clauses are met *and* independently proven by the 13-group deterministic test suite (version+attribution stamped and round-trip-durable; completion genuinely optional with partial drafts as a first-class unscored state; baseline↔follow-up comparison that refuses to mix instrument versions or score an incomplete side).
+- **CLAUDE.md §1 Zero-Guilt** — no red/streak/penalty chrome; a *decrease* reads calm, never shamed; all surfaced copy clears a non-trivial `isGuiltFree` guard.
+- **CLAUDE.md §3 No boilerplate** — real validated SRBAI instrument with verbatim items and full grade-A citation, honestly distinguished from the grade-B automaticity mechanism. No placeholders or fake-mock logic.
+- **CLAUDE.md §4 Strict TS** — `npm run build` exit 0 (zero warnings), `eslint` exit 0, no `any`/`@ts-ignore`/`@ts-nocheck`/`TODO`.
+- **Craft** — full a11y (labelled radiogroups, `aria-live`, focus rings, reduced-motion), 573-line hand-crafted CSS, wired into `App.tsx` with no dead ends.
+
+`tasks.json` → `completed`; `PROGRESS.md` → 3-bullet approval appended.
+
+APPROVED

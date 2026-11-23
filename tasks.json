@@ -386,7 +386,7 @@
       "title": "Implement habit automaticity survey",
       "workstream": "Validation & Growth",
       "description": "Capture periodic validated or clearly labeled exploratory automaticity measures.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Survey version and attribution stored; optional completion; baseline and follow-up results can be compared."
       ],

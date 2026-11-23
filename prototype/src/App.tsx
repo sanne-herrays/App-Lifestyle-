@@ -15,6 +15,7 @@ import SevenDayJourney from './components/SevenDayJourney'
 import HabitProgress from './components/HabitProgress'
 import ActivationEvents from './components/ActivationEvents'
 import CohortRetention from './components/CohortRetention'
+import AutomaticitySurvey from './components/AutomaticitySurvey'
 import DesignTokens from './components/DesignTokens'
 
 /**
@@ -34,6 +35,7 @@ type View =
   | 'progress'
   | 'activation'
   | 'retention'
+  | 'automaticity'
   | 'ledger'
   | 'recommend'
   | 'catalog'
@@ -112,6 +114,14 @@ function App() {
           onClick={() => setView('retention')}
         >
           Retention
+        </button>
+        <button
+          type="button"
+          className={`shell-tab${view === 'automaticity' ? ' on' : ''}`}
+          aria-current={view === 'automaticity'}
+          onClick={() => setView('automaticity')}
+        >
+          Automaticity
         </button>
         <button
           type="button"
@@ -194,6 +204,8 @@ function App() {
         <ActivationEvents />
       ) : view === 'retention' ? (
         <CohortRetention />
+      ) : view === 'automaticity' ? (
+        <AutomaticitySurvey />
       ) : view === 'ledger' ? (
         <CompletionLedger />
       ) : view === 'recommend' ? (
