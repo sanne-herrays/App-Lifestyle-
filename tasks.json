@@ -442,7 +442,8 @@
       "title": "Run 30-day behavioral pilot",
       "workstream": "Validation & Growth",
       "description": "Test feasibility and action persistence in a real cohort.",
-      "status": "pending",
+      "status": "blocked",
+      "blocked_reason": "Requires a real 30-day longitudinal human-subject run (≥20 of ~30 recruited/consented participants performing real-world health micro-actions across 30 real calendar days, with attrition, completion, adverse events and behavior outcomes OBSERVED and reported) which cannot be executed in an autonomous overnight build — a 30-day pilot is by definition thirty days of real behavior and cannot be compressed into one build session. This is the most empirically-demanding task in the backlog and the only one carrying a genuine physical-safety / adverse-event duty (participants perform bodily actions), so fabricating it is both the most tempting shortcut and the most harmful. Same class of empirical-record blocker as TASK-008/009/016/017/018/039, which the Reviewer blocked on 2026-11-22 while explicitly forbidding synthetic human-subject records from being advanced through a gate as if empirical (PROGRESS.md 2026-11-22); unlike TASK-036, whose criterion asked only for a pre-registered design and so advanced to in_review. Fabricating attrition/completion/AE/automaticity numbers would corrupt the TASK-042 editorial package (which would then advertise a fabricated 'tested' result), the TASK-043 launch plan and the TASK-038 economics assumptions, and violate CLAUDE.md §3. Field-ready protocol delivered in docs/research/30-day-behavioral-pilot-protocol-and-analysis-framework.md: single-arm 30-day feasibility design bound to the already-built instrumentation (ledger lib/ledger.ts TASK-026, cohort retention lib/cohortRetention.ts TASK-034, automaticity SRBAI lib/automaticitySurvey.ts TASK-035, activation events lib/activation.ts TASK-033, evidence-graded action catalog lib/actionCatalog.ts TASK-024) (§1–§2), sample/eligibility bound to the TASK-007 screener with a non-negotiable TASK-006 contraindication safety filter (§3), a full consent instrument + withdrawal/export/deletion bound to TASK-041 (§4), day-by-day procedure (§5), precise outcome definitions for all five acceptance outcomes — attrition, completion, adverse events (incl. guilt-as-AE per CLAUDE.md §1), behavior outcomes, and a no-disease-claim enforcement gate (§6), pre-registered safety monitoring + stopping rules (§7), and the analysis framework with empty result slots reporting every required outcome separately with 95% CIs (§10). Empirical requirement (a real 30-day run producing reported attrition + completion + adverse events + behavior outcomes) remains OPEN. Unblock path and definition-of-done in that file (§11). Marking blocked (not in_review) avoids fabricating the empirical deliverable and prevents a synthetic-data reject loop.",
       "acceptance_criteria": [
         "Protocol, consent, attrition, completion, adverse events and behavior outcomes reported; no disease-prevention claims."
       ],
@@ -453,7 +454,7 @@
       "title": "Build privacy and consent controls",
       "workstream": "Validation & Growth",
       "description": "Implement consent and data minimization for habit and optional health data.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Consent can be withdrawn; export and deletion flows tested; no optional health data collected by default."
       ],

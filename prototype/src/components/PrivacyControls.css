@@ -1,0 +1,465 @@
+/* TASK-041 — Privacy & consent surface.
+   HerRays warm-paper language with a calm-green "on / kept" accent. Scoped under .pc.
+
+   Standards wired into the styles:
+   - Zero-Guilt (CLAUDE.md §1): warm paper + calm-green only — NO red, danger or
+     penalty colour anywhere, not even on the delete control. Deleting is a calm,
+     reversible, user-owned choice, styled as a quiet outline, never an alarm.
+   - Accessibility: visible focus rings on every control; strong text contrast; the
+     optional toggles are real role="switch" controls with aria-checked; status
+     changes live in an aria-live region; all motion is disabled under
+     prefers-reduced-motion at the foot of this file.
+*/
+
+.pc {
+  --paper: #fbf6ee;
+  --card: #fffdf9;
+  --ink: #2c2420;
+  --ink-soft: #7a6f63;
+  --ink-faint: #a89c8c;
+  --line: #ebdfcd;
+  --line-soft: #f1e8da;
+  --accent: #5f9e7e;
+  --accent-deep: #3f7d60;
+  --accent-soft: #e4efe7;
+  --gold-deep: #8a5a12;
+  --gold-soft: #f6ead3;
+
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: clamp(22px, 4vw, 36px) clamp(18px, 4vw, 30px) clamp(26px, 4vw, 40px);
+  color: var(--ink);
+  font-family: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0.1px;
+}
+
+.pc *,
+.pc *::before,
+.pc *::after {
+  box-sizing: border-box;
+}
+
+.pc-glow {
+  position: absolute;
+  inset: -14% -10% auto -10%;
+  height: 220px;
+  background:
+    radial-gradient(58% 78% at 68% 0%, rgba(95, 158, 126, 0.16), transparent 62%),
+    radial-gradient(52% 70% at 28% 0%, rgba(255, 217, 160, 0.16), transparent 58%);
+  filter: blur(6px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pc > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- header ------------------------------------------------------------ */
+
+.pc-head {
+  text-align: center;
+  margin-bottom: clamp(14px, 3vw, 20px);
+}
+
+.pc-eyebrow {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+}
+
+.pc-title {
+  margin: 0 0 8px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(22px, 4.6vw, 29px);
+  font-weight: 600;
+  line-height: 1.14;
+  color: var(--ink);
+}
+
+.pc-sub {
+  margin: 0 auto;
+  max-width: 52ch;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* ---- promises ---------------------------------------------------------- */
+
+.pc-promises {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 14px 16px;
+  display: grid;
+  gap: 9px;
+  background: linear-gradient(180deg, var(--accent-soft), var(--card));
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.pc-promise {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  align-items: start;
+  gap: 10px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.pc-promise-mark {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent-deep);
+  color: #fffdf9;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ---- live status ------------------------------------------------------- */
+
+.pc-status {
+  margin: 0 0 14px;
+  padding: 11px 14px;
+  background: var(--card);
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-deep);
+}
+
+/* ---- panels ------------------------------------------------------------ */
+
+.pc-panel {
+  margin-bottom: 14px;
+  padding: 14px 16px 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.pc-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.pc-panel-title {
+  margin: 0;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 16.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.pc-panel-note {
+  margin: 0 0 12px;
+  font-size: 12.8px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.pc-chip {
+  padding: 3px 11px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.pc-chip-essential {
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+}
+
+.pc-chip-optional {
+  background: var(--gold-soft);
+  color: var(--gold-deep);
+}
+
+/* ---- data items -------------------------------------------------------- */
+
+.pc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.pc-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 10px 12px;
+  padding: 11px 13px;
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: 12px;
+  transition: border-color 200ms ease, background 200ms ease;
+}
+
+/* Essential items carry a leading check column; optional items lead with text. */
+section[aria-label='Essential data'] .pc-item {
+  grid-template-columns: 24px 1fr auto;
+}
+
+.pc-item-on {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, var(--accent-soft), var(--paper));
+}
+
+.pc-item-mark {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent-deep);
+  color: #fffdf9;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.pc-item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.pc-item-name {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-weight: 650;
+  font-size: 14.5px;
+  color: var(--ink);
+}
+
+.pc-item-desc {
+  font-size: 12.5px;
+  line-height: 1.42;
+  color: var(--ink-soft);
+}
+
+.pc-item-tag {
+  align-self: center;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+}
+
+.pc-health-tag {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  background: var(--gold-soft);
+  color: var(--gold-deep);
+}
+
+/* ---- toggle switch ----------------------------------------------------- */
+
+.pc-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 5px 6px 5px 5px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink-faint);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 200ms ease, color 200ms ease;
+}
+
+.pc-switch.on {
+  border-color: var(--accent);
+  color: var(--accent-deep);
+}
+
+.pc-switch-track {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--line);
+  transition: background 200ms ease;
+}
+
+.pc-switch.on .pc-switch-track {
+  background: var(--accent);
+}
+
+.pc-switch-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fffdf9;
+  box-shadow: 0 1px 3px rgba(44, 36, 32, 0.28);
+  transition: transform 200ms ease;
+}
+
+.pc-switch.on .pc-switch-thumb {
+  transform: translateX(16px);
+}
+
+.pc-switch-label {
+  min-width: 22px;
+  text-align: left;
+}
+
+/* ---- ownership: export + delete --------------------------------------- */
+
+.pc-ownership {
+  border-color: var(--line);
+}
+
+.pc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.pc-btn {
+  flex: 1 1 auto;
+  min-width: 180px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 120ms ease, border-color 200ms ease, box-shadow 200ms ease, background 200ms ease;
+}
+
+.pc-btn:hover {
+  transform: translateY(-1px);
+}
+
+.pc-btn-export {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, var(--accent-soft), var(--paper));
+  color: var(--accent-deep);
+}
+
+.pc-btn-export:hover {
+  box-shadow: 0 8px 20px -14px rgba(63, 125, 96, 0.7);
+}
+
+/* Delete is a quiet outline, never an alarming red (Zero-Guilt §1). */
+.pc-btn-delete {
+  border-color: var(--line);
+  color: var(--ink-soft);
+}
+
+.pc-btn-delete:hover {
+  border-color: var(--gold-deep);
+  color: var(--gold-deep);
+}
+
+.pc-btn-cancel {
+  border-color: var(--accent);
+  color: var(--accent-deep);
+}
+
+.pc-confirm {
+  flex: 1 1 100%;
+  padding: 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.pc-confirm-text {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.pc-confirm-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pc-export-note {
+  margin: 12px 0 0;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+}
+
+/* ---- focus rings ------------------------------------------------------- */
+
+.pc-switch:focus-visible,
+.pc-btn:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---- reduced motion ---------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .pc-item,
+  .pc-switch,
+  .pc-switch-track,
+  .pc-switch-thumb,
+  .pc-btn {
+    transition: none;
+  }
+  .pc-btn:hover {
+    transform: none;
+  }
+}
+
+.pc.reduce .pc-item,
+.pc.reduce .pc-switch,
+.pc.reduce .pc-switch-track,
+.pc.reduce .pc-switch-thumb,
+.pc.reduce .pc-btn {
+  transition: none;
+}
+
+.pc.reduce .pc-btn:hover {
+  transform: none;
+}

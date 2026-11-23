@@ -18,6 +18,7 @@ import CohortRetention from './components/CohortRetention'
 import AutomaticitySurvey from './components/AutomaticitySurvey'
 import EntitlementGate from './components/EntitlementGate'
 import SubscriptionEconomics from './components/SubscriptionEconomics'
+import PrivacyControls from './components/PrivacyControls'
 import DesignTokens from './components/DesignTokens'
 
 /**
@@ -40,6 +41,7 @@ type View =
   | 'automaticity'
   | 'premium'
   | 'economics'
+  | 'privacy'
   | 'ledger'
   | 'recommend'
   | 'catalog'
@@ -145,6 +147,14 @@ function App() {
         </button>
         <button
           type="button"
+          className={`shell-tab${view === 'privacy' ? ' on' : ''}`}
+          aria-current={view === 'privacy'}
+          onClick={() => setView('privacy')}
+        >
+          Privacy &amp; consent
+        </button>
+        <button
+          type="button"
           className={`shell-tab${view === 'ledger' ? ' on' : ''}`}
           aria-current={view === 'ledger'}
           onClick={() => setView('ledger')}
@@ -230,6 +240,8 @@ function App() {
         <EntitlementGate />
       ) : view === 'economics' ? (
         <SubscriptionEconomics />
+      ) : view === 'privacy' ? (
+        <PrivacyControls />
       ) : view === 'ledger' ? (
         <CompletionLedger />
       ) : view === 'recommend' ? (
