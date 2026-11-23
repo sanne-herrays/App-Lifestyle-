@@ -397,7 +397,7 @@
       "title": "Design reminder-reduction experiment",
       "workstream": "Validation & Growth",
       "description": "Test whether users continue actions when reminders are tapered.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Randomization, eligibility, outcome window, consent and stopping rules pre-registered."
       ],

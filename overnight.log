@@ -1910,3 +1910,52 @@ Review complete. TASK-035 (Implement habit automaticity survey) passed on every 
 `tasks.json` → `completed`; `PROGRESS.md` → 3-bullet approval appended.
 
 APPROVED
+[main 61db54c] feat: complete autonomous task
+ 9 files changed, 1975 insertions(+), 2 deletions(-)
+ create mode 100644 prototype/src/components/AutomaticitySurvey.css
+ create mode 100644 prototype/src/components/AutomaticitySurvey.tsx
+ create mode 100644 prototype/src/lib/automaticitySurvey.test.ts
+ create mode 100644 prototype/src/lib/automaticitySurvey.ts
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   3f42398..61db54c  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Mon Nov 23 01:16:47 CET 2026
+==========================================
+Task complete. Summary of this session's single-task build:
+
+## TASK-036 — Design reminder-reduction experiment → `in_review`
+
+**First `pending` task** (TASK-008/009/010/016/017/018/019 blocked; TASK-011–015 + TASK-020–035 completed). The evidence register already pointed here (`behavior-change-evidence-register.md` §3.6 → "TASK-036 reminder-reduction experiment"). Grounds PRD §7 (habit graduation — "once a behavior is automatic, reduce prompting") and Principle 5 (habits become independent of the app).
+
+**Key judgment call:** TASK-036's acceptance criterion — *"Randomization, eligibility, outcome window, consent and stopping rules **pre-registered**"* — asks for five **design artifacts**, not empirical records. A pre-registration is by definition written *before* any data exists, so unlike the blocked human-subject tasks, this is fully satisfied by the design itself → `in_review`, **not** `blocked`. No synthetic data anywhere.
+
+**Deliverable:** `docs/research/reminder-reduction-experiment-preregistration.md` (~4,650 words) — a locked pre-registration for a two-arm **non-inferiority RCT** testing whether tapering reminders preserves real-world behavior once a habit is automatic. All five required elements covered:
+- **Randomization** — 1:1 stratified permuted-block, server-side concealment, honest open-label handling with blinded objective outcome + masked analysis
+- **Eligibility** — per-habit inclusion I1–I6 / exclusion E1–E5, tied to TASK-028/035/026/034/023
+- **Outcome window** — four defined windows; primary endpoint anchored to the reduced-reminder steady state (days 15–28), measuring *behavior* retention, not app-opens
+- **Consent** — experiment-specific, with a first-class "turn reminders back on anytime" autonomy override
+- **Stopping rules** — anti-peeking sample-size + futility + a conservative ethical/safety boundary
+
+House conventions upheld: Wilson/Newcombe CIs, ITT estimand, empty result slots (§9), labelled NON-DATA determinism fixture (§9.6), Zero-Guilt framing (graduation, not withdrawal), health-claim integrity (behavior only).
+
+**Verified:** `cd prototype && npm run build` → **exit 0** (tsc strict + Vite, 75 modules, zero warnings — no prototype code touched, nothing broken). Banned-pattern grep clean. `tasks.json` valid JSON (28 completed / 7 blocked / 1 in_review / 7 pending).
+
+**Changed:** `tasks.json`, `PROGRESS.md`; **new:** the pre-registration doc. Not committed, per CLAUDE.md workflow and your instructions. Next pending after approval: TASK-037 (premium entitlement gate).
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 75 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.81 kB │ gzip:   0.45 kB
+dist/assets/index-Dn73duvT.css  116.01 kB │ gzip:  17.54 kB
+dist/assets/index-zsAxtDsx.js   385.54 kB │ gzip: 112.47 kB
+
+✓ built in 94ms
+The deliverable is a genuine, locked pre-registration — every acceptance element is a design specification written before data, grounded in the project's own evidence register and verbatim PRD references. Zero-Guilt is carried into the experiment itself, health-claim integrity is preserved, the status choice (`in_review`, not `blocked`) is correct and honest, and no synthetic data is passed off as findings. Build is clean.
+
+APPROVED
