@@ -408,7 +408,7 @@
       "title": "Build premium entitlement gate",
       "workstream": "Validation & Growth",
       "description": "Separate free one-habit experience from premium multi-habit features.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Free user completes core loop; premium access requires valid entitlement; expired entitlement restores free access."
       ],

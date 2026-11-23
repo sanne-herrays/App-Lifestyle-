@@ -1959,3 +1959,65 @@ dist/assets/index-zsAxtDsx.js   385.54 kB │ gzip: 112.47 kB
 The deliverable is a genuine, locked pre-registration — every acceptance element is a design specification written before data, grounded in the project's own evidence register and verbatim PRD references. Zero-Guilt is carried into the experiment itself, health-claim integrity is preserved, the status choice (`in_review`, not `blocked`) is correct and honest, and no synthetic data is passed off as findings. Build is clean.
 
 APPROVED
+[main 0edd640] feat: complete autonomous task
+ 4 files changed, 406 insertions(+), 1 deletion(-)
+ create mode 100644 docs/research/reminder-reduction-experiment-preregistration.md
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   61db54c..0edd640  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Mon Nov 23 01:23:58 CET 2026
+==========================================
+Done. TASK-037 (Build premium entitlement gate) is complete and set to `in_review`. Not committed, per the workflow rules.
+
+## Summary
+
+**Task:** TASK-037 — Build premium entitlement gate (first `pending` task, Validation & Growth).
+
+**Delivered** (following the established engine + deterministic test + reachable surface pattern):
+- `prototype/src/lib/entitlement.ts` — pure, React-free engine: tier model, the three PRD §7 annual hypothesis products ($29.99/$39.99/$59.99), free-vs-premium feature catalog, time-based `resolveEntitlement`, the `canUse` gate, `isCoreLoopAvailable`, active-habit limits, gentle-downgrade `enforceActiveLimit` (park, never delete), guilt-free copy, defensive serialize/deserialize, and a localStorage-backed store.
+- `prototype/src/lib/entitlement.test.ts` — 12 deterministic case groups.
+- `prototype/src/components/EntitlementGate.tsx` + `.css` — the surface, wired into `App.tsx` as a new "Premium gate" tab, with a display-only demo clock to watch an annual grant lapse.
+
+**Acceptance criterion met exactly:**
+- *Free user completes core loop* — every core-loop feature is free by construction; proven available with no entitlement at all.
+- *Premium requires valid entitlement* — premium unlocks only under an `active` grant for a known product within term; forged/unknown/incoherent grants unlock nothing (fail-closed).
+- *Expired restores free access* — at `now >= expiresAt` the tier falls back to free, premium re-locks, the loop stays intact, and extra habits are parked (never deleted).
+
+**Verified:**
+- `npm run build` → **exit 0** (tsc strict + Vite, 78 modules, zero warnings).
+- `npm run lint` → **exit 0**.
+- `node src/lib/entitlement.test.ts` → **12/12 passed**; regressions (activation, cohortRetention, automaticitySurvey, ledger, restart, progressViz) all pass.
+- Banned-pattern grep clean; no danger hues in CSS.
+- `tasks.json` well-formed: 29 completed / 7 blocked / 1 in_review / 6 pending.
+
+Next pending build after approval: TASK-038 (subscription economics model).
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 78 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.81 kB │ gzip:   0.45 kB
+dist/assets/index-Bp0pjwNx.css  123.02 kB │ gzip:  18.37 kB
+dist/assets/index-Bg4fbtMO.js   396.02 kB │ gzip: 115.23 kB
+
+✓ built in 108ms
+TASK-037 (premium entitlement gate) passes review on every axis.
+
+**Verdict rationale:**
+- **Build:** `npm run build` → exit 0, zero errors/warnings, 78 modules.
+- **Tests:** `node src/lib/entitlement.test.ts` → all 12 deterministic case groups passed.
+- **Acceptance criteria:** All three clauses are proven by the running engine, not narrated — free core loop unlocked with no entitlement, premium gated to active grants (forged/unknown/backwards-term grants fail closed), expiry at the `now >= expiresAt` boundary restores free access with the loop intact.
+- **Zero-guilt (§1):** Expiry = soft "resting" state; habits are *parked, never deleted* (`active ∪ parked` reconstructs the original set); no red/streak/penalty chrome; every string clears the real `isGuiltFree` guard, which is proven non-trivial.
+- **Strict TS (§4):** No `any`, no `@ts-ignore`, no TODOs/placeholders. The test's `as unknown as Entitlement` casts are deliberate forged-input fixtures.
+- **Craft & integrity:** a11y radiogroups, `aria-live`, focus rings, reduced-motion; prices labelled hypotheses; demo clock honestly display-only; wired into `App.tsx`.
+
+Actions taken:
+- `tasks.json`: TASK-037 `in_review` → `completed`.
+- `PROGRESS.md`: appended the reviewer approval section.
+
+APPROVED

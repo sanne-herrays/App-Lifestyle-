@@ -16,6 +16,7 @@ import HabitProgress from './components/HabitProgress'
 import ActivationEvents from './components/ActivationEvents'
 import CohortRetention from './components/CohortRetention'
 import AutomaticitySurvey from './components/AutomaticitySurvey'
+import EntitlementGate from './components/EntitlementGate'
 import DesignTokens from './components/DesignTokens'
 
 /**
@@ -36,6 +37,7 @@ type View =
   | 'activation'
   | 'retention'
   | 'automaticity'
+  | 'premium'
   | 'ledger'
   | 'recommend'
   | 'catalog'
@@ -125,6 +127,14 @@ function App() {
         </button>
         <button
           type="button"
+          className={`shell-tab${view === 'premium' ? ' on' : ''}`}
+          aria-current={view === 'premium'}
+          onClick={() => setView('premium')}
+        >
+          Premium gate
+        </button>
+        <button
+          type="button"
           className={`shell-tab${view === 'ledger' ? ' on' : ''}`}
           aria-current={view === 'ledger'}
           onClick={() => setView('ledger')}
@@ -206,6 +216,8 @@ function App() {
         <CohortRetention />
       ) : view === 'automaticity' ? (
         <AutomaticitySurvey />
+      ) : view === 'premium' ? (
+        <EntitlementGate />
       ) : view === 'ledger' ? (
         <CompletionLedger />
       ) : view === 'recommend' ? (

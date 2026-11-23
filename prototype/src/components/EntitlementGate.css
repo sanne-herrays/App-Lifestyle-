@@ -1,0 +1,504 @@
+/* TASK-037 — Premium entitlement gate surface.
+   HerRays warm-paper language with a calm-green "unlocked" accent and a soft gold
+   "premium / resting" tone. Scoped under .eg.
+
+   Standards wired into the styles:
+   - Zero-Guilt (CLAUDE.md §1): warm paper + calm-green + soft gold only — NO red,
+     danger, penalty or streak colour anywhere. A locked premium feature is a calm,
+     soft gold "resting" state, never an alarming paywall; a lapsed plan rests, it is
+     never shamed.
+   - Accessibility: visible focus rings on every control; strong text contrast; the
+     plan and clock pickers are labelled radiogroups; status changes live in an
+     aria-live region; all motion is disabled under prefers-reduced-motion at the
+     foot of this file.
+*/
+
+.eg {
+  --paper: #fbf6ee;
+  --card: #fffdf9;
+  --ink: #2c2420;
+  --ink-soft: #7a6f63;
+  --ink-faint: #a89c8c;
+  --line: #ebdfcd;
+  --line-soft: #f1e8da;
+  --accent: #5f9e7e;
+  --accent-deep: #3f7d60;
+  --accent-soft: #e4efe7;
+  --gold: #e09a38;
+  --gold-deep: #8a5a12;
+  --gold-soft: #f6ead3;
+
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: clamp(22px, 4vw, 36px) clamp(18px, 4vw, 30px) clamp(26px, 4vw, 40px);
+  color: var(--ink);
+  font-family: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: 0.1px;
+}
+
+.eg *,
+.eg *::before,
+.eg *::after {
+  box-sizing: border-box;
+}
+
+.eg-glow {
+  position: absolute;
+  inset: -14% -10% auto -10%;
+  height: 220px;
+  background:
+    radial-gradient(58% 78% at 70% 0%, rgba(95, 158, 126, 0.16), transparent 62%),
+    radial-gradient(52% 70% at 26% 0%, rgba(255, 217, 160, 0.2), transparent 58%);
+  filter: blur(6px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.eg > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- header ------------------------------------------------------------ */
+
+.eg-head {
+  text-align: center;
+  margin-bottom: clamp(16px, 3vw, 24px);
+}
+
+.eg-eyebrow {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.eg-title {
+  margin: 0 0 8px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(22px, 4.6vw, 29px);
+  font-weight: 600;
+  line-height: 1.14;
+  color: var(--ink);
+}
+
+.eg-sub {
+  margin: 0 auto;
+  max-width: 50ch;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* ---- status ------------------------------------------------------------ */
+
+.eg-status {
+  margin-bottom: 16px;
+  padding: 16px 18px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  transition: border-color 220ms ease, background 220ms ease;
+}
+
+.eg-status-active {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, var(--accent-soft), var(--card));
+}
+
+.eg-status-expired {
+  border-color: var(--gold);
+  background: linear-gradient(180deg, var(--gold-soft), var(--card));
+}
+
+.eg-status-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 10px;
+}
+
+.eg-badge {
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.eg-badge-free {
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+}
+
+.eg-badge-premium {
+  background: var(--gold-deep);
+  color: #fffdf9;
+}
+
+.eg-plan {
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--ink);
+}
+
+.eg-plan-when {
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.eg-status-headline {
+  margin: 0 0 4px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.eg-status-body {
+  margin: 0 0 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.eg-limit {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-deep);
+}
+
+.eg-status-expired .eg-limit {
+  color: var(--gold-deep);
+}
+
+/* ---- feature panels ---------------------------------------------------- */
+
+.eg-panel {
+  margin-bottom: 14px;
+  padding: 14px 16px 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.eg-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.eg-panel-title {
+  margin: 0;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 16.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.eg-loop-chip {
+  padding: 3px 11px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  background: var(--line-soft);
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+.eg-loop-chip.ok {
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+}
+
+.eg-loop-chip.resting {
+  background: var(--gold-soft);
+  color: var(--gold-deep);
+}
+
+.eg-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.eg-feature {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  align-items: start;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: 12px;
+  transition: border-color 200ms ease, background 200ms ease, opacity 200ms ease;
+}
+
+.eg-feature.on {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, var(--accent-soft), var(--paper));
+}
+
+/* A locked premium feature is calm and inviting, never an alarming paywall. */
+.eg-feature.locked {
+  opacity: 0.86;
+}
+
+.eg-feature-mark {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--line-soft);
+  color: var(--ink-faint);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.eg-feature.on .eg-feature-mark {
+  background: var(--accent-deep);
+  color: #fffdf9;
+}
+
+.eg-feature.locked .eg-feature-mark {
+  background: var(--gold-soft);
+  color: var(--gold-deep);
+}
+
+.eg-feature-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.eg-feature-name {
+  font-weight: 650;
+  font-size: 14.5px;
+  color: var(--ink);
+}
+
+.eg-feature-desc {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+.eg-feature-tag {
+  align-self: center;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: var(--gold-soft);
+  color: var(--gold-deep);
+}
+
+.eg-feature.on .eg-feature-tag {
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+}
+
+/* ---- controls ---------------------------------------------------------- */
+
+.eg-controls,
+.eg-clock {
+  margin-top: 14px;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.eg-h3 {
+  margin: 0 0 12px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.eg-hyp {
+  font-family: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-faint);
+}
+
+.eg-plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.eg-plan-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 14px 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 120ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.eg-plan-btn:hover {
+  border-color: var(--gold);
+  box-shadow: 0 8px 20px -14px rgba(138, 90, 18, 0.6);
+  transform: translateY(-1px);
+}
+
+.eg-plan-btn.current {
+  border-color: var(--gold-deep);
+  background: linear-gradient(180deg, var(--gold-soft), var(--paper));
+}
+
+.eg-plan-price {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.eg-plan-period {
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+
+.eg-plan-cta {
+  margin-top: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--gold-deep);
+}
+
+.eg-manage {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.eg-ghost {
+  flex: 1 1 auto;
+  min-width: 170px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 200ms ease, color 200ms ease, opacity 200ms ease;
+}
+
+.eg-ghost:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent-deep);
+}
+
+.eg-ghost:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* ---- demo clock -------------------------------------------------------- */
+
+.eg-clock-note {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.eg-clock-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.eg-step-btn {
+  flex: 1 1 auto;
+  min-width: 110px;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 200ms ease, background 200ms ease, color 200ms ease;
+}
+
+.eg-step-btn.on {
+  border-color: var(--gold-deep);
+  background: var(--gold-soft);
+  color: var(--gold-deep);
+}
+
+.eg-clock-at {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+}
+
+/* ---- focus rings ------------------------------------------------------- */
+
+.eg-plan-btn:focus-visible,
+.eg-ghost:focus-visible,
+.eg-step-btn:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* ---- reduced motion ---------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .eg-status,
+  .eg-feature,
+  .eg-plan-btn,
+  .eg-ghost,
+  .eg-step-btn {
+    transition: none;
+  }
+  .eg-plan-btn:hover {
+    transform: none;
+  }
+}
+
+.eg.reduce .eg-status,
+.eg.reduce .eg-feature,
+.eg.reduce .eg-plan-btn,
+.eg.reduce .eg-ghost,
+.eg.reduce .eg-step-btn {
+  transition: none;
+}
+
+.eg.reduce .eg-plan-btn:hover {
+  transform: none;
+}
