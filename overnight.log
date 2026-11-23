@@ -2292,3 +2292,65 @@ dist/assets/index-D6bOmufP.js               404.50 kB │ gzip: 117.24 kB
 TASK-041 passes a ruthless review on every axis — acceptance criteria, Apple-level craft, zero-guilt behavioral design, and strict TypeScript — with all claims independently verified (build clean, 11/11 test groups passing, registry coverage confirmed against actual app keys, no `any`/`@ts-ignore`/placeholders). Status updated to `completed` and PROGRESS.md logged.
 
 APPROVED
+[main c4ba9a6] feat: complete autonomous task
+ 10 files changed, 2195 insertions(+), 3 deletions(-)
+ create mode 100644 docs/research/30-day-behavioral-pilot-protocol-and-analysis-framework.md
+ create mode 100644 prototype/src/components/PrivacyControls.css
+ create mode 100644 prototype/src/components/PrivacyControls.tsx
+ create mode 100644 prototype/src/lib/privacy.test.ts
+ create mode 100644 prototype/src/lib/privacy.ts
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   f74447d..c4ba9a6  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Mon Nov 23 02:14:43 CET 2026
+==========================================
+Clean. TASK-042 is complete and ready for review.
+
+## Summary
+
+I executed **TASK-042 — Prepare App Store editorial package**, the first `pending` task in `tasks.json`, and set it to `in_review` (not committed, per the workflow rules).
+
+**Deliverable:** a self-contained package under `docs/strategy/app-store-editorial-package/` — `README.md` (the editorial package), `capture-screenshots.mjs` (a reproducible capture tool), and `screenshots/` (nine real PNGs).
+
+Every acceptance element was made real rather than asserted:
+
+- **Real screenshots** — captured from the **production build** of the prototype by driving Google Chrome headless over the DevTools Protocol (dependency-free, using Node 25's global `WebSocket`/`fetch`). The script clicks the real `App.tsx` nav tabs and shoots nine surfaces at an iPhone-class viewport — including the genuine <2s completion state ("That felt good.") reached via the real keyboard-hold path. I verified the renders by eye.
+- **Tested US English copy** — full listing (name, 3 pre-registered subtitle variants, promo, keywords, description, What's New). "Tested" is scoped honestly: every string clears the two gates that actually run here (the Zero-Guilt `isGuiltFree` guard and the TASK-006 claims ladder) and is delivered as the **candidate set for the blocked TASK-017 proposition test, not its winner** — no CTR/preference/comprehension numbers appear anywhere. Character counts were verified by `node` (keywords trimmed from 102→92 to fit Apple's 100-char field).
+- **Privacy disclosures** — Apple App Privacy nutrition-label answers derived line-by-line from the real consent registry in `privacy.ts`.
+- **Demo** — a scripted App Review / editorial walkthrough, each step mapped to a real built view.
+- **Claims review** — every public health string mapped to its Action Evidence & Safety Record (24 approved actions) and scanned against the forbidden-framings list, with a named sign-off block.
+
+**Integrity:** §9 explicitly lists the four blocked upstream gates (TASK-019/017/039/018) and operational items, so the package is honestly marked *ready-to-finalize*, not *submitted*.
+
+**Verification:** `cd prototype && npm run build` → exit 0 (strict, zero warnings, 85 modules); no `prototype/src` changes; banned-boilerplate and fabricated-metric greps clean; `tasks.json` valid (32 completed / 9 blocked / 1 in_review / 1 pending). No lingering processes left behind.
+
+The last remaining pending task is **TASK-043** (launch experiment plan), a buildable design artifact.
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 85 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                               1.22 kB │ gzip:   0.56 kB
+dist/assets/index-DfdtTvaM.css              135.35 kB │ gzip:  19.78 kB
+dist/assets/rolldown-runtime-4tVxZq34.js      0.23 kB │ gzip:   0.19 kB
+dist/assets/ledger-6Ieso8fS.js                3.35 kB │ gzip:   1.29 kB
+dist/assets/activation-BaT3WFs4.js            4.34 kB │ gzip:   1.78 kB
+dist/assets/entitlement-DXQSibD2.js           4.60 kB │ gzip:   1.92 kB
+dist/assets/automaticitySurvey-CzEQrfw7.js    6.24 kB │ gzip:   2.66 kB
+dist/assets/index-D6bOmufP.js               404.50 kB │ gzip: 117.24 kB
+
+✓ built in 110ms
+Review complete. TASK-042 ("Prepare App Store editorial package") passed every acceptance element and every CLAUDE.md non-negotiable:
+
+- **Real deliverables, not assertions** — the nine screenshots are authentic PNG captures from the production build via genuine DevTools-Protocol automation; all referenced code artifacts, quoted copy, character counts, and the 24-record / 7A-10B-7C claims grade split check out exactly.
+- **Standards clean** — strict `npm run build` passes at zero errors with no `prototype/src` changes; no fabricated metrics, no placeholder filler, zero-guilt copy throughout.
+- **Intellectually honest** — "tested" is scoped to the gates that actually run (Zero-Guilt + claims ladder), with no un-run empirical result smuggled through as fact, and the lone unfilled Privacy-Policy-URL slot is transparently flagged as an operational hosting step, not faked.
+
+`tasks.json` → `completed`; PROGRESS.md updated with the verdict.
+
+APPROVED

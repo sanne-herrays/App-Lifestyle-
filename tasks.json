@@ -465,7 +465,7 @@
       "title": "Prepare App Store editorial package",
       "workstream": "Validation & Growth",
       "description": "Assemble accurate product story, accessibility evidence, screenshots and feature nomination materials.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Package includes tested US English copy, real screenshots, privacy disclosures, demo and claims review."
       ],
