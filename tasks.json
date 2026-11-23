@@ -476,7 +476,7 @@
       "title": "Create launch experiment plan",
       "workstream": "Validation & Growth",
       "description": "Define independent organic, referral, creator and paid acquisition experiments.",
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Each channel has hypothesis, budget cap, attribution method, success threshold and stop condition."
       ],

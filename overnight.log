@@ -2354,3 +2354,75 @@ Review complete. TASK-042 ("Prepare App Store editorial package") passed every a
 `tasks.json` → `completed`; PROGRESS.md updated with the verdict.
 
 APPROVED
+[main 5295019] feat: complete autonomous task
+ 14 files changed, 655 insertions(+), 1 deletion(-)
+ create mode 100644 docs/strategy/app-store-editorial-package/README.md
+ create mode 100644 docs/strategy/app-store-editorial-package/capture-screenshots.mjs
+ create mode 100644 docs/strategy/app-store-editorial-package/screenshots/01-little-win-today.png
+ create mode 100644 docs/strategy/app-store-editorial-package/screenshots/02-little-win-complete.png
+ create mode 100644 docs/strategy/app-store-editorial-package/screenshots/03-seven-day-journey.png
+ create mode 100644 docs/strategy/app-store-editorial-package/screenshots/04-gentle-restart.png
+ create mode 100644 docs/strategy/app-store-editorial-package/screenshots/05-progress.png
+ create mode 100644 docs/strategy/app-store-editorial-package/screenshots/06-cue-scheduler.png
+ create mode 100644 docs/strategy/app-store-editorial-package/screenshots/07-action-catalog.png
+ create mode 100644 docs/strategy/app-store-editorial-package/screenshots/08-privacy-consent.png
+ create mode 100644 docs/strategy/app-store-editorial-package/screenshots/09-first-session-onboarding.png
+To https://github.com/sanne-herrays/App-Lifestyle-.git
+   c4ba9a6..5295019  main -> main
+Task approved, committed, and pushed.
+==========================================
+Starting next task at Mon Nov 23 02:27:16 CET 2026
+==========================================
+Task complete. Per the instructions, I executed exactly one task and am stopping here without committing.
+
+## Summary — TASK-043: Create launch experiment plan
+
+**Deliverable:** `docs/strategy/launch-experiment-plan.md` — a publication-grade, pre-committed launch experiment plan covering the four channels named in the acceptance criterion.
+
+**Each channel has all five required elements** (cross-checked in the §11 acceptance matrix):
+
+| Channel | Hypothesis | Budget cap | Attribution | Success threshold | Stop condition |
+|---|---|---|---|---|---|
+| **Organic** | ✓ | $0-media + capped production | ASC source types + geo/time holdout | 65% activation / 45% D7 | ✓ |
+| **Referral** | ✓ | total + per-install incentive caps | first-party codes / deep links (k-factor) | k-factor floor + baseline retention | ✓ |
+| **Creator** | ✓ | total + per-creator + per-activated caps | per-creator Custom Product Pages | eCPActivated < ceiling + baseline D7 | ✓ |
+| **Paid** | ✓ | total + daily + $1.70 eCPA ceiling | SKAdNetwork / Apple Search Ads | eCPActivated + D7/D30 targets | ✓ |
+
+**Grounded, not asserted:** the economics anchor (≈$1.70 break-even / $0.20 contribution) traces to the real TASK-038 model; attribution is privacy-safe by construction (TASK-041 "no tracking"); the spine reuses TASK-033 activation + TASK-034 behavior-retention; PRD §8's "scale only when retention *and* economics justify it" is made enforceable as the §7.3 three-gate scale gate — with **G1 openly recorded UNMET** (TASK-040 blocked).
+
+**Honesty:** advanced to `in_review` (not `blocked`) because the criterion asks for a *plan*, not empirical records — unlike TASK-017/018. No fabricated results: §9 holds empty ⟨pending⟩ slots; the only numbers are labelled model-assumptions or NON-DATA cap arithmetic.
+
+**Verification:**
+- `cd prototype && npm run build` → **exit 0** (strict `tsc -b && vite build`, zero warnings, 85 modules); no `prototype/src` changes.
+- Banned-boilerplate grep → none.
+- `tasks.json` well-formed: **33 completed / 9 blocked / 1 in_review / 0 pending**. TASK-043 → `in_review`.
+
+Changed: `tasks.json`, `PROGRESS.md`; new: `docs/strategy/launch-experiment-plan.md`. **Not committed** (awaiting Reviewer per workflow rules). This was the last `pending` task.
+
+> prototype@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.8 building client environment for production...
+transforming...
+✓ 85 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                               1.22 kB │ gzip:   0.56 kB
+dist/assets/index-DfdtTvaM.css              135.35 kB │ gzip:  19.78 kB
+dist/assets/rolldown-runtime-4tVxZq34.js      0.23 kB │ gzip:   0.19 kB
+dist/assets/ledger-6Ieso8fS.js                3.35 kB │ gzip:   1.29 kB
+dist/assets/activation-BaT3WFs4.js            4.34 kB │ gzip:   1.78 kB
+dist/assets/entitlement-DXQSibD2.js           4.60 kB │ gzip:   1.92 kB
+dist/assets/automaticitySurvey-CzEQrfw7.js    6.24 kB │ gzip:   2.66 kB
+dist/assets/index-D6bOmufP.js               404.50 kB │ gzip: 117.24 kB
+
+✓ built in 110ms
+Review complete. TASK-043 ("Create launch experiment plan") passes every acceptance criterion and CLAUDE.md standard:
+
+- **Criterion met for all four channels** — Organic, Referral, Creator, Paid each specify a concrete hypothesis, budget cap, attribution method, success threshold, and stop condition (verified section-by-section in §3–§6, not just the §11 matrix).
+- **No fabrication** — every §9 result table is an honest `⟨pending⟩`; the scale-gate G1 is openly recorded UNMET; the only numbers are the real TASK-038 economics anchor ($1.70/$0.20, traced to the cent in `subscriptionEconomics.ts`) and the explicit NON-DATA cap arithmetic. `in_review` (not `blocked`) was the correct call — the criterion asks for a plan, not empirical records.
+- **Standards clean** — Zero-Guilt carried into growth with an economics-overriding hard-kill (§8.1); privacy-safe attribution by construction (no IDFA/cross-app tracking); no banned boilerplate; no `prototype/src` changes, so Strict-TypeScript is untouched.
+
+`tasks.json` → `completed` (34 completed / 9 blocked / 0 in_review); PROGRESS.md updated with the verdict.
+
+APPROVED
